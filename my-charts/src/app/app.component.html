@@ -302,25 +302,132 @@
             visibility: hidden;
         }
     }
+    
+    .square {
+        width: 130px;
+        height: 130px;
+        background-color: #1976d2;
+        border-radius: 4px;
+        border: 1px solid #eee;
+        margin: 1px 10px 1px 1px;
+    }
+    
+    .groupsquare {
+        width: 280px;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .setsquare {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .sqnot {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        height: 20%;
+        width: 20%;
+        background-color: #3ed219;
+    }
+    
+    .sqnob {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        height: 20%;
+        width: 20%;
+        background-color: #3ed219;
+    }
+    /* The switch - the box around the slider */
+    
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+    /* Hide default HTML checkbox */
+    
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    /* The slider */
+    
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: crimson;
+        transition: .4s;
+    }
+    
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    input:checked+.slider {
+        background-color: #2196F3;
+    }
+    
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+    
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+    /* Rounded sliders */
+    
+    .slider.round {
+        border-radius: 34px;
+    }
+    
+    .slider.round:before {
+        border-radius: 50%;
+    }
 </style>
+
+
+
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
     <img width="40" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
     />
-    <span>Welcome</span>
+    <span id="state">{{dataState}}</span>
     <div class="spacer"></div>
-    <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://twitter.com/angular" title="Twitter">
-        <svg id="twitter-logo" height="24" data-name="Logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-        <rect width="400" height="400" fill="none"/>
-        <path d="M153.62,301.59c94.34,0,145.94-78.16,145.94-145.94,0-2.22,0-4.43-.15-6.63A104.36,104.36,0,0,0,325,122.47a102.38,102.38,0,0,1-29.46,8.07,51.47,51.47,0,0,0,22.55-28.37,102.79,102.79,0,0,1-32.57,12.45,51.34,51.34,0,0,0-87.41,46.78A145.62,145.62,0,0,1,92.4,107.81a51.33,51.33,0,0,0,15.88,68.47A50.91,50.91,0,0,1,85,169.86c0,.21,0,.43,0,.65a51.31,51.31,0,0,0,41.15,50.28,51.21,51.21,0,0,1-23.16.88,51.35,51.35,0,0,0,47.92,35.62,102.92,102.92,0,0,1-63.7,22A104.41,104.41,0,0,1,75,278.55a145.21,145.21,0,0,0,78.62,23" fill="#fff"/>
-      </svg>
-    </a>
+    <label class="switch" (change)="stateClicked($event)">
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label>
 </div>
 
 <div class="content" role="main">
 
     <!-- Highlight Card -->
+    <!--
     <div class="card highlight-card card-small">
 
         <svg id="rocket" alt="Rocket Ship" xmlns="http://www.w3.org/2000/svg" width="101.678" height="101.678" viewBox="0 0 101.678 101.678">
@@ -340,7 +447,31 @@
     </svg>
 
     </div>
+    -->
 
+
+    <div class="setsquare">
+        <div class="groupsquare">
+            <div class="square" (click)="buttonClicked('set1')" tabindex="0">
+                <span class="sqnot">1</span>
+            </div>
+            <div class="square" (click)="buttonClicked('set2')" tabindex="0">
+                <span class="sqnot">2</span>
+            </div>
+        </div>
+        <div class="groupsquare">
+            <div class="square" (click)="buttonClicked('set3')" tabindex="0">
+                <span class="sqnob">3</span>
+            </div>
+            <div class="square" (click)="buttonClicked('set4')" tabindex="0">
+                <span class="sqnob">4</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="separator" *ngIf="showLineChart">
+        <hr>
+    </div>
     <!-- Resources -->
 
     <!--
@@ -380,7 +511,7 @@
     <p>What do you want to do next with your app?</p>
     -->
     <input type="hidden" #selection>
-
+    <!--
     <div class="card-container">
         <div class="card card-small" (click)="buttonClicked('set1')" tabindex="0">
             <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
@@ -405,7 +536,7 @@
 
             <span>Graph Set 4</span>
         </div>
-        <!--
+        
         <div class="card card-small" (click)="selection.value = 'test'" tabindex="0">
             <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
 
@@ -417,9 +548,9 @@
 
             <span>Build for Production</span>
         </div>
-        -->
-    </div>
-
+    
+</div>
+-->
     <!-- Terminal -->
     <!--
     <div class="terminal" [ngSwitch]="selection.value">

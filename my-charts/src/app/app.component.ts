@@ -26,6 +26,7 @@ export class AppComponent implements OnInit{
   public showScatterChart = false;
   public showFinancialChart = false;
 
+  public dataState = "HARD CURRENCY";
 
   ngOnInit(): void {
     throw new Error("Method not implemented.");
@@ -503,6 +504,16 @@ export class AppComponent implements OnInit{
   fupdate() {
     // candlestick vs ohlc
     this.financialChartType = this.financialChartType === 'candlestick' ? 'ohlc' : 'candlestick';
+  }
+
+  public stateClicked(e): void {
+    
+    if(e.target.checked) {
+      this.dataState = "LOCAL MARKETS";
+    }
+    else {
+      this.dataState = "HARD CURRENCY";
+    }
   }
 
 }  
