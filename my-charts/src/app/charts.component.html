@@ -24,28 +24,36 @@
             </div>
         </div>
     </div>
-    <linechart class="separator " *ngIf="showLineChart ">
-        <hr>
-    </linechart>
-    <doughnutchart class="separator " *ngIf="showDoughnutChart ">
-        <hr>
-    </doughnutchart>
-    <radarchart class="separator " *ngIf="showRadarChart ">
-        <hr>
-    </radarchart>
-    <barchart class="separator " *ngIf="showBarChart ">
-        <hr>
-    </barchart>
-    <piechart class="separator " *ngIf="showPieChart ">
-        <hr>
-    </piechart>
-    <polarareachart class="separator " *ngIf="showPolarAreaChart ">
-        <hr>
-    </polarareachart>
-    <bubblechart class="separator " *ngIf="showBubbleChart ">
-        <hr>
-    </bubblechart>
-    <scatterchart class="separator " *ngIf="showScatterChart ">
-        <hr>
-    </scatterchart>
+    <div *ngIf="showLineChart ">
+        <linechart>
+        </linechart>
+    </div>
+    <div *ngIf="showDoughnutChart ">
+        <doughnutchart>
+        </doughnutchart>
+    </div>
+    <div *ngIf="showRadarChart ">
+        <radarchart>
+        </radarchart>
+    </div>
+    <div *ngIf="showBarChart ">
+        <barchart>
+        </barchart>
+    </div>
+    <div *ngIf="showPieChart ">
+        <piechart>
+        </piechart>
+    </div>
+    <div *ngIf="showPolarAreaChart ">
+        <polarareachart>
+        </polarareachart>
+    </div>
+    <div *ngIf="showBubbleChart ">
+        <bubblechart>
+        </bubblechart>
+    </div>
+    <div *ngIf="showScatterChart ">
+        <scatterchart>
+        </scatterchart>
+    </div>
 </div>

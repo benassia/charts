@@ -1,9 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgxAutoScrollModule } from 'ngx-auto-scroll';
+import { Routes, RouterModule } from '@angular/router';
+
 import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
+
 import { HomeComponent } from './home.component';
 import { ChatComponent } from './chat.component';
 import { ChartsComponent } from './charts.component';
@@ -65,6 +70,20 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 
+console.log('[app.module] debug');
+
+const conditionalImports = [];
+if (!/iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())) {	// if not iphone family
+
+}
+const routes: Routes = [
+	{ 
+	 path: '', pathMatch: 'full', redirectTo: '/'
+	}
+   ];
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,6 +100,7 @@ import {MatTreeModule} from '@angular/material/tree';
     ScatterChartComponent
   ],
   imports: [
+    NgxAutoScrollModule,
     BrowserModule,
     AppRoutingModule,
     ChartsModule,
@@ -127,7 +147,8 @@ import {MatTreeModule} from '@angular/material/tree';
     MatTooltipModule,
     MatTreeModule,
     PortalModule,
-    ScrollingModule
+    ScrollingModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent]
