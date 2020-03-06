@@ -1,5 +1,9 @@
-<mat-toolbar class="toolbar" color="primary">
-    <mat-icon (click)="drawer.toggle()">dehaze</mat-icon>
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <mat-icon (click)="drawer.toggle()">dehaze</mat-icon>
+        <span class="example-spacer"></span>
+        <mat-icon (click)="openHome()">home</mat-icon>
+    </mat-toolbar-row>
 </mat-toolbar>
 <mat-drawer-container class="base_container" [hasBackdrop]=true>
     <mat-drawer #drawer [mode]="'side'">

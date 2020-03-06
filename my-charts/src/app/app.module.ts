@@ -1,3 +1,6 @@
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgxAutoScrollModule } from 'ngx-auto-scroll';
@@ -101,6 +104,9 @@ const routes: Routes = [
   ],
   imports: [
     NgxAutoScrollModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     ChartsModule,

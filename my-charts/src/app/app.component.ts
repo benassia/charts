@@ -34,7 +34,6 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.openHome();
-    throw new Error("Method not implemented.");
   }
 
 public openChat(): void {
