@@ -1,0 +1,51 @@
+<div class="content" role="main">
+    <div class="setsquare">
+        <div class="sqoverlay"><span class="sqovsp">0</span></div>
+        <div class="groupsquare">
+            <div class="squaref" (click)="buttonClicked('set1')" tabindex="0">
+                <div class=" sqnot "><span class="sqsp ">1</span></div>
+                <div class=" sqlettert " (click)="buttonClicked( 'set1') "><span>F</span></div>
+            </div>
+            <div class="squarev" (click)="buttonClicked( 'set2') " tabindex="0">
+                <div class="sqnot "><span class="sqsp ">2</span></div>
+                <div class=" sqlettert" (click)="buttonClicked( 'set3') "><span>V</span></div>
+            </div>
+        </div>
+        <div class="groupsquare ">
+            <div class="squares" (click)="buttonClicked( 'set3') " tabindex="0">
+                <div class=" sqletterb " (click)="buttonClicked( 'set3') "><span>S</span></div>
+                <div class="sqnob "><span class="sqsp ">3</span></div>
+
+            </div>
+            <div class="squaret" (click)="buttonClicked( 'set4') " tabindex="0">
+                <div class=" sqletterb" (click)="buttonClicked( 'set4') "><span>T</span></div>
+                <div class="sqnob "><span class="sqsp ">4</span></div>
+
+            </div>
+        </div>
+    </div>
+    <linechart class="separator " *ngIf="showLineChart ">
+        <hr>
+    </linechart>
+    <doughnutchart class="separator " *ngIf="showDoughnutChart ">
+        <hr>
+    </doughnutchart>
+    <radarchart class="separator " *ngIf="showRadarChart ">
+        <hr>
+    </radarchart>
+    <barchart class="separator " *ngIf="showBarChart ">
+        <hr>
+    </barchart>
+    <piechart class="separator " *ngIf="showPieChart ">
+        <hr>
+    </piechart>
+    <polarareachart class="separator " *ngIf="showPolarAreaChart ">
+        <hr>
+    </polarareachart>
+    <bubblechart class="separator " *ngIf="showBubbleChart ">
+        <hr>
+    </bubblechart>
+    <scatterchart class="separator " *ngIf="showScatterChart ">
+        <hr>
+    </scatterchart>
+</div>

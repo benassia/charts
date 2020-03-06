@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { ChartDataSets, ChartOptions, ChartType, RadialChartOptions } from 'chart.js';
 import { Color, MultiDataSet, BaseChartDirective, SingleDataSet, Label } from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
@@ -6,122 +6,105 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import * as luxon from 'luxon';
 import 'chartjs-adapter-luxon';
 
-//import '../../../../ng2-charts/dist/ng2-charts/chartjs-chart-financial/chartjs-chart-financial';
-
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+	selector: 'charts',
+	templateUrl: './charts.component.html',
+	styleUrls: ['./charts.component.css']
 })
-export class AppComponent implements OnInit{
-  
-  title = 'my-charts';
-  showLineChart = true;
-  showDoughnutChart = true;
-  showRadarChart = true;
-  showBarChart = true;
-  showPieChart = true;
-  showPolarAreaChart = false;
-  showBubbleChart = false;
-  showScatterChart = false;
-  showFinancialChart = false;
+export class ChartsComponent implements OnInit, OnDestroy {
 
-  showChat = false;
-  showCharts = false;
-  showHome = true;
+    title = 'my-charts';
+    showLineChart = true;
+    showDoughnutChart = true;
+    showRadarChart = true;
+    showBarChart = true;
+    showPieChart = true;
+    showPolarAreaChart = false;
+    showBubbleChart = false;
+    showScatterChart = false;
+    showFinancialChart = false;
 
-  public dataState = "HARD CURRENCY";
+    dataState = "HARD CURRENCY";
 
-  ngOnInit(): void {
-    this.openHome();
-    throw new Error("Method not implemented.");
-  }
-
-public openChat(): void {
-  this.showChat = true;
-  this.showCharts = false;
-  this.showHome = false;
-}
-
-public openCharts(): void {
-  this.showChat = false;
-  this.showCharts = true;
-  this.showHome = false;
-}
-
-public openHome(): void {
-  this.showChat = false;
-  this.showCharts = false;
-  this.showHome = true;
-}
-
- public buttonClicked(value: any) {
-
-  switch (value) {
-    case 'set1': {
-      this.showLineChart = false;
-      this.showDoughnutChart = true;
-      this.showRadarChart = false;
-      this.showBarChart = true;
-      this.showPieChart = false;
-      this.showPolarAreaChart = true;
-      this.showBubbleChart = true;
-      this.showScatterChart = false;
-      this.showFinancialChart = true;
-      break;
+    ngOnInit(): void {
+        
+      console.log('init chart');
+        
     }
-    case 'set2': {
-      this.showLineChart = true;
-      this.showDoughnutChart = true;
-      this.showRadarChart = false;
-      this.showBarChart = true;
-      this.showPieChart = true;
-      this.showPolarAreaChart = false;
-      this.showBubbleChart = true;
-      this.showScatterChart = false;
-      this.showFinancialChart = false;
-      break;
+    
+    ngOnDestroy(): void {
+      console.log('destroy chart');
     }
-    case 'set3': {
-      this.showLineChart = false;
-      this.showDoughnutChart = true;
-      this.showRadarChart = false;
-      this.showBarChart = false;
-      this.showPieChart = true;
-      this.showPolarAreaChart = false;
-      this.showBubbleChart = true;
-      this.showScatterChart = false;
-      this.showFinancialChart = false;
-      break;
-    }
-    case 'set4': {
-      this.showLineChart = true;
-      this.showDoughnutChart = false;
-      this.showRadarChart = true;
-      this.showBarChart = false;
-      this.showPieChart = false;
-      this.showPolarAreaChart = true;
-      this.showBubbleChart = false;
-      this.showScatterChart = false;
-      this.showFinancialChart = false;
-      break;
-    }
-    default: {
-      this.showLineChart = true;
-      this.showDoughnutChart = true;
-      this.showRadarChart = false;
-      this.showBarChart = false;
-      this.showPieChart = true;
-      this.showPolarAreaChart = true;
-      this.showBubbleChart = false;
-      this.showScatterChart = false;
-      this.showFinancialChart = false;
-      break;
-    }
-  }
- }
 
-  barCount = 60;
+   
+   
+    public buttonClicked(value: any) {
+
+        switch (value) {
+          case 'set1': {
+            this.showLineChart = false;
+            this.showDoughnutChart = true;
+            this.showRadarChart = false;
+            this.showBarChart = true;
+            this.showPieChart = false;
+            this.showPolarAreaChart = true;
+            this.showBubbleChart = true;
+            this.showScatterChart = false;
+            this.showFinancialChart = true;
+            break;
+          }
+          case 'set2': {
+            this.showLineChart = true;
+            this.showDoughnutChart = true;
+            this.showRadarChart = false;
+            this.showBarChart = true;
+            this.showPieChart = true;
+            this.showPolarAreaChart = false;
+            this.showBubbleChart = true;
+            this.showScatterChart = false;
+            this.showFinancialChart = false;
+            break;
+          }
+          case 'set3': {
+            this.showLineChart = false;
+            this.showDoughnutChart = true;
+            this.showRadarChart = false;
+            this.showBarChart = false;
+            this.showPieChart = true;
+            this.showPolarAreaChart = false;
+            this.showBubbleChart = true;
+            this.showScatterChart = false;
+            this.showFinancialChart = false;
+            break;
+          }
+          case 'set4': {
+            this.showLineChart = true;
+            this.showDoughnutChart = false;
+            this.showRadarChart = true;
+            this.showBarChart = false;
+            this.showPieChart = false;
+            this.showPolarAreaChart = true;
+            this.showBubbleChart = false;
+            this.showScatterChart = false;
+            this.showFinancialChart = false;
+            break;
+          }
+          default: {
+            this.showLineChart = true;
+            this.showDoughnutChart = true;
+            this.showRadarChart = false;
+            this.showBarChart = false;
+            this.showPieChart = true;
+            this.showPolarAreaChart = true;
+            this.showBubbleChart = false;
+            this.showScatterChart = false;
+            this.showFinancialChart = false;
+            break;
+          }
+        }
+    }
+
+    barCount = 60;
   initialDateStr = '01 Apr 2017 00:00 Z';
 
 
@@ -540,4 +523,12 @@ public openHome(): void {
     }
   }
 
-}  
+}
+
+export interface PolarDataSet {
+	chartData: number[];
+	chartLabels: Label[];
+	chartLegend: boolean;
+	chartColors: Color[];
+	chartType: string;
+}
