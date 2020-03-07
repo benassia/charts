@@ -40,3 +40,11 @@ mat-drawer {
 .example-spacer {
     flex: 1 1 auto;
 }
+
+.mat-drawer:not(.mat-drawer-side) {
+    position: fixed;
+}
+
+.mat-drawer-backdrop {
+    position: fixed !important;
+}
