@@ -1,8 +1,8 @@
 <div class="flex">
     <div class="flex-item">
         <div style="display: block;">
-            <canvas responsive=" true " maintainAspectRatio="true " height=400 baseChart [datasets]="viewModel.chartData" [labels]="viewModel.chartLabels" [options]="viewModel.chartOptions" [colors]="viewModel.chartColors" [legend]="viewModel.chartLegend" [chartType]="viewModel.chartType"
-                [plugins]="viewModel.chartPlugins" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+            <canvas responsive=" true " maintainAspectRatio="true " width=350 height=350 baseChart [datasets]="viewModel.chartData" [labels]="viewModel.chartLabels" [options]="viewModel.chartOptions" [colors]="viewModel.chartColors" [legend]="viewModel.chartLegend"
+                [chartType]="viewModel.chartType" [plugins]="viewModel.chartPlugins" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
         </div>
     </div>
     <div class="flex-item">

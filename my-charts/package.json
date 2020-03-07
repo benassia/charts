@@ -25,6 +25,7 @@
     "chartjs-adapter-luxon": "^0.2.0",
     "chartjs-plugin-annotation": "^0.5.7",
     "chartjs-plugin-datalabels": "^0.7.0",
+    "common": "^0.2.5",
     "luxon": "^1.22.0",
     "moment": "^2.24.0",
     "ng2-charts": "^2.3.0",
@@ -54,5 +55,9 @@
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
     "typescript": "~3.7.5"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.4.",
+  "main": "karma.conf.js",
+  "author": "",
+  "license": "ISC"
 }

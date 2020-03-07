@@ -24,36 +24,21 @@
             </div>
         </div>
     </div>
-    <div *ngIf="showLineChart ">
-        <linechart>
-        </linechart>
-    </div>
-    <div *ngIf="showDoughnutChart ">
-        <doughnutchart>
-        </doughnutchart>
-    </div>
-    <div *ngIf="showRadarChart ">
-        <radarchart>
-        </radarchart>
-    </div>
-    <div *ngIf="showBarChart ">
-        <barchart>
-        </barchart>
-    </div>
-    <div *ngIf="showPieChart ">
-        <piechart>
-        </piechart>
-    </div>
-    <div *ngIf="showPolarAreaChart ">
-        <polarareachart>
-        </polarareachart>
-    </div>
-    <div *ngIf="showBubbleChart ">
-        <bubblechart>
-        </bubblechart>
-    </div>
-    <div *ngIf="showScatterChart ">
-        <scatterchart>
-        </scatterchart>
-    </div>
+    <linechart *ngIf="showLineChart ">
+    </linechart>
+    <doughnutchart *ngIf="showDoughnutChart ">
+    </doughnutchart>
+    <radarchart *ngIf="showRadarChart ">
+    </radarchart>
+    <barchart *ngIf="showBarChart ">
+    </barchart>
+    <piechart *ngIf="showPieChart ">
+    </piechart>
+    <polarareachart *ngIf="showPolarAreaChart ">
+    </polarareachart>
+    <bubblechart *ngIf="showBubbleChart ">
+    </bubblechart>
+    <scatterchart *ngIf="showScatterChart ">
+    </scatterchart>
+
 </div>
