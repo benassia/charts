@@ -1,0 +1,46 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <mat-icon (click)="drawer.toggle()">dehaze</mat-icon>
+        <span class="example-spacer"></span>
+        <mat-icon (click)="openHome()">home</mat-icon>
+        <span class="example-spacer"></span>
+        <mat-icon (click)="logout()">logout</mat-icon>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-drawer-container class="base_container" [hasBackdrop]=true>
+    <mat-drawer #drawer [mode]="'side'">
+        <mat-list>
+            <mat-list-item (click)="openYourDetails()" (click)="drawer.toggle()"> Your Details </mat-list-item>
+            <mat-list-item (click)="openLocationTracker()" (click)="drawer.toggle()"> Location Tracker </mat-list-item>
+            <mat-list-item (click)="openDayObservations()" (click)="drawer.toggle()"> Day Observations</mat-list-item>
+            <mat-list-item (click)="openYourSummary()" (click)="drawer.toggle()"> Your Summary</mat-list-item>
+            <mat-list-item (click)="openAegonSummary()" (click)="drawer.toggle()"> Aegon Summary</mat-list-item>
+            <mat-list-item (click)="openWorldComparator()" (click)="drawer.toggle()"> World Comparator</mat-list-item>
+            <!--
+            <mat-list-item (click)="openChat()" (click)="drawer.toggle()"> Chat </mat-list-item>
+            <mat-list-item (click)="openCharts()" (click)="drawer.toggle()"> Charts </mat-list-item>
+            -->
+        </mat-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <yourdetails *ngIf="showYourDetails">
+        </yourdetails>
+        <locationtracker *ngIf="showLocationTracker">
+        </locationtracker>
+        <dayobservations *ngIf="showDayObservations">
+        </dayobservations>
+        <yoursummary *ngIf="showYourSummary">
+        </yoursummary>
+        <aegonsummary *ngIf="showAegonSummary">
+        </aegonsummary>
+        <worldcomparator *ngIf="showWorldComparator">
+        </worldcomparator>
+        <home *ngIf="showHome">
+        </home>
+        <!-- <chat *ngIf="showChat">
+            </chat>
+            <charts *ngIf="showCharts">
+            </charts>
+        -->
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -35,7 +35,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openGood(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
         width: '250px',
-        data: {record: 11, status: 'Hydrogen', temp: 1.0079, symptom: 'H'}
+        data: {record: 11, status: 'At Work', temp: 37.8, symptom: 'None'}
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -47,7 +47,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19Q():void{
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog1, {
         width: '250px',
-        data: {record: 12, status: 'Hydrogen', temp: 1.0079, symptom: 'H'}
+        data: {record: 12, status: 'Quarantined', temp: 39, symptom: 'Cough & Breath'}
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -58,7 +58,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19A():void{
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog2, {
         width: '250px',
-        data: {record: 13, status: 'Hydrogen', temp: 1.0079, symptom: 'H'}
+        data: {record: 13, status: 'Hospitalised', temp: 90, symptom: 'Severe'}
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -69,7 +69,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19S():void{
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog3, {
         width: '250px',
-        data: {record: 14, status: 'Hydrogen', temp: 1.0079, symptom: 'H'}
+        data: {record: 14, status: 'Recovering', temp: 37.8, symptom: 'Exhuasted'}
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -145,16 +145,16 @@ export class DialogOverviewExampleDialog3 {
 
 
 const ELEMENT_DATA: HObservation[] = [
-  {record: 1, status: 'Hydrogen', temp: 1.0079, symptom: 'H'},
-  {record: 2, status: 'Helium', temp: 4.0026, symptom: 'He'},
-  {record: 3, status: 'Lithium', temp: 6.941, symptom: 'Li'},
-  {record: 4, status: 'Beryllium', temp: 9.0122, symptom: 'Be'},
-  {record: 5, status: 'Boron', temp: 10.811, symptom: 'B'},
-  {record: 6, status: 'Carbon', temp: 12.0107, symptom: 'C'},
-  {record: 7, status: 'Nitrogen', temp: 14.0067, symptom: 'N'},
-  {record: 8, status: 'Oxygen', temp: 15.9994, symptom: 'O'},
-  {record: 9, status: 'Fluorine', temp: 18.9984, symptom: 'F'},
-  {record: 10, status: 'Neon', temp: 20.1797, symptom: 'Ne'},
+  {record: 1, status: 'At Work', temp: 37.8, symptom: 'Good'},
+  {record: 2, status: 'At Home', temp: 37.8, symptom: 'Not Well'},
+  {record: 3, status: 'Quarantined', temp: 37.8, symptom: 'Cough'},
+  {record: 4, status: 'Hospitalised', temp: 39, symptom: 'Hard to Breathe'},
+  {record: 5, status: 'Hospitalised', temp: 39, symptom: 'Severe'},
+  {record: 6, status: 'Hospitalised', temp: 40, symptom: 'Severe'},
+  {record: 7, status: 'Hospitalised', temp: 40, symptom: 'Severe'},
+  {record: 8, status: 'Quarantined', temp: 37.8, symptom: 'Recovery'},
+  {record: 9, status: 'At Home', temp: 37.8, symptom: 'Well'},
+  {record: 10, status: 'At Work', temp: 37.8, symptom: 'Good'}
 ];
 
 export interface HObservation {

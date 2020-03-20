@@ -1,0 +1,50 @@
+body.noScroll {
+    /* ...or body.dialogShowing */
+    overflow: hidden;
+}
+
+.base_container {
+    width: 99%;
+    height: 100%;
+}
+
+mat-drawer-content {
+    padding: 12px;
+}
+
+mat-drawer {
+    width: 200px;
+}
+
+.toolbar {
+    position: relative;
+}
+
+.selected {
+    color: #F27D00;
+}
+
+@media(max-width: 576px) {
+    mat-toolbar {
+        height: 40px;
+    }
+     ::ng-deep .mat-toolbar-single-row {
+        padding: 0 5px !important;
+    }
+}
+
+.example-icon {
+    padding: 0 14px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.mat-drawer:not(.mat-drawer-side) {
+    position: fixed;
+}
+
+.mat-drawer-backdrop {
+    position: fixed !important;
+}

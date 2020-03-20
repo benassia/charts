@@ -11,6 +11,8 @@ import { ChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { SecureAppComponent } from './secure.component';
+import { UnSecureAppComponent } from './unsecure.component';
 
 import { HomeComponent } from './home.component';
 import { ChatComponent } from './chat.component';
@@ -100,6 +102,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    SecureAppComponent,
+    UnSecureAppComponent,
     HomeComponent,
     ChatComponent,
     ChartsComponent,

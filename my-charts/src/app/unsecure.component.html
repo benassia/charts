@@ -1,0 +1,104 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <mat-icon>font_download</mat-icon>
+        <span class="example-spacer "></span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<div id="login" *ngIf="pageState=='login'">
+    <mat-card>
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    Email is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Password</mat-label>
+                <input matInput [formControl]="passwordFormControl" placeholder="secrect code">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
+                    Please needs to be a minimum of 8 characters
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    Pass is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card>
+</div>
+
+<div id="register" *ngIf="pageState=='registerLogin'">
+    <mat-card>
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+                <mat-label>Name</mat-label>
+                <input matInput [formControl]="nameFormControl" placeholder="your name">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="nameFormControl.hasError('required')">
+                    Email is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    Email is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Password</mat-label>
+                <input matInput [formControl]="passwordFormControl" placeholder="secrect code">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
+                    Please needs to be a minimum of 8 characters
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    Pass is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput [formControl]="passwordFormControl" placeholder="confirm secrect code">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
+                    Please needs to be a minimum of 8 characters
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    Pass is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card>
+</div>
+
+<div id="forgot" *ngIf="pageState=='forgotLogin'">
+    <mat-card>
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+                <mat-label>Mobile</mat-label>
+                <input type="tel" matInput [formControl]="mobileFormControl" placeholder="mobile number">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="mobileFormControl.hasError('required')">
+                    Mobile is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card>
+</div>
+<mat-card>
+    <button mat-button color="primary" (click)="login() " *ngIf="pageState=='login' || pageState=='forgotLogin' || pageState=='registerLogin'">Login</button>
+    <button mat-button color="primary" (click)="forgotLogin() " *ngIf="pageState=='login' ">Forgot</button>
+    <button mat-button color="primary" (click)="registerLogin() " *ngIf="pageState=='login' || pageState=='registerLogin'"> Register</button>
+    <button mat-button color="primary" (click)="sendLoginReminder() " *ngIf="pageState=='forgotLogin'">Send Reminder</button>
+</mat-card>

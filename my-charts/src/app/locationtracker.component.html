@@ -6,7 +6,9 @@
         <div class="example-form">
             <span>Your Tracking Radius id ({{radius}} &nbsp; miles)</span>
             <mat-slide-toggle class="example-margin" [color]="color" (click)="trackOnOff()">
-                {{trackStatus}}
+                &nbsp;
+                <mat-icon *ngIf="trackStatus">wifi_tethering</mat-icon>
+                <mat-icon *ngIf="!trackStatus">portable_wifi_off</mat-icon>
             </mat-slide-toggle>
             <br><br><br>
             <div class="example-button-row">

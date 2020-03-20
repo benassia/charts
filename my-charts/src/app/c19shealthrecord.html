@@ -1,9 +1,17 @@
 <h1 mat-dialog-title>Hi {{data.record}}</h1>
 <div mat-dialog-content>
-    <p>What's your favorite animal?</p>
+    <p>S Status Record</p>
     <mat-form-field>
-        <mat-label>Favorite Animal</mat-label>
+        <mat-label>Health Status</mat-label>
         <input matInput [(ngModel)]="data.status">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Temperature</mat-label>
+        <input matInput [(ngModel)]="data.temp">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Symptoms</mat-label>
+        <input matInput [(ngModel)]="data.symptom">
     </mat-form-field>
 </div>
 <div mat-dialog-actions>

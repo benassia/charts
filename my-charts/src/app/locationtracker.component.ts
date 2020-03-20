@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import {ThemePalette} from '@angular/material/core';
-import * as geolib from 'geolib';
+//import * as geolib from 'geolib';
 
 @Component({
 	selector: 'locationtracker',
@@ -16,7 +16,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     checked = false;
     disabled = false;
     radius = 0.5;
-    trackStatus = "Track Me?";
+    trackStatus = false;
 
     ngOnInit(): void {
     }
@@ -31,9 +31,9 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     trackOnOff(): void {
       this.checked = !this.checked;
       if(this.checked){
-        this.trackStatus = "Tracking";
+        this.trackStatus = true;
       } else{
-        this.trackStatus = "Track Me?";
+        this.trackStatus = false;
       }
       this.trackCoords();
       console.log(this.checked);
