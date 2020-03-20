@@ -1,0 +1,14 @@
+.example-button-row button,
+.example-button-row a {
+    margin-right: 8px;
+    align-content: stretch;
+}
+
+.example-container {
+    height: 200px;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+}

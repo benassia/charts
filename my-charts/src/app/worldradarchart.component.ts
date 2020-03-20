@@ -7,11 +7,11 @@ import * as luxon from 'luxon';
 import 'chartjs-adapter-luxon';
 
 @Component({
-	selector: 'radarchart',
-	templateUrl: './radarchart.component.html',
-	styleUrls: ['./radarchart.component.css']
+	selector: 'worldradarchart',
+	templateUrl: './worldradarchart.component.html',
+	styleUrls: ['./worldradarchart.component.css']
 })
-export class RadarChartComponent implements OnInit, OnDestroy {
+export class WorldRadarChartComponent implements OnInit, OnDestroy {
 	
 	isWorldData = true;
 

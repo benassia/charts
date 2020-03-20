@@ -3,6 +3,8 @@
 
 <head>
     <meta http-equiv="Cache-control" content="no-store">
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=black>
     <meta http-equiv="Refresh" content="240">
     <meta charset="utf-8">
     <title>AAM-Charts</title>
@@ -32,6 +34,20 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1976d2">
     <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script>
+        if ((Browser.Platform.ios) || (Browser.Platform.android) && (Browser.safari)) {
+            //For iPhone and Andriod To remove Address bar when viewing website on Safari Mobile
+            // When ready...
+            window.addEventListener("load", function() {
+                // Set a timeout...
+                setTimeout(function() {
+                    // Hide the address bar!
+                    window.scrollTo(0, 1);
+                }, 0);
+            });
+        }
+    </script>
+
 </head>
 
 <body>
@@ -46,7 +62,7 @@
     <app-root></app-root>
     <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
-
-<footer></footer>
+<footer>
+</footer>
 
 </html>

@@ -1,0 +1,56 @@
+<div class="content" role="main">
+    <mat-card>
+        <h2>Location Tracker</h2>
+        <hr>
+        <br>
+        <div class="example-form">
+            <span>Your Tracking Radius id ({{radius}} &nbsp; miles)</span>
+            <mat-slide-toggle class="example-margin" [color]="color" (click)="trackOnOff()">
+                {{trackStatus}}
+            </mat-slide-toggle>
+            <br><br><br>
+            <div class="example-button-row">
+                <button mat-fab (click)="setRadius(0.5)">.5</button>
+                <button mat-fab color="accent" (click)="setRadius(1)">1</button>
+                <button mat-fab color="warn" (click)="setRadius(1.5)">1.5 </button>
+                <button mat-fab color="primary" (click)="setRadius(2)">2</button>
+            </div>
+            <br><br><br>
+            <span>A measure will be recorded as you move out with the radius from the last point of record</span>
+        </div>
+    </mat-card>
+
+    <mat-card>
+        <div class="example-container mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="trackpoint">
+                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.trackpoint}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="latlng">
+                    <th mat-header-cell *matHeaderCellDef> Lat/lng </th>
+                    <td mat-cell *matCellDef="let element"> {{element.latlng}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="datetime">
+                    <th mat-header-cell *matHeaderCellDef> Date/Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.datetime}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="maplink">
+                    <th mat-header-cell *matHeaderCellDef> MapLink </th>
+                    <td mat-cell *matCellDef="let element"> {{element.maplink}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </mat-card>
+</div>

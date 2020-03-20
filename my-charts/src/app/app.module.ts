@@ -16,6 +16,15 @@ import { HomeComponent } from './home.component';
 import { ChatComponent } from './chat.component';
 import { ChartsComponent } from './charts.component';
 
+import { YourDetailsComponent } from './yourdetails.component';
+import { LocationTrackerComponent } from './locationtracker.component';
+import { DayObservationsComponent, DialogOverviewExampleDialog, DialogOverviewExampleDialog1, DialogOverviewExampleDialog2, DialogOverviewExampleDialog3 } from './dayobservations.component';
+import { YourSummaryComponent } from './yoursummary.component';
+import { AegonSummaryComponent } from './aegonsummary.component';
+import { WorldComparatorComponent } from './worldcomparator.component';
+import { AegonRadarChartComponent } from './aegonradarchart.component';
+import { WorldRadarChartComponent } from './worldradarchart.component';
+
 import { BarChartComponent } from './barchart.component';
 import { BubbleChartComponent } from './bubblechart.component';
 import { DoughnutChartComponent } from './doughnutchart.component';
@@ -31,14 +40,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import {A11yModule} from '@angular/cdk/a11y';
-import {ClipboardModule} from '@angular/cdk/clipboard';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {PortalModule} from '@angular/cdk/portal';
+//import {ClipboardModule} from '@angular/cdk/clipboard';
+//import {DragDropModule} from '@angular/cdk/drag-drop';
+//import {PortalModule} from '@angular/cdk/portal';
 import {ScrollingModule} from '@angular/cdk/scrolling';
-import {CdkStepperModule} from '@angular/cdk/stepper';
+//import {CdkStepperModule} from '@angular/cdk/stepper';
 import {CdkTableModule} from '@angular/cdk/table';
-import {CdkTreeModule} from '@angular/cdk/tree';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+//import {CdkTreeModule} from '@angular/cdk/tree';
+//import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatButtonModule} from '@angular/material/button';
@@ -46,8 +55,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatChipsModule} from '@angular/material/chips';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+//import {MatStepperModule} from '@angular/material/stepper';
+//import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -57,7 +66,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
-import {MatPaginatorModule} from '@angular/material/paginator';
+//import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatRadioModule} from '@angular/material/radio';
@@ -71,7 +80,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatTreeModule} from '@angular/material/tree';
+//import {MatTreeModule} from '@angular/material/tree';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 console.log('[app.module] debug');
 
@@ -93,6 +103,16 @@ const routes: Routes = [
     HomeComponent,
     ChatComponent,
     ChartsComponent,
+    YourDetailsComponent,
+    LocationTrackerComponent,
+    DayObservationsComponent,
+    DialogOverviewExampleDialog,
+    DialogOverviewExampleDialog1,
+    DialogOverviewExampleDialog2,
+    DialogOverviewExampleDialog3,
+    YourSummaryComponent,
+    AegonSummaryComponent,
+    WorldComparatorComponent,
     BarChartComponent,
     BubbleChartComponent,
     DoughnutChartComponent,
@@ -100,6 +120,8 @@ const routes: Routes = [
     PieChartComponent,
     PolarAreaChartComponent,
     RadarChartComponent,
+    AegonRadarChartComponent,
+    WorldRadarChartComponent,
     ScatterChartComponent
   ],
   imports: [
@@ -112,12 +134,12 @@ const routes: Routes = [
     ChartsModule,
     BrowserAnimationsModule,
     A11yModule,
-    ClipboardModule,
-    CdkStepperModule,
+    //ClipboardModule,
+    //CdkStepperModule,
     CdkTableModule,
-    CdkTreeModule,
-    DragDropModule,
-    MatAutocompleteModule,
+    //CdkTreeModule,
+    //DragDropModule,
+    //MatAutocompleteModule,
     MatBadgeModule,
     MatBottomSheetModule,
     MatButtonModule,
@@ -125,8 +147,8 @@ const routes: Routes = [
     MatCardModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatStepperModule,
-    MatDatepickerModule,
+    //MatStepperModule,
+    //MatDatepickerModule,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,
@@ -136,7 +158,7 @@ const routes: Routes = [
     MatListModule,
     MatMenuModule,
     MatNativeDateModule,
-    MatPaginatorModule,
+    //MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatRadioModule,
@@ -151,12 +173,14 @@ const routes: Routes = [
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule,
-    PortalModule,
+    //MatTreeModule,
+    //PortalModule,
     ScrollingModule,
     RouterModule.forRoot(routes),
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

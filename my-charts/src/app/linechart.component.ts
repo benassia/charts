@@ -52,14 +52,9 @@ export class LineChartComponent implements OnInit, OnDestroy {
 		//return sessions;
 		const viewModel = {
 			chartData: [
-				{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Tech' },
-				{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Health' },
-				{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Retail' },
-				{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Media' },
-				{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Finance' },
-				{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Lifestyle' },
-				{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Social' },
-				{ data: [180, 480, 770, 90, 1000, 270, 400], label: 'Personal', yAxisID: 'y-axis-1' }
+				{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Temp' },
+				{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Status' },
+				{ data: [2, 32, 25, 28, 74, 23, 12], label: 'Symptom', yAxisID: 'y-axis-1'}
 			  ],
 			chartLabels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 			chartOptions: {

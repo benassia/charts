@@ -1,0 +1,23 @@
+<div class="content" role="main">
+    <mat-card>
+        <h2>Your Details</h2>
+        <hr>
+        <br>
+
+        <div class="example-form">
+            <mat-form-field class="example-full-width">
+                <mat-label>Identity</mat-label>
+                <input matInput disabled placeholder="your email address" value="you@you.com">
+            </mat-form-field>
+            <br> <button mat-flat-button color="warn" (click)="deleteAllMyData()">Delete All My Data</button>
+        </div>
+    </mat-card>
+    <mat-card *ngIf="showBuffer ">
+        <mat-card-content>
+            <section class="example-section">
+                <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
+                </mat-progress-bar>
+            </section>
+        </mat-card-content>
+    </mat-card>
+</div>

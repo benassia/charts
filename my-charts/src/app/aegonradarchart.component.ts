@@ -7,13 +7,13 @@ import * as luxon from 'luxon';
 import 'chartjs-adapter-luxon';
 
 @Component({
-	selector: 'radarchart',
-	templateUrl: './radarchart.component.html',
-	styleUrls: ['./radarchart.component.css']
+	selector: 'aegonradarchart',
+	templateUrl: './aegonradarchart.component.html',
+	styleUrls: ['./aegonradarchart.component.css']
 })
-export class RadarChartComponent implements OnInit, OnDestroy {
+export class AegonRadarChartComponent implements OnInit, OnDestroy {
 	
-	isWorldData = true;
+	isWorldData = false;
 
     viewModel: RadarDataSet = {
 		chartType: 'radar',

@@ -28,29 +28,124 @@ export class AppComponent implements OnInit{
 
   showChat = false;
   showCharts = false;
+  showYourDetails = false;
+  showLocationTracker = false;
+  showDayObservations = false;
+  showYourSummary = false;
+  showAegonSummary = false;
+  showWorldComparator = false;
   showHome = true;
 
   public dataState = "HARD CURRENCY";
 
   ngOnInit(): void {
     this.openHome();
+
+    
   }
+
+  public openYourDetails(): void {
+    this.showChat = false;
+    this.showCharts = false;
+    this.showYourDetails = true;
+    this.showLocationTracker = false;
+    this.showDayObservations = false;
+    this.showYourSummary = false;
+    this.showAegonSummary = false;
+    this.showWorldComparator = false;
+    this.showHome = false;
+  }
+  public openLocationTracker(): void {
+    this.showChat = false;
+    this.showCharts = false;
+    this.showYourDetails = false;
+    this.showLocationTracker = true;
+    this.showDayObservations = false;
+    this.showYourSummary = false;
+    this.showAegonSummary = false;
+    this.showWorldComparator = false;
+    this.showHome = false;
+
+  }
+  public openDayObservations(): void {
+    this.showChat = false;
+    this.showCharts = false;
+    this.showYourDetails = false;
+    this.showLocationTracker = false;
+    this.showDayObservations = true;
+    this.showYourSummary = false;
+    this.showAegonSummary = false;
+    this.showWorldComparator = false;
+    this.showHome = false;
+  }
+  public openYourSummary(): void {
+    this.showChat = false;
+    this.showCharts = false;
+    this.showYourDetails = false;
+    this.showLocationTracker = false;
+    this.showDayObservations = false;
+    this.showYourSummary = true;
+    this.showAegonSummary = false;
+    this.showWorldComparator = false;
+    this.showHome = false;
+  }
+  public openAegonSummary(): void {
+    this.showChat = false;
+    this.showCharts = false;
+    this.showYourDetails = false;
+    this.showLocationTracker = false;
+    this.showDayObservations = false;
+    this.showYourSummary = false;
+    this.showAegonSummary = true;
+    this.showWorldComparator = false;
+    this.showHome = false;
+  }
+  public openWorldComparator(): void {
+    this.showChat = false;
+    this.showCharts = false;
+    this.showYourDetails = false;
+    this.showLocationTracker = false;
+    this.showDayObservations = false;
+    this.showYourSummary = false;
+    this.showAegonSummary = false;
+    this.showWorldComparator = true;
+    this.showHome = false;
+  }
+
 
 public openChat(): void {
   this.showChat = true;
   this.showCharts = false;
+  this.showYourDetails = false;
+  this.showLocationTracker = false;
+  this.showDayObservations = false;
+  this.showYourSummary = false;
+  this.showAegonSummary = false;
+  this.showWorldComparator = false;
   this.showHome = false;
 }
 
 public openCharts(): void {
   this.showChat = false;
   this.showCharts = true;
+  this.showYourDetails = false;
+  this.showLocationTracker = false;
+  this.showDayObservations = false;
+  this.showYourSummary = false;
+  this.showAegonSummary = false;
+  this.showWorldComparator = false;
   this.showHome = false;
 }
 
 public openHome(): void {
   this.showChat = false;
   this.showCharts = false;
+  this.showYourDetails = false;
+  this.showLocationTracker = false;
+  this.showDayObservations = false;
+  this.showYourSummary = false;
+  this.showAegonSummary = false;
+  this.showWorldComparator = false;
   this.showHome = true;
 }
 
