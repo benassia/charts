@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import { DataService } from "./data.service";
+import { DataService, Session } from "./data.service";
 
 @Component({
   selector: 'unsecure-root',
@@ -11,12 +11,12 @@ import { DataService } from "./data.service";
 export class UnSecureAppComponent  implements OnInit {
 
   pageState = 'login';
-  loginStatus: string;
+  session: Session = {loginStatus: '', device: '', latlng: ''};
 
   constructor(private data: DataService) { }
 
   ngOnInit(): void {
-    this.data.currentMessage.subscribe(loginStatus => this.loginStatus = loginStatus);
+    this.data.currentSession.subscribe(session => this.session = session);
   }
   
   emailFormControl = new FormControl('', [
@@ -42,8 +42,8 @@ export class UnSecureAppComponent  implements OnInit {
   }
   login():void{
     this.pageState = 'login';
-    this.data.changeMessage('true');
-
+    this.session.loginStatus = 'true';
+    this.data.updateSession(this.session);
   }
   forgotLogin():void{
     this.pageState='forgotLogin';

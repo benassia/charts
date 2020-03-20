@@ -7,13 +7,55 @@ import { BehaviorSubject } from 'rxjs';
 
 export class DataService {
 
-  private messageSource = new BehaviorSubject('false');
-  currentMessage = this.messageSource.asObservable();
+  session: Session = {loginStatus: 'false', device: '', latlng: ''};
+
+
+  private sessionHandler = new BehaviorSubject(this.session);
+  currentSession = this.sessionHandler.asObservable();
 
   constructor() { }
 
-  changeMessage(loginStatus: string) {
-    this.messageSource.next(loginStatus);
+  updateSession(session: Session) {
+    this.sessionHandler.next(session);
   }
 
+}
+
+export interface Session {
+  loginStatus: string;
+  device: string;
+  latlng: string;
+}
+
+export interface Identity {
+    name: string;
+    email: string;
+    mobile: string;
+    device: string;
+    uid: string;
+}
+
+export interface Observation {
+  status: string;
+  record: number;
+  temp: number;
+  symptom: string;
+  org: string;
+  latlng: string;
+}
+
+export interface Tracker {
+  latlng: string;
+  trackpoint: number;
+  datetime: number;
+  maplink: string;
+}
+
+export interface Observations {
+  chartData: [
+    {
+      data: Observation [];
+      label: string;
+    }
+  ];
 }

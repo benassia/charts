@@ -1,5 +1,5 @@
-<unsecure-root *ngIf="loginStatus=='false'">
+<unsecure-root *ngIf="session.loginStatus == 'false'">
 </unsecure-root>
 
-<secure-root *ngIf="loginStatus=='true'">
+<secure-root *ngIf="session.loginStatus == 'true'">
 </secure-root>

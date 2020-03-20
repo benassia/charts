@@ -1,5 +1,5 @@
-import { Component,OnInit} from '@angular/core';
-import { DataService } from "./data.service";
+import { Component, OnInit} from '@angular/core';
+import { DataService, Session } from "./data.service";
 
 @Component({
   selector: 'app-root',
@@ -8,12 +8,12 @@ import { DataService } from "./data.service";
 })
 export class AppComponent implements OnInit {
 
-  loginStatus: string ='false';
+  session: Session = {loginStatus: '', device: '', latlng: ''};
 
   constructor(private data: DataService) { }
 
   ngOnInit() {
-    this.data.currentMessage.subscribe(loginStatus => this.loginStatus = loginStatus);
+    this.data.currentSession.subscribe(session => this.session = session);
   }
 
 }

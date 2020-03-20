@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
-import { DataService } from "./data.service";
+import { DataService, Session } from "./data.service";
 import { ChartDataSets, ChartOptions, ChartType, RadialChartOptions } from 'chart.js';
 import { Color, MultiDataSet, BaseChartDirective, SingleDataSet, Label } from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
@@ -41,15 +41,16 @@ export class SecureAppComponent implements OnInit{
 
   public dataState = "HARD CURRENCY";
 
-  loginStatus: string;
+  session: Session = {loginStatus: '', device: '', latlng: ''};
 
   ngOnInit(): void {
     this.openHome();
-    this.data.currentMessage.subscribe(loginStatus => this.loginStatus = loginStatus)
+    this.data.currentSession.subscribe(session => this.session = session);
   }
 
   logout(): void {
-    this.data.changeMessage('false');
+    this.session.loginStatus = 'false';
+    this.data.updateSession(this.session);
   }
 
   public openYourDetails(): void {
