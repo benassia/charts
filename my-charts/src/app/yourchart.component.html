@@ -1,17 +1,17 @@
 <div class="flex">
     <div class="flex-item">
         <div style="display: block;">
-            <canvas responsive=" true " maintainAspectRatio="true " width=350 height=350 baseChart [datasets]="viewModel.chartData" [labels]="viewModel.chartLabels" [options]="viewModel.chartOptions" [colors]="viewModel.chartColors" [legend]="viewModel.chartLegend"
-                [chartType]="viewModel.chartType" [plugins]="viewModel.chartPlugins" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+            <canvas responsive=" true " maintainAspectRatio="true " width=350 height=350 baseChart [datasets]="chartDataSet.chartData" [labels]="chartDataSet.chartLabels" [options]="chartDataSet.chartOptions" [colors]="chartDataSet.chartColors" [legend]="chartDataSet.chartLegend"
+                [chartType]="chartDataSet.chartType" [plugins]="chartDataSet.chartPlugins" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
         </div>
     </div>
     <div class="flex-item">
         <table class="table table-responsive table-condensed">
             <tr>
-                <th *ngFor="let label of viewModel.chartLabels">{{label}}</th>
+                <th *ngFor="let label of chartDataSet.chartLabels">{{label}}</th>
             </tr>
-            <tr *ngFor="let d of viewModel.chartData; let i=index" [class]="'line-'+i">
-                <td *ngFor="let label of viewModel.chartLabels; let j=index">{{d && d.data[j]}}</td>
+            <tr *ngFor="let d of chartDataSet.chartData; let i=index" [class]="'line-'+i">
+                <td *ngFor="let label of chartDataSet.chartLabels; let j=index">{{d && d.data[j]}}</td>
             </tr>
         </table>
         <button mat-button mat-raised-button color="primary" (click)="randomize()">Randomize</button>

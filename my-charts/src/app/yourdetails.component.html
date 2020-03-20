@@ -7,7 +7,7 @@
         <div class="example-form">
             <mat-form-field class="example-full-width">
                 <mat-label>Identity</mat-label>
-                <input matInput disabled placeholder="your email address" value="you@you.com">
+                <input matInput disabled placeholder="your email address" [value]="identity.email">
             </mat-form-field>
             <br> <button mat-flat-button color="warn" (click)="deleteAllMyData()">Delete All My Data</button>
         </div>

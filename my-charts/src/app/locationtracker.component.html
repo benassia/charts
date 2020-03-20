@@ -2,29 +2,28 @@
     <mat-card>
         <h2>Location Tracker</h2>
         <hr>
-        <br>
         <div class="example-form">
             <span>Your Tracking Radius id ({{radius}} &nbsp; miles)</span>
             <mat-slide-toggle class="example-margin" [color]="color" (click)="trackOnOff()">
                 &nbsp;
-                <mat-icon *ngIf="trackStatus">wifi_tethering</mat-icon>
-                <mat-icon *ngIf="!trackStatus">portable_wifi_off</mat-icon>
+                <mat-icon *ngIf="trackerPage.trackme">wifi_tethering</mat-icon>
+                <mat-icon *ngIf="!trackerPage.trackme">portable_wifi_off</mat-icon>
             </mat-slide-toggle>
-            <br><br><br>
+            <br>
             <div class="example-button-row">
                 <button mat-fab (click)="setRadius(0.5)">.5</button>
                 <button mat-fab color="accent" (click)="setRadius(1)">1</button>
                 <button mat-fab color="warn" (click)="setRadius(1.5)">1.5 </button>
                 <button mat-fab color="primary" (click)="setRadius(2)">2</button>
             </div>
-            <br><br><br>
+            <br>
             <span>A measure will be recorded as you move out with the radius from the last point of record</span>
         </div>
     </mat-card>
 
     <mat-card>
         <div class="example-container mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource">
+            <table mat-table [dataSource]="tracker.tracks">
 
                 <!-- Position Column -->
                 <ng-container matColumnDef="trackpoint">

@@ -26,11 +26,12 @@ import { AegonSummaryComponent } from './aegonsummary.component';
 import { WorldComparatorComponent } from './worldcomparator.component';
 import { AegonRadarChartComponent } from './aegonradarchart.component';
 import { WorldRadarChartComponent } from './worldradarchart.component';
+import { YourChartComponent } from './yourchart.component';
 
 import { BarChartComponent } from './barchart.component';
 import { BubbleChartComponent } from './bubblechart.component';
 import { DoughnutChartComponent } from './doughnutchart.component';
-import { LineChartComponent } from './linechart.component';
+
 import { PieChartComponent } from './piechart.component';
 import { PolarAreaChartComponent } from './polarareachart.component';
 import { RadarChartComponent } from './radarchart.component';
@@ -120,7 +121,7 @@ const routes: Routes = [
     BarChartComponent,
     BubbleChartComponent,
     DoughnutChartComponent,
-    LineChartComponent,
+    YourChartComponent,
     PieChartComponent,
     PolarAreaChartComponent,
     RadarChartComponent,

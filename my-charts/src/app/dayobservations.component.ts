@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { DataService, Observer, Observation } from './data.service';
+
 
 export interface DialogData {
   animal: string;
@@ -7,27 +9,27 @@ export interface DialogData {
 }
 
 @Component({
-	selector: 'dayobservations',
-	templateUrl: './dayobservations.component.html',
-	styleUrls: ['./dayobservations.component.css']
+  selector: 'dayobservations',
+  templateUrl: './dayobservations.component.html',
+  styleUrls: ['./dayobservations.component.css']
 })
 export class DayObservationsComponent implements OnInit, OnDestroy {
 
+    observer: Observer;
+
     displayedColumns = ['record', 'status', 'temp', 'symptom'];
-    dataSource = ELEMENT_DATA;
-    
+
     animal: string;
     name: string;
 
-    constructor(public dialog: MatDialog) {}
+    constructor(public dialog: MatDialog, private data: DataService) {}
 
     ngOnInit(): void {
-      //const ndata = {position: 11, name: 'Hydrogen', weight: 1.0079, symbol: 'H'};
-      //this.dataSource.push(ndata);
+      this.data.currentObservation.subscribe(observer => this.observer = observer);
     }
-    
+
     ngOnDestroy(): void {
-        
+
     }
 
 
@@ -37,11 +39,11 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
         width: '250px',
         data: {record: 11, status: 'At Work', temp: 37.8, symptom: 'None'}
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         alert(JSON.stringify(result));
-        this.dataSource.push(result);
+        console.log(result);
       });
     }
     openC19Q():void{
@@ -49,10 +51,10 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
         width: '250px',
         data: {record: 12, status: 'Quarantined', temp: 39, symptom: 'Cough & Breath'}
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
-        this.dataSource.push(result);
+        console.log(result);
       });
     }
     openC19A():void{
@@ -60,13 +62,13 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
         width: '250px',
         data: {record: 13, status: 'Hospitalised', temp: 90, symptom: 'Severe'}
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
-        this.dataSource.push(result);
+        console.log(result);
       });
     }
-    openC19S():void{
+    openC19S(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog3, {
         width: '250px',
         data: {record: 14, status: 'Recovering', temp: 37.8, symptom: 'Exhuasted'}
@@ -74,7 +76,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
   
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
-        this.dataSource.push(result);
+        console.log(result);
       });
     }
 }
@@ -87,7 +89,7 @@ export class DialogOverviewExampleDialog {
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: HObservation) {}
+    @Inject(MAT_DIALOG_DATA) public data: Observation) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -103,7 +105,7 @@ export class DialogOverviewExampleDialog1 {
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog1>,
-    @Inject(MAT_DIALOG_DATA) public data: HObservation) {}
+    @Inject(MAT_DIALOG_DATA) public data: Observation) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -119,7 +121,7 @@ export class DialogOverviewExampleDialog2 {
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog2>,
-    @Inject(MAT_DIALOG_DATA) public data: HObservation) {}
+    @Inject(MAT_DIALOG_DATA) public data: Observation) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -135,31 +137,10 @@ export class DialogOverviewExampleDialog3 {
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog3>,
-    @Inject(MAT_DIALOG_DATA) public data: HObservation) {}
+    @Inject(MAT_DIALOG_DATA) public data: Observation) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-}
-
-
-const ELEMENT_DATA: HObservation[] = [
-  {record: 1, status: 'At Work', temp: 37.8, symptom: 'Good'},
-  {record: 2, status: 'At Home', temp: 37.8, symptom: 'Not Well'},
-  {record: 3, status: 'Quarantined', temp: 37.8, symptom: 'Cough'},
-  {record: 4, status: 'Hospitalised', temp: 39, symptom: 'Hard to Breathe'},
-  {record: 5, status: 'Hospitalised', temp: 39, symptom: 'Severe'},
-  {record: 6, status: 'Hospitalised', temp: 40, symptom: 'Severe'},
-  {record: 7, status: 'Hospitalised', temp: 40, symptom: 'Severe'},
-  {record: 8, status: 'Quarantined', temp: 37.8, symptom: 'Recovery'},
-  {record: 9, status: 'At Home', temp: 37.8, symptom: 'Well'},
-  {record: 10, status: 'At Work', temp: 37.8, symptom: 'Good'}
-];
-
-export interface HObservation {
-  status: string;
-  record: number;
-  temp: number;
-  symptom: string;
 }
