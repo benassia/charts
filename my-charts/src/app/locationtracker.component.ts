@@ -25,6 +25,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
       this.data.currentTracking.subscribe(tracker => this.tracker = tracker);
       this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
       this.tracking = this.trackerPage.trackme;
+      this.radius = this.trackerPage.trackradius;
       console.log(this.tracking);
     }
 
@@ -34,6 +35,8 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
 
     setRadius(val): void{
       this.radius = val;
+      this.trackerPage.trackradius = this.radius;
+      this.page.updateTrackerPage(this.trackerPage);
     }
 
     trackOnOff(): void {

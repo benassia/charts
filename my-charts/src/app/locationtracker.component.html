@@ -3,12 +3,12 @@
         <h2 class="subrow">
             <mat-icon class="icon-display active-icon " *ngIf="trackerPage.trackme" (click)="trackOnOff()">wifi_tethering</mat-icon>
             <mat-icon class="icon-display " *ngIf="!trackerPage.trackme" (click)="trackOnOff()">portable_wifi_off</mat-icon>
-            &nbsp; Location Tracker&nbsp;
+            &nbsp; Location Tracker&nbsp;&nbsp;
             <span *ngIf="trackerPage.trackme">On</span>
             <span *ngIf="!trackerPage.trackme">Off</span>
         </h2>
         <hr>
-        <div class="example-form">
+        <div class="example-form" *ngIf="trackerPage.trackme">
             <span>Your Tracking Radius id ({{radius}} &nbsp; miles )</span>
             <br><br>
             <div class="example-button-row">
