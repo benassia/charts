@@ -14,21 +14,9 @@ export class DataService {
   tracker: Tracker = {tracks: this.position};
 
 
-  observer: Observer = {observations: [
-                                      {record: 1, status: 'At Work', temp: 37.8, symptom: 'Good', latlng: ''},
-                                      {record: 2, status: 'At Home', temp: 37.8, symptom: 'Not Well', latlng: ''},
-                                      {record: 3, status: 'Quarantined', temp: 37.8, symptom: 'Cough', latlng: ''},
-                                      {record: 4, status: 'Hospitalised', temp: 39, symptom: 'Hard to Breathe', latlng: ''},
-                                      {record: 5, status: 'Hospitalised', temp: 39, symptom: 'Severe', latlng: ''},
-                                      {record: 6, status: 'Hospitalised', temp: 40, symptom: 'Severe', latlng: ''},
-                                      {record: 7, status: 'Hospitalised', temp: 40, symptom: 'Severe', latlng: ''},
-                                      {record: 8, status: 'Quarantined', temp: 37.8, symptom: 'Recovery', latlng: ''},
-                                      {record: 9, status: 'At Home', temp: 37.8, symptom: 'Well', latlng: ''},
-                                      {record: 10, status: 'At Work', temp: 37.8, symptom: 'Good', latlng: ''}
-                                      ]
-                                    };
+  observer: Observer = {observations: this.observation };
 
-  indentity: Identity = {name: '', email: 'you@you.com', mobile: '', device: '', uid: '', homelatlng: 'click icon to get your location'};
+  indentity: Identity = {name: '', email: 'you@you.com', sword: '', mobile: '', device: '',org: '', uid: '', homelatlng: 'click icon to get your location'};
 
   private identityHandler = new BehaviorSubject(this.indentity);
   currentIdentity = this.identityHandler.asObservable();
@@ -62,6 +50,28 @@ export class DataService {
     this.sessionHandler.next(session);
   }
 
+  async registerUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
+    console.log('registering ..');
+    await this.delay(5000);
+    return Promise.resolve(true);
+  }
+
+  async loginUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
+    console.log('logging in ..');
+    await this.delay(5000);
+    return Promise.resolve(true);
+  }
+
+  async sendLoginIdentity(identity: UnSecureIdentity): Promise <boolean> {
+    console.log('sending reminder ..');
+    await this.delay(5000);
+    return Promise.resolve(true);
+  }
+
+  async delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
 }
 
 export interface Session {
@@ -70,11 +80,22 @@ export interface Session {
   latlng: string;
 }
 
+export interface UnSecureIdentity {
+  orgunit: string;
+  email: string;
+  sword: string;
+  swordChk: string;
+  name: string;
+  mobile: string;
+}
+
 export interface Identity {
     name: string;
     email: string;
+    sword: string;
     mobile: string;
     device: string;
+    org : string;
     uid: string;
     homelatlng: string;
 }
@@ -95,9 +116,13 @@ export interface Track {
 export interface Observation {
   record: number;
   status: string;
+  activity: string;
   temp: number;
   symptom: string;
   latlng: string;
+  notes: string;
+  bstate: number;
+  datetime: number;
 }
 
 

@@ -13,7 +13,10 @@ import { MatSort } from '@angular/material/sort';
 export class LocationTrackerComponent implements OnInit, OnDestroy {
 
     static position: Track[] = [];
-    displayedColumns = ['trackpoint', 'latlng', 'datetime', 'maplink'];
+    static recSize: number;
+    static radius: number;
+
+    displayedColumns = ['trackpoint', 'latlng', 'datetime', 'maplink', 'radius'];
     color: ThemePalette = 'warn';
     tracking = false;
     radius = 0.5;
@@ -30,14 +33,15 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
       this.data.currentTracking.subscribe(tracker => this.tracker = tracker);
+      LocationTrackerComponent.recSize = this.tracker.tracks.length;
+      LocationTrackerComponent.position = this.tracker.tracks;
       this.dataSource = new MatTableDataSource(this.tracker.tracks);
       this.dataSource.sort = this.sort;
 
       this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
-      LocationTrackerComponent.position = this.tracker.tracks;
       this.tracking = this.trackerPage.trackme;
       this.radius = this.trackerPage.trackradius;
-      console.log(this.tracking);
+      LocationTrackerComponent.radius = this.radius;
     }
 
     ngOnDestroy(): void {
@@ -48,11 +52,11 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
       this.radius = val;
       this.trackerPage.trackradius = this.radius;
       this.page.updateTrackerPage(this.trackerPage);
+      LocationTrackerComponent.radius = this.radius;
     }
 
     trackOnOff(): void {
       this.tracking = !this.tracking;
-      console.log(this.tracking);
       this.trackerPage.trackme = this.tracking;
       this.page.updateTrackerPage(this.trackerPage);
       this.trackCoords();
@@ -65,18 +69,18 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     dataRefresh() {
       this.tracker.tracks = LocationTrackerComponent.position;
       this.dataSource = new MatTableDataSource(this.tracker.tracks);
+      this.radius = LocationTrackerComponent.radius;
       this.table.renderRows();
       this.dataSource.sort = this.sort;
-      console.log(this.tracker);
       this.data.updateTracking(this.tracker);
       return;
     }
 
     processPosition(position: any) {
       const rec: Track ={trackpoint: 0, latlng: '', datetime: 0, maplink: '', radius: 0};
-      rec.trackpoint= 12;
+      rec.trackpoint = LocationTrackerComponent.recSize++;
       rec.latlng = position.coords.latitude + ',' + position.coords.longitude;
-      rec.radius = 0.5;
+      rec.radius = LocationTrackerComponent.radius;
       rec.datetime = position.timestamp;
       rec.maplink = 'H';
       LocationTrackerComponent.position.push(rec);

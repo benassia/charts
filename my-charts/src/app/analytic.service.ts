@@ -53,11 +53,11 @@ export class AnalyticService {
 
   chartDataSet: ChartDataSet = {
                                 chartData: [
-                                  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Temp' },
-                                  { data: [28, 48, 40, 19, 86, 27, 90], label: 'Status' },
-                                  { data: [2, 32, 25, 28, 74, 23, 12], label: 'Symptom', yAxisID: 'y-axis-1'}
+                                  { data: [37, 37, 37, 37, 37, 37, 37], label: 'Temp' },
+                                  { data: [5, 5, 4, 4, 4, 3, 2], label: 'Status' },
+                                  { data: [1, 1, 1, 4, 4, 5, 5], label: 'Symptom', yAxisID: 'y-axis-1'}
                                   ],
-                                chartLabels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                                chartLabels: ['1-Jan', '2-Jan', '3-Jan', '4-Jan', '5-Jan', '6-Jan', '7-Jan'],
                                 chartOptions: {
                                   responsive: true,
                                   scales: {
@@ -86,7 +86,7 @@ export class AnalyticService {
                                       type: 'line',
                                       mode: 'vertical',
                                       scaleID: 'x-axis-0',
-                                      value: 'March',
+                                      value: '2-Jan',
                                       borderColor: 'orange',
                                       borderWidth: 2,
                                       label: {

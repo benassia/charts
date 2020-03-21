@@ -10,7 +10,7 @@
         <form class="example-form">
             <mat-form-field class="example-full-width">
                 <mat-label>Email</mat-label>
-                <input matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
+                <input matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com" [(ngModel)]="unSecureIdentity.email">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                     Please enter a valid email address
@@ -21,7 +21,7 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Password</mat-label>
-                <input matInput [formControl]="passwordFormControl" placeholder="secrect code">
+                <input matInput [formControl]="passwordFormControl" placeholder="secrect code" [(ngModel)]="unSecureIdentity.sword">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
                     Please needs to be a minimum of 8 characters
@@ -39,7 +39,7 @@
         <form class="example-form">
             <mat-form-field class="example-full-width">
                 <mat-label>Name</mat-label>
-                <input matInput [formControl]="nameFormControl" placeholder="your name">
+                <input matInput [formControl]="nameFormControl" placeholder="your name" [(ngModel)]="unSecureIdentity.name">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="nameFormControl.hasError('required')">
                     Email is <strong>required</strong>
@@ -47,7 +47,7 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Email</mat-label>
-                <input matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
+                <input matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com" [(ngModel)]="unSecureIdentity.email">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                     Please enter a valid email address
@@ -58,7 +58,7 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Password</mat-label>
-                <input matInput [formControl]="passwordFormControl" placeholder="secrect code">
+                <input matInput [formControl]="passwordFormControl" placeholder="secrect code" [(ngModel)]="unSecureIdentity.sword">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
                     Please needs to be a minimum of 8 characters
@@ -69,7 +69,7 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Confirm Password</mat-label>
-                <input matInput [formControl]="passwordFormControl" placeholder="confirm secrect code">
+                <input matInput [formControl]="passwordFormControl" placeholder="confirm secrect code" [(ngModel)]="unSecureIdentity.swordChk">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
                     Please needs to be a minimum of 8 characters
@@ -77,6 +77,23 @@
                 <mat-error *ngIf="emailFormControl.hasError('required')">
                     Pass is <strong>required</strong>
                 </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Org Unit</mat-label>
+                <mat-select [(value)]="unSecureIdentity.orgunit">
+                    <mat-option value="Aegon Life">Aegon Life</mat-option>
+                    <mat-option value="Aegon AAM NL">Aegon AAM NL</mat-option>
+                    <mat-option value="Aegon AAM UK">Aegon AAM UK</mat-option>
+                    <mat-option value="Aegon AAM US">Aegon AAM US</mat-option>
+                    <mat-option value="Aegon HU">Aegon HU</mat-option>
+                    <mat-option value="Aegon NL">Aegon NL</mat-option>
+                    <mat-option value="Aegon PL">Aegon PL</mat-option>
+                    <mat-option value="Aegon RO">Aegon RO</mat-option>
+                    <mat-option value="Aegon SP">Aegon SP</mat-option>
+                    <mat-option value="Aegon TK">Aegon TK</mat-option>
+                    <mat-option value="Aegon UK">Aegon UK</mat-option>
+                    <mat-option value="Transamerica">Transamerica</mat-option>
+                </mat-select>
             </mat-form-field>
         </form>
     </mat-card>
@@ -87,7 +104,7 @@
         <form class="example-form">
             <mat-form-field class="example-full-width">
                 <mat-label>Mobile</mat-label>
-                <input type="tel" matInput [formControl]="mobileFormControl" placeholder="mobile number">
+                <input type="tel" matInput [formControl]="mobileFormControl" placeholder="mobile number" [(ngModel)]="unSecureIdentity.mobile">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="mobileFormControl.hasError('required')">
                     Mobile is <strong>required</strong>
@@ -101,4 +118,12 @@
     <button mat-button color="primary" (click)="forgotLogin() " *ngIf="pageState=='login' ">Forgot</button>
     <button mat-button color="primary" (click)="registerLogin() " *ngIf="pageState=='login' || pageState=='registerLogin'"> Register</button>
     <button mat-button color="primary" (click)="sendLoginReminder() " *ngIf="pageState=='forgotLogin'">Send Reminder</button>
+</mat-card>
+<mat-card *ngIf="showBuffer ">
+    <mat-card-content>
+        <section class="example-section">
+            <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
+            </mat-progress-bar>
+        </section>
+    </mat-card-content>
 </mat-card>

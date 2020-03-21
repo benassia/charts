@@ -1,17 +1,50 @@
-<h1 mat-dialog-title>Hi {{data.record}}</h1>
+<h1 mat-dialog-title>Observation {{data.record}}</h1>
 <div mat-dialog-content>
     <p>A Status Record</p>
     <mat-form-field>
+        <mat-label>Activity</mat-label>
+        <mat-select [(value)]="data.activity">
+            <mat-option value="At Work">At Work</mat-option>
+            <mat-option value="At Home">At Home</mat-option>
+            <mat-option value="In Quarantine">In Quarantine</mat-option>
+            <mat-option value="In Bed">In Bed</mat-option>
+            <mat-option value="See Doctor">Seen Doctor</mat-option>
+            <mat-option value="Hospitalised">Hospitalised</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
         <mat-label>Health Status</mat-label>
-        <input matInput [(ngModel)]="data.status">
+        <mat-select [(value)]="data.status">
+            <mat-option value="VeryGood">Very Good</mat-option>
+            <mat-option value="Good">Good</mat-option>
+            <mat-option value="Fine">Fine</mat-option>
+            <mat-option value="Not So Good">Not So Good</mat-option>
+            <mat-option value="Ill">Ill</mat-option>
+        </mat-select>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Temperature</mat-label>
-        <input matInput [(ngModel)]="data.temp">
+        <mat-select [(value)]="data.temp">
+            <mat-option value="2"> 36.1C[97F] &gt; - &lt; 37.2C[99F]</mat-option>
+            <mat-option value="4"> &gt; 37.2C [99F]</mat-option>
+            <mat-option value="0"> &lt; 36.1C [97F]</mat-option>
+            <mat-option value="6"> &sim; nearing 38C [100.4F]</mat-option>
+        </mat-select>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Symptoms</mat-label>
-        <input matInput [(ngModel)]="data.symptom">
+        <mat-select [(value)]="data.symptom">
+            <mat-option value="None"> None</mat-option>
+            <mat-option value="Dry Cough">Dry Cough</mat-option>
+            <mat-option value="Taste Loss">Taste Loss</mat-option>
+            <mat-option value="Sore Throat">Sore Throat</mat-option>
+            <mat-option value="Smell Loss">Smell Loss</mat-option>
+            <mat-option value="Fever">Smell Loss</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Notes</mat-label>
+        <textarea matInput [(ngModel)]="data.notes "></textarea>
     </mat-form-field>
 </div>
 <div mat-dialog-actions>

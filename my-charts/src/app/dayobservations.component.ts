@@ -20,6 +20,9 @@ export interface DialogData {
 export class DayObservationsComponent implements OnInit, OnDestroy {
 
     static ypos: string;
+    static yposTime: number;
+    static recSize: number;
+    static oCancel: boolean = false;
 
     showBuffer = false;
     color: ThemePalette = 'primary';
@@ -29,7 +32,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
 
     observer: Observer;
 
-    displayedColumns = ['record', 'status', 'temp', 'symptom', 'latlng'];
+    displayedColumns = ['record', 'activity', 'status', 'temp', 'symptom', 'notes', 'latlng', 'datetime'];
 
     dataSource = null;
 
@@ -39,6 +42,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
       this.data.currentObservation.subscribe(observer => this.observer = observer);
+      DayObservationsComponent.recSize = this.observer.observations.length + 1;
       this.dataSource = new MatTableDataSource(this.observer.observations);
       this.dataSource.sort = this.sort;
     }
@@ -52,7 +56,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openGood(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
         width: '250px',
-        data: {record: 11, status: 'At Work', temp: 37.8, symptom: 'None'}
+        data: {record: DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: '', latlng: '', bstate: 1, datetime: 0}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -62,7 +66,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19Q(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog1, {
         width: '250px',
-        data: {record: 12, status: 'Quarantined', temp: 39, symptom: 'Cough & Breath'}
+        data: {record: DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: '', latlng: '', bstate: 2, datetime: 0}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -72,7 +76,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19A(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog2, {
         width: '250px',
-        data: {record: 13, status: 'Hospitalised', temp: 90, symptom: 'Severe'}
+        data: {record: DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: '', latlng: '', bstate: 3, datetime: 0}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -82,7 +86,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19S(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog3, {
         width: '250px',
-        data: {record: 14, status: 'Recovering', temp: 37.8, symptom: 'Exhuasted'}
+        data: {record: DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: '', latlng: '', bstate: 4, datetime: 0}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -96,22 +100,29 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
 
   processPosition(position: any) {
       const pos =  position.coords.latitude + ',' + position.coords.longitude;
+      const posTime = position.timestamp;
       DayObservationsComponent.ypos = pos;
+      DayObservationsComponent.yposTime = posTime;
   }
 
   async getMyLocation(result: Observation): Promise<void> {
+    if (!DayObservationsComponent.oCancel) {
       this.showBuffer = true;
       navigator.geolocation.getCurrentPosition(
           this.processPosition
       );
       await this.delay(5000);
       result.latlng = DayObservationsComponent.ypos;
+      result.datetime = DayObservationsComponent.yposTime;
       this.observer.observations.push(result);
       this.table.renderRows();
       this.data.updateObservation(this.observer);
       this.dataSource = new MatTableDataSource(this.observer.observations);
       this.dataSource.sort = this.sort;
       this.showBuffer = false;
+    } else {
+      DayObservationsComponent.oCancel = false;
+    }
   }
 
 
@@ -128,7 +139,10 @@ export class DialogOverviewExampleDialog {
     @Inject(MAT_DIALOG_DATA) public data: Observation) {}
 
   onNoClick(): void {
+    DayObservationsComponent.oCancel = true;
+    DayObservationsComponent.recSize--;
     this.dialogRef.close();
+    
   }
 
 }
@@ -144,7 +158,10 @@ export class DialogOverviewExampleDialog1 {
     @Inject(MAT_DIALOG_DATA) public data: Observation) {}
 
   onNoClick(): void {
+    DayObservationsComponent.oCancel = true;
+    DayObservationsComponent.recSize--;
     this.dialogRef.close();
+    
   }
 
 }
@@ -160,6 +177,8 @@ export class DialogOverviewExampleDialog2 {
     @Inject(MAT_DIALOG_DATA) public data: Observation) {}
 
   onNoClick(): void {
+    DayObservationsComponent.oCancel = true;
+    DayObservationsComponent.recSize--;
     this.dialogRef.close();
   }
 
@@ -176,6 +195,8 @@ export class DialogOverviewExampleDialog3 {
     @Inject(MAT_DIALOG_DATA) public data: Observation) {}
 
   onNoClick(): void {
+    DayObservationsComponent.oCancel = true;
+    DayObservationsComponent.recSize--;
     this.dialogRef.close();
   }
 
