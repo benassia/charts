@@ -11,7 +11,10 @@
     <mat-drawer #drawer [mode]="'side'">
         <mat-list>
             <mat-list-item (click)="openYourDetails()" (click)="drawer.toggle()"> Your Details </mat-list-item>
-            <mat-list-item (click)="openLocationTracker()" (click)="drawer.toggle()"> Location Tracker </mat-list-item>
+            <mat-list-item (click)="openLocationTracker()" (click)="drawer.toggle()">Location Tracker&nbsp;
+                <mat-icon *ngIf="trackerPage.trackme" class="active-icon icon-display">wifi_tethering</mat-icon>
+                <mat-icon *ngIf="!trackerPage.trackme" class="icon-display">portable_wifi_off</mat-icon>
+            </mat-list-item>
             <mat-list-item (click)="openDayObservations()" (click)="drawer.toggle()"> Day Observations</mat-list-item>
             <mat-list-item (click)="openYourSummary()" (click)="drawer.toggle()"> Your Summary</mat-list-item>
             <mat-list-item (click)="openAegonSummary()" (click)="drawer.toggle()"> Aegon Summary</mat-list-item>

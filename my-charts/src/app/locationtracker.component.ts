@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
-import {ThemePalette} from '@angular/material/core';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ThemePalette } from '@angular/material/core';
 import { DataService, Tracker } from './data.service';
 import { PageService, TrackerPage } from './page.service';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+
 @Component({
   selector: 'locationtracker',
   templateUrl: './locationtracker.component.html',
@@ -12,7 +12,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
 
     displayedColumns = ['trackpoint', 'latlng', 'datetime', 'maplink'];
     color: ThemePalette = 'warn';
-    checked = false;
+    tracking = true;
     radius = 0.5;
     //trackStatus = false;
 
@@ -24,7 +24,8 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
       this.data.currentTracking.subscribe(tracker => this.tracker = tracker);
       this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
-      this.checked = this.trackerPage.trackme;
+      this.tracking = this.trackerPage.trackme;
+      console.log(this.tracking);
     }
 
     ngOnDestroy(): void {
@@ -36,8 +37,9 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     trackOnOff(): void {
-      this.checked = !this.checked;
-      this.trackerPage.trackme = this.checked;
+      this.tracking = !this.tracking;
+      console.log(this.tracking);
+      this.trackerPage.trackme = this.tracking;
       this.page.updateTrackerPage(this.trackerPage);
       this.trackCoords();
     }
@@ -51,7 +53,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     async trackCoords(): Promise<void> {
-      while ( this.checked ) {
+      while ( this.tracking ) {
 
       navigator.geolocation.getCurrentPosition(
         this.processPosition

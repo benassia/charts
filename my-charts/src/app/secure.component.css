@@ -48,3 +48,12 @@ mat-drawer {
 .mat-drawer-backdrop {
     position: fixed !important;
 }
+
+.active-icon {
+    color: green;
+}
+
+.icon-display {
+    transform: scale(0.8);
+    margin-left: 2px;
+}

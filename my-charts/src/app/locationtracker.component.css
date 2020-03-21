@@ -37,3 +37,16 @@
 table {
     width: 100%;
 }
+
+.icon-display {
+    transform: scale(1.5);
+    margin-right: 8px;
+}
+
+.subrow {
+    align-items: stretch
+}
+
+.active-icon {
+    color: green;
+}
