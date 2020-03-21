@@ -29,6 +29,7 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
     }
+    
     async delay(ms: number) {
         return new Promise( resolve => setTimeout(resolve, ms) );
     }

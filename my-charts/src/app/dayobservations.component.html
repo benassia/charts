@@ -10,32 +10,46 @@
             <button mat-fab color="warn" (click)="openC19S()">C19-Ok</button>
         </div>
     </mat-card>
+    <mat-card *ngIf="showBuffer ">
+        <mat-card-content>
+            <section class="example-section">
+                <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
+                </mat-progress-bar>
+            </section>
+        </mat-card-content>
+    </mat-card>
     <mat-card>
         <div class="example-container mat-elevation-z8">
-            <table mat-table [dataSource]="observer.observations">
+            <table mat-table [dataSource]="dataSource" matSort>
 
                 <!-- Position Column -->
                 <ng-container matColumnDef="record">
-                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
                     <td mat-cell *matCellDef="let element"> {{element.record}} </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
                     <td mat-cell *matCellDef="let element"> {{element.status}} </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="temp">
-                    <th mat-header-cell *matHeaderCellDef> Temp </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Temp </th>
                     <td mat-cell *matCellDef="let element"> {{element.temp}} </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="symptom">
-                    <th mat-header-cell *matHeaderCellDef> Symptom </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Symptom </th>
                     <td mat-cell *matCellDef="let element"> {{element.symptom}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="latlng">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Latlng </th>
+                    <td mat-cell *matCellDef="let element"> {{element.latlng}} </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

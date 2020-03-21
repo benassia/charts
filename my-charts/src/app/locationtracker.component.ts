@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { ThemePalette } from '@angular/material/core';
 import { DataService, Tracker, Track } from './data.service';
 import { PageService, TrackerPage } from './page.service';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'locationtracker',
@@ -21,11 +22,17 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     tracker: Tracker;
     trackerPage: TrackerPage;
 
+    dataSource = null;
+
     constructor(private data: DataService, private page: PageService) { }
     @ViewChild(MatTable) table: MatTable<any>;
+    @ViewChild(MatSort, {static: true}) sort: MatSort;
 
     ngOnInit(): void {
       this.data.currentTracking.subscribe(tracker => this.tracker = tracker);
+      this.dataSource = new MatTableDataSource(this.tracker.tracks);
+      this.dataSource.sort = this.sort;
+
       this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
       LocationTrackerComponent.position = this.tracker.tracks;
       this.tracking = this.trackerPage.trackme;
@@ -57,9 +64,11 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
 
     dataRefresh() {
       this.tracker.tracks = LocationTrackerComponent.position;
+      this.dataSource = new MatTableDataSource(this.tracker.tracks);
+      this.table.renderRows();
+      this.dataSource.sort = this.sort;
       console.log(this.tracker);
       this.data.updateTracking(this.tracker);
-      this.table.renderRows();
       return;
     }
 

@@ -24,29 +24,29 @@
 
     <mat-card>
         <div class="example-container mat-elevation-z8">
-            <table mat-table [dataSource]="tracker.tracks">
+            <table mat-table [dataSource]="dataSource" matSort>
 
                 <!-- Position Column -->
                 <ng-container matColumnDef="trackpoint">
-                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
                     <td mat-cell *matCellDef="let element"> {{element.trackpoint}} </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="latlng">
-                    <th mat-header-cell *matHeaderCellDef> Lat/lng </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Lat/lng </th>
                     <td mat-cell *matCellDef="let element"> {{element.latlng}} </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="datetime">
-                    <th mat-header-cell *matHeaderCellDef> Date/Time </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date/Time </th>
                     <td mat-cell *matCellDef="let element"> {{element.datetime}} </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="maplink">
-                    <th mat-header-cell *matHeaderCellDef> MapLink </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> MapLink </th>
                     <td mat-cell *matCellDef="let element"> {{element.maplink}} </td>
                 </ng-container>
 

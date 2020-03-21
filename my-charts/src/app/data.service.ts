@@ -8,22 +8,23 @@ import { BehaviorSubject } from 'rxjs';
 export class DataService {
 
   position: Track[] = [];
+  observation: Observation[] = [];
 
   session: Session = {loginStatus: 'false', device: '', latlng: ''};
   tracker: Tracker = {tracks: this.position};
 
 
   observer: Observer = {observations: [
-                                      {record: 1, status: 'At Work', temp: 37.8, symptom: 'Good', org: '', latlng: ''},
-                                      {record: 2, status: 'At Home', temp: 37.8, symptom: 'Not Well', org: '', latlng: ''},
-                                      {record: 3, status: 'Quarantined', temp: 37.8, symptom: 'Cough', org: '', latlng: ''},
-                                      {record: 4, status: 'Hospitalised', temp: 39, symptom: 'Hard to Breathe', org: '', latlng: ''},
-                                      {record: 5, status: 'Hospitalised', temp: 39, symptom: 'Severe', org: '', latlng: ''},
-                                      {record: 6, status: 'Hospitalised', temp: 40, symptom: 'Severe', org: '', latlng: ''},
-                                      {record: 7, status: 'Hospitalised', temp: 40, symptom: 'Severe', org: '', latlng: ''},
-                                      {record: 8, status: 'Quarantined', temp: 37.8, symptom: 'Recovery', org: '', latlng: ''},
-                                      {record: 9, status: 'At Home', temp: 37.8, symptom: 'Well', org: '', latlng: ''},
-                                      {record: 10, status: 'At Work', temp: 37.8, symptom: 'Good', org: '', latlng: ''}
+                                      {record: 1, status: 'At Work', temp: 37.8, symptom: 'Good', latlng: ''},
+                                      {record: 2, status: 'At Home', temp: 37.8, symptom: 'Not Well', latlng: ''},
+                                      {record: 3, status: 'Quarantined', temp: 37.8, symptom: 'Cough', latlng: ''},
+                                      {record: 4, status: 'Hospitalised', temp: 39, symptom: 'Hard to Breathe', latlng: ''},
+                                      {record: 5, status: 'Hospitalised', temp: 39, symptom: 'Severe', latlng: ''},
+                                      {record: 6, status: 'Hospitalised', temp: 40, symptom: 'Severe', latlng: ''},
+                                      {record: 7, status: 'Hospitalised', temp: 40, symptom: 'Severe', latlng: ''},
+                                      {record: 8, status: 'Quarantined', temp: 37.8, symptom: 'Recovery', latlng: ''},
+                                      {record: 9, status: 'At Home', temp: 37.8, symptom: 'Well', latlng: ''},
+                                      {record: 10, status: 'At Work', temp: 37.8, symptom: 'Good', latlng: ''}
                                       ]
                                     };
 
@@ -96,7 +97,6 @@ export interface Observation {
   status: string;
   temp: number;
   symptom: string;
-  org: string;
   latlng: string;
 }
 

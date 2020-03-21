@@ -1,6 +1,10 @@
 import { Component, Inject, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DataService, Observer, Observation } from './data.service';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { ThemePalette } from '@angular/material/core';
+import { ProgressBarMode } from '@angular/material/progress-bar';
+import { MatSort } from '@angular/material/sort';
 
 
 export interface DialogData {
@@ -15,17 +19,28 @@ export interface DialogData {
 })
 export class DayObservationsComponent implements OnInit, OnDestroy {
 
+    static ypos: string;
+
+    showBuffer = false;
+    color: ThemePalette = 'primary';
+    mode: ProgressBarMode = 'buffer';
+    value = 60;
+    bufferValue = 95;
+
     observer: Observer;
 
-    displayedColumns = ['record', 'status', 'temp', 'symptom'];
+    displayedColumns = ['record', 'status', 'temp', 'symptom', 'latlng'];
 
-    animal: string;
-    name: string;
+    dataSource = null;
 
     constructor(public dialog: MatDialog, private data: DataService) {}
+    @ViewChild(MatTable) table: MatTable<any>;
+    @ViewChild(MatSort, {static: true}) sort: MatSort;
 
     ngOnInit(): void {
       this.data.currentObservation.subscribe(observer => this.observer = observer);
+      this.dataSource = new MatTableDataSource(this.observer.observations);
+      this.dataSource.sort = this.sort;
     }
 
     ngOnDestroy(): void {
@@ -41,31 +56,27 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        alert(JSON.stringify(result));
-        console.log(result);
+        this.getMyLocation(result);
       });
     }
-    openC19Q():void{
+    openC19Q(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog1, {
         width: '250px',
         data: {record: 12, status: 'Quarantined', temp: 39, symptom: 'Cough & Breath'}
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        console.log(result);
+        this.getMyLocation(result);
       });
     }
-    openC19A():void{
+    openC19A(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog2, {
         width: '250px',
         data: {record: 13, status: 'Hospitalised', temp: 90, symptom: 'Severe'}
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        console.log(result);
+        this.getMyLocation(result);
       });
     }
     openC19S(): void {
@@ -73,12 +84,37 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
         width: '250px',
         data: {record: 14, status: 'Recovering', temp: 37.8, symptom: 'Exhuasted'}
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        console.log(result);
+        this.getMyLocation(result);
       });
     }
+
+    async delay(ms: number) {
+      return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  processPosition(position: any) {
+      const pos =  position.coords.latitude + ',' + position.coords.longitude;
+      DayObservationsComponent.ypos = pos;
+  }
+
+  async getMyLocation(result: Observation): Promise<void> {
+      this.showBuffer = true;
+      navigator.geolocation.getCurrentPosition(
+          this.processPosition
+      );
+      await this.delay(5000);
+      result.latlng = DayObservationsComponent.ypos;
+      this.observer.observations.push(result);
+      this.table.renderRows();
+      this.data.updateObservation(this.observer);
+      this.dataSource = new MatTableDataSource(this.observer.observations);
+      this.dataSource.sort = this.sort;
+      this.showBuffer = false;
+  }
+
+
 }
 
 @Component({
