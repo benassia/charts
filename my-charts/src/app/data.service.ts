@@ -7,20 +7,12 @@ import { BehaviorSubject } from 'rxjs';
 
 export class DataService {
 
+  position: Track[] = [];
+
   session: Session = {loginStatus: 'false', device: '', latlng: ''};
-  tracker: Tracker = {tracks: [
-                              {trackpoint: 1, latlng: 'Hydrogen', datetime: 1.0079, maplink: 'H', radius: 0.5},
-                              {trackpoint: 2, latlng: 'Helium', datetime: 4.0026, maplink: 'He', radius: 0.5},
-                              {trackpoint: 3, latlng: 'Lithium', datetime: 6.941, maplink: 'Li', radius: 0.5},
-                              {trackpoint: 4, latlng: 'Beryllium', datetime: 9.0122, maplink: 'Be', radius: 0.5},
-                              {trackpoint: 5, latlng: 'Boron', datetime: 10.811, maplink: 'B', radius: 0.5},
-                              {trackpoint: 6, latlng: 'Carbon', datetime: 12.0107, maplink: 'C', radius: 0.5},
-                              {trackpoint: 7, latlng: 'Nitrogen', datetime: 14.0067, maplink: 'N', radius: 0.5},
-                              {trackpoint: 8, latlng: 'Oxygen', datetime: 15.9994, maplink: 'O', radius: 0.5},
-                              {trackpoint: 9, latlng: 'Fluorine', datetime: 18.9984, maplink: 'F', radius: 0.5},
-                              {trackpoint: 10, latlng: 'Neon', datetime: 20.1797, maplink: 'Ne', radius: 0.5}
-                              ]
-                            };
+  tracker: Tracker = {tracks: this.position};
+
+
   observer: Observer = {observations: [
                                       {record: 1, status: 'At Work', temp: 37.8, symptom: 'Good', org: '', latlng: ''},
                                       {record: 2, status: 'At Home', temp: 37.8, symptom: 'Not Well', org: '', latlng: ''},
@@ -35,7 +27,7 @@ export class DataService {
                                       ]
                                     };
 
-  indentity: Identity = {name: '', email: 'you@you.com', mobile: '', device: '', uid: ''};
+  indentity: Identity = {name: '', email: 'you@you.com', mobile: '', device: '', uid: '', homelatlng: 'click icon to get your location'};
 
   private identityHandler = new BehaviorSubject(this.indentity);
   currentIdentity = this.identityHandler.asObservable();
@@ -61,6 +53,7 @@ export class DataService {
   }
 
   updateTracking(tracker: Tracker) {
+    console.log('tracking updated');
     this.trackerHandler.next(tracker);
   }
 
@@ -82,6 +75,7 @@ export interface Identity {
     mobile: string;
     device: string;
     uid: string;
+    homelatlng: string;
 }
 
 export interface Tracker {

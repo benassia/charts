@@ -10,6 +10,9 @@ import { DataService, Identity } from './data.service';
 	styleUrls: ['./yourdetails.component.css']
 })
 export class YourDetailsComponent implements OnInit, OnDestroy {
+    
+    static ypos: string;
+
     showBuffer = false;
     color: ThemePalette = 'primary';
     mode: ProgressBarMode = 'buffer';
@@ -23,9 +26,27 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.data.currentIdentity.subscribe(identity => this.identity = identity);
     }
-    
+
     ngOnDestroy(): void {
-        
+    }
+    async delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
+    }
+
+    processPosition(position: any) {
+        const pos =  position.coords.latitude + ',' + position.coords.longitude;
+        YourDetailsComponent.ypos = pos;
+    }
+
+    async getMyLocation(): Promise<void> {
+        this.showBuffer = true;
+        navigator.geolocation.getCurrentPosition(
+            this.processPosition
+        );
+        await this.delay(5000);
+        this.showBuffer = false;
+        this.identity.homelatlng = YourDetailsComponent.ypos;
+        this.data.updateIdentity(this.identity);
     }
 
     deleteAllMyData(): void
