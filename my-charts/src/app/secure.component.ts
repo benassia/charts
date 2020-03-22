@@ -7,6 +7,7 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import * as luxon from 'luxon';
 import 'chartjs-adapter-luxon';
 import { PageService, TrackerPage } from './page.service';
+import { Router } from '@angular/router';
 
 //import '../../../../ng2-charts/dist/ng2-charts/chartjs-chart-financial/chartjs-chart-financial';
 
@@ -18,7 +19,7 @@ import { PageService, TrackerPage } from './page.service';
 export class SecureAppComponent implements OnInit{
   trackerPage: TrackerPage;
 
-  constructor(private data: DataService, private page: PageService) { }
+  constructor(private data: DataService, private page: PageService, private router: Router) { }
 
   title = 'my-charts';
   showLineChart = true;
@@ -54,6 +55,7 @@ export class SecureAppComponent implements OnInit{
   logout(): void {
     this.session.loginStatus = 'false';
     this.data.updateSession(this.session);
+    this.router.navigate(['/unsecure']);
   }
 
   public openYourDetails(): void {

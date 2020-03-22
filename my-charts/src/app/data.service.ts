@@ -47,6 +47,7 @@ export class DataService {
   }
 
   updateSession(session: Session) {
+    console.log(session);
     this.sessionHandler.next(session);
   }
 

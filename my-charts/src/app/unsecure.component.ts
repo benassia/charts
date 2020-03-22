@@ -4,6 +4,7 @@ import { DataService, Session, UnSecureIdentity, Device } from './data.service';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'unsecure-root',
@@ -27,11 +28,12 @@ export class UnSecureAppComponent  implements OnInit {
   value = 60;
   bufferValue = 95;
 
-  constructor(private data: DataService, private deviceService: DeviceDetectorService) { }
+  constructor(private data: DataService, private deviceService: DeviceDetectorService, private router: Router) { }
 
   ngOnInit(): void {
     this.data.currentSession.subscribe(session => this.session = session);
     this.epicFunction();
+    console.log('unsecure');
   }
 
   epicFunction() {
@@ -71,6 +73,9 @@ export class UnSecureAppComponent  implements OnInit {
       //this.session.loginStatus = 'true';
       this.data.updateSession(this.session);
       this.showBuffer = false;
+      if ( this.session.loginStatus === 'true' ) {
+        this.router.navigate(['/secure']);
+      }
     }
     this.pageState = 'login';
   }

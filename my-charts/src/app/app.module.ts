@@ -6,7 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgxAutoScrollModule } from 'ngx-auto-scroll';
 import { Routes, RouterModule } from '@angular/router';
-
+import { AuthGuard } from './auth.guard';
 import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -186,6 +186,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
   ],
   providers: [
+    AuthGuard,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ],
   bootstrap: [AppComponent]
