@@ -6,12 +6,43 @@
 
         <div class="example-form">
             <mat-form-field class="example-full-width">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="your name" [(ngModel)]="identity.name">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label>Identity</mat-label>
-                <input matInput disabled placeholder="your email address" [value]="identity.email">
+                <input matInput disabled placeholder="your email address" [(ngModel)]="identity.email">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="secrect code" [(ngModel)]="identity.sword">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Mobile</mat-label>
+                <input type="tel" matInput placeholder="mobile number" [(ngModel)]="identity.mobile">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Org Unit</mat-label>
+                <mat-select [(value)]="identity.org">
+                    <mat-option value="Aegon Life">Aegon Life</mat-option>
+                    <mat-option value="Aegon AAM NL">Aegon AAM NL</mat-option>
+                    <mat-option value="Aegon AAM UK">Aegon AAM UK</mat-option>
+                    <mat-option value="Aegon AAM US">Aegon AAM US</mat-option>
+                    <mat-option value="Aegon HU">Aegon HU</mat-option>
+                    <mat-option value="Aegon NL">Aegon NL</mat-option>
+                    <mat-option value="Aegon PL">Aegon PL</mat-option>
+                    <mat-option value="Aegon RO">Aegon RO</mat-option>
+                    <mat-option value="Aegon SP">Aegon SP</mat-option>
+                    <mat-option value="Aegon TK">Aegon TK</mat-option>
+                    <mat-option value="Aegon UK">Aegon UK</mat-option>
+                    <mat-option value="Transamerica">Transamerica</mat-option>
+                </mat-select>
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Home Location</mat-label>
-                <input matInput disabled placeholder="click icon to get your location" [value]="identity.homelatlng">
+                <input matInput disabled placeholder="click icon to get your location" [(ngModel)]="identity.homelatlng">
                 <mat-icon matSuffix (click)="getMyLocation()">person_pin_circle</mat-icon>
             </mat-form-field>
             <br> <button mat-flat-button color="warn" (click)="deleteAllMyData()">Delete All My Data</button>

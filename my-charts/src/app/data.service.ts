@@ -16,7 +16,7 @@ export class DataService {
 
   observer: Observer = {observations: this.observation };
 
-  indentity: Identity = {name: '', email: 'you@you.com', sword: '', mobile: '', device: '',org: '', uid: '', homelatlng: 'click icon to get your location'};
+  indentity: Identity = {name: '', email: 'you@you.com', sword: '', mobile: '', device: null,org: '', uid: '', homelatlng: 'click icon to get your location'};
 
   private identityHandler = new BehaviorSubject(this.indentity);
   currentIdentity = this.identityHandler.asObservable();
@@ -52,18 +52,21 @@ export class DataService {
 
   async registerUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
     console.log('registering ..');
+    console.log(identity);
     await this.delay(5000);
     return Promise.resolve(true);
   }
 
   async loginUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
     console.log('logging in ..');
+    console.log(identity);
     await this.delay(5000);
     return Promise.resolve(true);
   }
 
   async sendLoginIdentity(identity: UnSecureIdentity): Promise <boolean> {
     console.log('sending reminder ..');
+    console.log(identity);
     await this.delay(5000);
     return Promise.resolve(true);
   }
@@ -83,6 +86,7 @@ export interface Session {
 export interface UnSecureIdentity {
   orgunit: string;
   email: string;
+  device: Device;
   sword: string;
   swordChk: string;
   name: string;
@@ -94,10 +98,17 @@ export interface Identity {
     email: string;
     sword: string;
     mobile: string;
-    device: string;
-    org : string;
+    device: Device;
+    org: string;
     uid: string;
     homelatlng: string;
+}
+
+export interface Device {
+  isMobile: boolean;
+  isDesktop: boolean;
+  isTablet: boolean;
+  info: any;
 }
 
 export interface Tracker {

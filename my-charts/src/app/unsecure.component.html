@@ -21,8 +21,10 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Password</mat-label>
-                <input matInput [formControl]="passwordFormControl" placeholder="secrect code" [(ngModel)]="unSecureIdentity.sword">
-                <mat-icon matSuffix>mode_edit</mat-icon>
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="secrect code" [(ngModel)]="unSecureIdentity.sword">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                 <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
                     Please needs to be a minimum of 8 characters
                 </mat-error>
@@ -58,8 +60,10 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Password</mat-label>
-                <input matInput [formControl]="passwordFormControl" placeholder="secrect code" [(ngModel)]="unSecureIdentity.sword">
-                <mat-icon matSuffix>mode_edit</mat-icon>
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="secrect code" [(ngModel)]="unSecureIdentity.sword">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                 <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
                     Please needs to be a minimum of 8 characters
                 </mat-error>
@@ -69,8 +73,10 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Confirm Password</mat-label>
-                <input matInput [formControl]="passwordFormControl" placeholder="confirm secrect code" [(ngModel)]="unSecureIdentity.swordChk">
-                <mat-icon matSuffix>mode_edit</mat-icon>
+                <input matInput [type]="chide ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="confirm secrect code" [(ngModel)]="unSecureIdentity.swordChk">
+                <button mat-icon-button matSuffix (click)="chide = !chide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="chide">
+                    <mat-icon>{{chide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                 <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
                     Please needs to be a minimum of 8 characters
                 </mat-error>

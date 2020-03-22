@@ -1,5 +1,6 @@
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -130,6 +131,7 @@ const routes: Routes = [
     ScatterChartComponent
   ],
   imports: [
+    DeviceDetectorModule.forRoot(),
     NgxAutoScrollModule,
     ReactiveFormsModule,
     FormsModule,
