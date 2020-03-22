@@ -16,8 +16,10 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Password</mat-label>
-                <input matInput placeholder="secrect code" [(ngModel)]="identity.sword">
-                <mat-icon matSuffix>mode_edit</mat-icon>
+                <input matInput [type]="hide ? 'password' : 'text'" placeholder="secrect code" [(ngModel)]="identity.sword">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Mobile</mat-label>

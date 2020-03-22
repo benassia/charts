@@ -19,6 +19,8 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
     value = 60;
     bufferValue = 95;
 
+    hide = false;
+
     identity: Identity;
 
     constructor(private data: DataService) { }
