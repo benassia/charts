@@ -47,7 +47,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import {ClipboardModule} from '@angular/cdk/clipboard';
 //import {DragDropModule} from '@angular/cdk/drag-drop';
 //import {PortalModule} from '@angular/cdk/portal';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+//import {ScrollingModule} from '@angular/cdk/scrolling';
 //import {CdkStepperModule} from '@angular/cdk/stepper';
 //import {CdkTableModule} from '@angular/cdk/table';
 //import {CdkTreeModule} from '@angular/cdk/tree';
@@ -182,7 +182,7 @@ const routes: Routes = [
     MatTooltipModule,
     //MatTreeModule,
     //PortalModule,
-    ScrollingModule,
+    //ScrollingModule,
     RouterModule.forRoot(routes),
   ],
   providers: [
