@@ -21,8 +21,9 @@ export class AuthGuard implements CanActivate, OnInit {
 		state: RouterStateSnapshot): Observable<boolean> {
 		if ( this.session.loginStatus === 'false') {
 			this.router.navigate[('/unsecure')];
+			return of(false);
 		}
-		return;
+		return of(true);
 		
 	}
 }
