@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject,Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SESSION_STORAGE, StorageService, LOCAL_STORAGE } from 'ngx-webstorage-service';
+
 
 @Injectable({
 	providedIn: 'root'
@@ -31,23 +33,41 @@ export class DataService {
   private sessionHandler = new BehaviorSubject(this.session);
   currentSession = this.sessionHandler.asObservable();
 
-  constructor() { }
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
+    
+    this.session = this.storage.get( KVLABELS.SESSION );
+    this.sessionHandler.next(this.session);
+    console.log('Constructor Session :: ' + JSON.stringify(this.session) );
+
+    this.tracker = this.storage.get( KVLABELS.TRACKER );
+    this.trackerHandler.next(this.tracker);
+
+    this.observer = this.storage.get( KVLABELS.OBSERVER );
+    this.observerHandler.next(this.observer);
+
+    this.indentity = this.storage.get( KVLABELS.IDENTITY );
+    this.identityHandler.next(this.indentity);
+  }
 
   updateIdentity(indentity: Identity) {
+    this.storage.set( KVLABELS.IDENTITY, indentity);
     this.identityHandler.next(indentity);
   }
 
   updateObservation(observer: Observer) {
+    this.storage.set( KVLABELS.OBSERVER, observer);
     this.observerHandler.next(observer);
   }
 
   updateTracking(tracker: Tracker) {
+    this.storage.set( KVLABELS.TRACKER, tracker);
     console.log('tracking updated');
     this.trackerHandler.next(tracker);
   }
 
   updateSession(session: Session) {
-    console.log(session);
+    console.log('Saving Session :: ' + JSON.stringify(this.session) );
+    this.storage.set( KVLABELS.SESSION, session);
     this.sessionHandler.next(session);
   }
 
@@ -78,6 +98,14 @@ export class DataService {
 
 }
 
+export class KVLABELS{
+  static IDENTITY: string = ')(*$IH£JJDJFBWOHF£UR)';
+  static OBSERVER: string = '@)(£$&$JEIFWJWJ($$U£@@£B';
+  static SESSION: string = ')(*£$HDJH(HUHEFWHF)££';
+  static TRACKER: string = 'H@&*HHHEI)£*&*£(@*';
+  static TRACKERPAGE: string = 'H@&*HHHEI)£*&*£(@*';
+
+}
 
 export interface Session {
   loginStatus: string;

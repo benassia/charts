@@ -5,6 +5,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgxAutoScrollModule } from 'ngx-auto-scroll';
+import { StorageServiceModule } from 'ngx-webstorage-service';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { ChartsModule } from 'ng2-charts';
@@ -133,6 +134,7 @@ const routes: Routes = [
   imports: [
     DeviceDetectorModule.forRoot(),
     NgxAutoScrollModule,
+    StorageServiceModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,

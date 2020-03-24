@@ -15,7 +15,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentSession.subscribe(session => this.session = session);
-    this.router.navigate(['/unsecure']);
+    console.log ("This is the session app.componnet " + JSON.stringify(this.session));
+    if ( this.session.loginStatus === 'true') {
+      this.router.navigate(['/secure']);
+    } else {
+      this.router.navigate(['/unsecure']);
+    }
   }
 
 }

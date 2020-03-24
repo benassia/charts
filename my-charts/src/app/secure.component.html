@@ -26,17 +26,17 @@
         </mat-list>
     </mat-drawer>
     <mat-drawer-content>
-        <yourdetails *ngIf="showYourDetails">
+        <yourdetails *ngIf="showYourDetails" ngx-auto-scroll>
         </yourdetails>
-        <locationtracker *ngIf="showLocationTracker">
+        <locationtracker *ngIf="showLocationTracker" ngx-auto-scroll>
         </locationtracker>
-        <dayobservations *ngIf="showDayObservations">
+        <dayobservations *ngIf="showDayObservations" ngx-auto-scroll>
         </dayobservations>
-        <yoursummary *ngIf="showYourSummary">
+        <yoursummary *ngIf="showYourSummary" ngx-auto-scroll>
         </yoursummary>
-        <aegonsummary *ngIf="showAegonSummary">
+        <aegonsummary *ngIf="showAegonSummary" ngx-auto-scroll>
         </aegonsummary>
-        <worldcomparator *ngIf="showWorldComparator">
+        <worldcomparator *ngIf="showWorldComparator" ngx-auto-scroll>
         </worldcomparator>
         <home *ngIf="showHome">
         </home>

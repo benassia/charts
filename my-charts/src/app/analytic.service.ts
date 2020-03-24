@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject,Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SESSION_STORAGE, StorageService, LOCAL_STORAGE } from 'ngx-webstorage-service';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label, Color } from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
@@ -139,7 +140,7 @@ export class AnalyticService {
   currentAegonDataSet = this.aegonDataSetHandler.asObservable();
 
 
-  constructor() { }
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) { }
 
   updateChartDataSet(chartDataSet: ChartDataSet) {
     this.chartDataSetHandler.next(chartDataSet);

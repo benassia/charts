@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import {ThemePalette} from '@angular/material/core'; 
 import {ProgressBarMode} from '@angular/material/progress-bar';
 import { DataService, Identity } from './data.service';

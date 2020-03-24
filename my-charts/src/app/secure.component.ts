@@ -8,6 +8,7 @@ import * as luxon from 'luxon';
 import 'chartjs-adapter-luxon';
 import { PageService, TrackerPage } from './page.service';
 import { Router } from '@angular/router';
+import { NgxAutoScroll } from 'ngx-auto-scroll';
 
 //import '../../../../ng2-charts/dist/ng2-charts/chartjs-chart-financial/chartjs-chart-financial';
 
@@ -18,7 +19,8 @@ import { Router } from '@angular/router';
 })
 export class SecureAppComponent implements OnInit{
   trackerPage: TrackerPage;
-
+  @ViewChild(NgxAutoScroll, {static: true}) ngxAutoScroll: NgxAutoScroll;
+  
   constructor(private data: DataService, private page: PageService, private router: Router) { }
 
   title = 'my-charts';
