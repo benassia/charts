@@ -5,7 +5,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { MatSort } from '@angular/material/sort';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface DialogData {
   animal: string;
@@ -36,7 +36,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
 
     dataSource = null;
 
-    constructor(public dialog: MatDialog, private data: DataService) {}
+    constructor(private _snackBar: MatSnackBar, public dialog: MatDialog, private data: DataService) {}
     @ViewChild(MatTable) table: MatTable<any>;
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -120,12 +120,17 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
       this.data.updateObservation(this.observer);
       this.dataSource = new MatTableDataSource(this.observer.observations);
       this.dataSource.sort = this.sort;
+      this.openSnackBar("Observation","Has Been Recorded")
       this.showBuffer = false;
     } else {
       DayObservationsComponent.oCancel = false;
     }
   }
-
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
 }
 

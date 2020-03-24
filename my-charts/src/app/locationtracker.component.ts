@@ -4,6 +4,7 @@ import { DataService, Tracker, Track } from './data.service';
 import { PageService, TrackerPage } from './page.service';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'locationtracker',
@@ -27,7 +28,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
 
     dataSource = null;
 
-    constructor(private data: DataService, private page: PageService) { 
+    constructor(private _snackBar: MatSnackBar, private data: DataService, private page: PageService) { 
 
     }
     @ViewChild(MatTable) table: MatTable<any>;
@@ -94,6 +95,12 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     async trackCoords(): Promise<void> {
+      if (this.tracking) { 
+        this.openSnackBar("Tracking","Is Now ON!"); 
+      } else { 
+        this.openSnackBar("Tracking","Is Now OFF!"); 
+      }
+
       while ( this.tracking ) {
         navigator.geolocation.getCurrentPosition(
           this.processPosition
@@ -101,6 +108,12 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
         this.dataRefresh();
         await this.delay(5000);
       }
+    }
+
+    openSnackBar(message: string, action: string) {
+      this._snackBar.open(message, action, {
+        duration: 2000,
+      });
     }
 
 }

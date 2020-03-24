@@ -10,7 +10,7 @@
         <form class="example-form">
             <mat-form-field class="example-full-width">
                 <mat-label>Email</mat-label>
-                <input matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com" [(ngModel)]="unSecureIdentity.email">
+                <input matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com" [(ngModel)]="unSecureLogIdentity.email">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                     Please enter a valid email address
@@ -21,14 +21,14 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="secrect code" [(ngModel)]="unSecureIdentity.sword">
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="secrect code" [(ngModel)]="unSecureLogIdentity.sword">
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
                     Please needs to be a minimum of 8 characters
                 </mat-error>
-                <mat-error *ngIf="emailFormControl.hasError('required')">
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
                     Pass is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
@@ -41,7 +41,7 @@
         <form class="example-form">
             <mat-form-field class="example-full-width">
                 <mat-label>Name</mat-label>
-                <input matInput [formControl]="nameFormControl" placeholder="your name" [(ngModel)]="unSecureIdentity.name">
+                <input matInput [formControl]="nameFormControl" placeholder="your name" [(ngModel)]="unSecureRegIdentity.name">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="nameFormControl.hasError('required')">
                     Email is <strong>required</strong>
@@ -49,7 +49,7 @@
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Email</mat-label>
-                <input matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com" [(ngModel)]="unSecureIdentity.email">
+                <input matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com" [(ngModel)]="unSecureRegIdentity.email">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                     Please enter a valid email address
@@ -59,34 +59,42 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="example-full-width">
+                <mat-label>Mobile</mat-label>
+                <input matInput [formControl]="mobileFormControl" placeholder="mobile number" [(ngModel)]="unSecureRegIdentity.mobile">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="mobileFormControl.hasError('required')">
+                    Mobile is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label>Password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="secrect code" [(ngModel)]="unSecureIdentity.sword">
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="secrect code" [(ngModel)]="unSecureRegIdentity.sword">
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
                     Please needs to be a minimum of 8 characters
                 </mat-error>
-                <mat-error *ngIf="emailFormControl.hasError('required')">
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
                     Pass is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Confirm Password</mat-label>
-                <input matInput [type]="chide ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="confirm secrect code" [(ngModel)]="unSecureIdentity.swordChk">
+                <input matInput [type]="chide ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="confirm secrect code" [(ngModel)]="unSecureRegIdentity.swordChk">
                 <button mat-icon-button matSuffix (click)="chide = !chide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="chide">
                     <mat-icon>{{chide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 <mat-error *ngIf="passwordFormControl.hasError('minLength') && !passwordFormControl.hasError('required')">
                     Please needs to be a minimum of 8 characters
                 </mat-error>
-                <mat-error *ngIf="emailFormControl.hasError('required')">
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
                     Pass is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Org Unit</mat-label>
-                <mat-select [(value)]="unSecureIdentity.orgunit">
+                <mat-select [(value)]="unSecureRegIdentity.orgunit">
                     <mat-option value="Aegon Life">Aegon Life</mat-option>
                     <mat-option value="Aegon AAM NL">Aegon AAM NL</mat-option>
                     <mat-option value="Aegon AAM UK">Aegon AAM UK</mat-option>
@@ -110,7 +118,7 @@
         <form class="example-form">
             <mat-form-field class="example-full-width">
                 <mat-label>Mobile</mat-label>
-                <input type="tel" matInput [formControl]="mobileFormControl" placeholder="mobile number" [(ngModel)]="unSecureIdentity.mobile">
+                <input type="tel" matInput [formControl]="mobileFormControl" placeholder="mobile number" [(ngModel)]="unSecureForgotIdentity.mobile">
                 <mat-icon matSuffix>mode_edit</mat-icon>
                 <mat-error *ngIf="mobileFormControl.hasError('required')">
                     Mobile is <strong>required</strong>

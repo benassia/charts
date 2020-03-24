@@ -84,14 +84,34 @@ export class DataService {
 
   async registerUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
     //console.log('Registering Unsecure Identity :: ' + JSON.stringify(identity) );
+    this.storage.set( KVLABELS.REGIDENTITY, identity);
+    this.createIdentity(identity);
     await this.delay(5000);
     return Promise.resolve(true);
   }
 
+  private createIdentity(identity: UnSecureIdentity): void {
+    this.indentity.sword = identity.sword;
+    this.indentity.name = identity.name;
+    this.indentity.email = identity.email;
+    this.indentity.mobile = identity.mobile;
+    this.indentity.org = identity.orgunit;
+    this.indentity.device = identity.device;
+    this.updateIdentity(this.indentity);
+
+  }
+
   async loginUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
-    //console.log('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
-    await this.delay(5000);
-    return Promise.resolve(true);
+      const regID = this.storage.get( KVLABELS.IDENTITY );
+      const testID = identity;
+      if( testID !== undefined && regID !== undefined && testID.email === regID.email && testID.sword === regID.sword) {
+        return Promise.resolve(true);
+      } else {
+        return Promise.resolve(false);
+      }
+     //console.log('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
+     await this.delay(5000);
+     return Promise.resolve(true);
   }
 
   async sendLoginIdentity(identity: UnSecureIdentity): Promise <boolean> {
@@ -115,6 +135,7 @@ export class KVLABELS{
   static WORLDS: string = 'WORLDS';
   static COMPYDS: string = 'COMPYDS';
   static PERNDS: string = 'PERNDS';
+  static REGIDENTITY: string = 'UNSECREGID';
 
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import {ThemePalette} from '@angular/material/core'; 
 import {ProgressBarMode} from '@angular/material/progress-bar';
 import { DataService, Identity } from './data.service';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'yourdetails',
@@ -23,11 +23,11 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
 
     identity: Identity;
 
-    constructor(private data: DataService) { }
+    constructor(private _snackBar: MatSnackBar, private data: DataService) { }
 
     ngOnInit(): void {
         this.data.currentIdentity.subscribe(identity => this.identity = identity);
-        console.log ('Your Stored Identity Is ' + JSON.stringify(this.identity));
+        //console.log ('Your Stored Identity Is ' + JSON.stringify(this.identity));
     }
 
     ngOnDestroy(): void {
@@ -49,6 +49,7 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
         );
         await this.delay(5000);
         this.showBuffer = false;
+        this.openSnackBar("Home Location", "Securely Recorded!");
         this.identity.homelatlng = YourDetailsComponent.ypos;
         this.data.updateIdentity(this.identity);
     }
@@ -58,5 +59,11 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
         this.showBuffer = true;
         this.showBuffer = false;
     }
+
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+          duration: 2000,
+        });
+      }
 
 }
