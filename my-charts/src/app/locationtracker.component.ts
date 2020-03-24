@@ -69,6 +69,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     dataRefresh() {
+      console.log('Called ' + this.isActive );
       if (this.isActive) {
         this.tracker.tracks = LocationTrackerComponent.position;
         this.dataSource = new MatTableDataSource(this.tracker.tracks);
@@ -96,7 +97,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
           this.processPosition
         );
         this.dataRefresh();
-        await this.delay(30000);
+        await this.delay(5000);
       }
     }
 
