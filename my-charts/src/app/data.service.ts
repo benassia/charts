@@ -1,6 +1,7 @@
 import { Inject,Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SESSION_STORAGE, StorageService, LOCAL_STORAGE } from 'ngx-webstorage-service';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -33,35 +34,45 @@ export class DataService {
   private sessionHandler = new BehaviorSubject(this.session);
   currentSession = this.sessionHandler.asObservable();
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-    
-    this.session = this.storage.get( KVLABELS.SESSION );
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router) {
+  
+    if ( this.storage.get( KVLABELS.SESSION ) !== undefined) { 
+      this.session = this.storage.get( KVLABELS.SESSION );
+    }
     this.sessionHandler.next(this.session);
     console.log('Constructor Session :: ' + JSON.stringify(this.session) );
 
-    this.tracker = this.storage.get( KVLABELS.TRACKER );
+    if ( this.storage.get( KVLABELS.TRACKER ) !== undefined ){
+      this.tracker = this.storage.get( KVLABELS.TRACKER );
+    }
     this.trackerHandler.next(this.tracker);
-
-    this.observer = this.storage.get( KVLABELS.OBSERVER );
+    
+    if ( this.storage.get( KVLABELS.OBSERVER ) !== undefined ) {
+      this.observer = this.storage.get( KVLABELS.OBSERVER );
+    }
     this.observerHandler.next(this.observer);
 
-    this.indentity = this.storage.get( KVLABELS.IDENTITY );
+    if ( this.storage.get( KVLABELS.IDENTITY ) !== undefined ) {
+      this.indentity = this.storage.get( KVLABELS.IDENTITY );
+    }
     this.identityHandler.next(this.indentity);
   }
 
   updateIdentity(indentity: Identity) {
+    console.log('Saving Identity :: ' + JSON.stringify(this.indentity) );
     this.storage.set( KVLABELS.IDENTITY, indentity);
     this.identityHandler.next(indentity);
   }
 
   updateObservation(observer: Observer) {
+    console.log('Saving Observer :: ' + JSON.stringify(this.observer) );
     this.storage.set( KVLABELS.OBSERVER, observer);
     this.observerHandler.next(observer);
   }
 
   updateTracking(tracker: Tracker) {
+    console.log('Saving Tracker :: ' + JSON.stringify(this.tracker) );
     this.storage.set( KVLABELS.TRACKER, tracker);
-    console.log('tracking updated');
     this.trackerHandler.next(tracker);
   }
 
@@ -72,22 +83,19 @@ export class DataService {
   }
 
   async registerUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
-    console.log('registering ..');
-    console.log(identity);
+    console.log('Registering Unsecure Identity :: ' + JSON.stringify(identity) );
     await this.delay(5000);
     return Promise.resolve(true);
   }
 
   async loginUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
-    console.log('logging in ..');
-    console.log(identity);
+    console.log('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
     await this.delay(5000);
     return Promise.resolve(true);
   }
 
   async sendLoginIdentity(identity: UnSecureIdentity): Promise <boolean> {
-    console.log('sending reminder ..');
-    console.log(identity);
+    console.log('Sending Login Identity :: ' + JSON.stringify(identity) );
     await this.delay(5000);
     return Promise.resolve(true);
   }
@@ -99,11 +107,15 @@ export class DataService {
 }
 
 export class KVLABELS{
-  static IDENTITY: string = ')(*$IH£JJDJFBWOHF£UR)';
-  static OBSERVER: string = '@)(£$&$JEIFWJWJ($$U£@@£B';
-  static SESSION: string = ')(*£$HDJH(HUHEFWHF)££';
-  static TRACKER: string = 'H@&*HHHEI)£*&*£(@*';
-  static TRACKERPAGE: string = 'H@&*HHHEI)£*&*£(@*';
+  static IDENTITY: string = 'IDENTITY';
+  static OBSERVER: string = 'OBSERVER';
+  static SESSION: string = 'SESSION';
+  static TRACKER: string = 'TRACKER';
+  static TRACKERPAGE: string = 'TRACKERPAGE';
+  static WORLDS: string = 'WORLDS';
+  static COMPYDS: string = 'COMPYDS';
+  static PERNDS: string = 'PERNDS';
+
 
 }
 

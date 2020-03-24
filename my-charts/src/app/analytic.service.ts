@@ -4,6 +4,7 @@ import { SESSION_STORAGE, StorageService, LOCAL_STORAGE } from 'ngx-webstorage-s
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label, Color } from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import { KVLABELS } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -140,17 +141,23 @@ export class AnalyticService {
   currentAegonDataSet = this.aegonDataSetHandler.asObservable();
 
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) { }
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
+
+
+   }
 
   updateChartDataSet(chartDataSet: ChartDataSet) {
+    this.storage.set( KVLABELS.PERNDS, chartDataSet);
     this.chartDataSetHandler.next(chartDataSet);
   }
 
   updateWorldDataSet(worldDataSet: WorldDataSet) {
+    this.storage.set( KVLABELS.WORLDS, worldDataSet);
     this.worldDataSetHandler.next(worldDataSet);
   }
 
   updateAegonDataSet(aegonDataSet: AegonDataSet) {
+    this.storage.set( KVLABELS.COMPYDS, aegonDataSet);
     this.aegonDataSetHandler.next(aegonDataSet);
   }
 

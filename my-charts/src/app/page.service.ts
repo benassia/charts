@@ -14,10 +14,16 @@ export class PageService {
   private trackerPageHandler = new BehaviorSubject(this.trackerPage);
   currentTrackerPage = this.trackerPageHandler.asObservable();
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) { }
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
+    if ( this.storage.get( KVLABELS.TRACKERPAGE) !== undefined ){
+      this.trackerPage = this.storage.get( KVLABELS.TRACKERPAGE);
+    }
+    this.trackerPageHandler.next(this.trackerPage);
+
+  }
 
   updateTrackerPage(trackerPage: TrackerPage) {
-    this.storage.set( KVLABELS.SESSION, trackerPage);
+    this.storage.set( KVLABELS.TRACKERPAGE, trackerPage);
     this.trackerPageHandler.next(trackerPage);
   }
 

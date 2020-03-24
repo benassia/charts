@@ -34,6 +34,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
       this.isActive = true;
       this.data.currentTracking.subscribe(tracker => this.tracker = tracker);
+      console.log ('Your Stored Tracker Is ' + JSON.stringify(this.tracker));
       LocationTrackerComponent.recSize = this.tracker.tracks.length;
       LocationTrackerComponent.position = this.tracker.tracks;
       this.dataSource = new MatTableDataSource(this.tracker.tracks);

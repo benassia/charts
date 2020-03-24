@@ -27,6 +27,7 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.data.currentIdentity.subscribe(identity => this.identity = identity);
+        console.log ('Your Stored Identity Is ' + JSON.stringify(this.identity));
     }
 
     ngOnDestroy(): void {

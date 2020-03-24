@@ -42,6 +42,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
       this.data.currentObservation.subscribe(observer => this.observer = observer);
+      console.log ('Your Stored Observer Is ' + JSON.stringify(this.observer));
       DayObservationsComponent.recSize = this.observer.observations.length + 1;
       this.dataSource = new MatTableDataSource(this.observer.observations);
       this.dataSource.sort = this.sort;
