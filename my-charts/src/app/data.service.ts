@@ -40,7 +40,7 @@ export class DataService {
       this.session = this.storage.get( KVLABELS.SESSION );
     }
     this.sessionHandler.next(this.session);
-    console.log('Constructor Session :: ' + JSON.stringify(this.session) );
+    //console.log('Constructor Session :: ' + JSON.stringify(this.session) );
 
     if ( this.storage.get( KVLABELS.TRACKER ) !== undefined ){
       this.tracker = this.storage.get( KVLABELS.TRACKER );
@@ -59,43 +59,43 @@ export class DataService {
   }
 
   updateIdentity(indentity: Identity) {
-    console.log('Saving Identity :: ' + JSON.stringify(this.indentity) );
+    //console.log('Saving Identity :: ' + JSON.stringify(this.indentity) );
     this.storage.set( KVLABELS.IDENTITY, indentity);
     this.identityHandler.next(indentity);
   }
 
   updateObservation(observer: Observer) {
-    console.log('Saving Observer :: ' + JSON.stringify(this.observer) );
+    //console.log('Saving Observer :: ' + JSON.stringify(this.observer) );
     this.storage.set( KVLABELS.OBSERVER, observer);
     this.observerHandler.next(observer);
   }
 
   updateTracking(tracker: Tracker) {
-    console.log('Saving Tracker :: ' + JSON.stringify(this.tracker) );
+    //console.log('Saving Tracker :: ' + JSON.stringify(this.tracker) );
     this.storage.set( KVLABELS.TRACKER, tracker);
     this.trackerHandler.next(tracker);
   }
 
   updateSession(session: Session) {
-    console.log('Saving Session :: ' + JSON.stringify(this.session) );
+    //console.log('Saving Session :: ' + JSON.stringify(this.session) );
     this.storage.set( KVLABELS.SESSION, session);
     this.sessionHandler.next(session);
   }
 
   async registerUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
-    console.log('Registering Unsecure Identity :: ' + JSON.stringify(identity) );
+    //console.log('Registering Unsecure Identity :: ' + JSON.stringify(identity) );
     await this.delay(5000);
     return Promise.resolve(true);
   }
 
   async loginUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
-    console.log('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
+    //console.log('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
     await this.delay(5000);
     return Promise.resolve(true);
   }
 
   async sendLoginIdentity(identity: UnSecureIdentity): Promise <boolean> {
-    console.log('Sending Login Identity :: ' + JSON.stringify(identity) );
+    //console.log('Sending Login Identity :: ' + JSON.stringify(identity) );
     await this.delay(5000);
     return Promise.resolve(true);
   }
