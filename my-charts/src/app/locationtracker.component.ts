@@ -15,7 +15,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     static position: Track[] = [];
     static recSize: number;
     static radius: number;
-
+    isActive = false;
     displayedColumns = ['trackpoint', 'latlng', 'datetime', 'maplink', 'radius'];
     color: ThemePalette = 'warn';
     tracking = false;
@@ -32,6 +32,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
     ngOnInit(): void {
+      this.isActive = true;
       this.data.currentTracking.subscribe(tracker => this.tracker = tracker);
       LocationTrackerComponent.recSize = this.tracker.tracks.length;
       LocationTrackerComponent.position = this.tracker.tracks;
@@ -45,7 +46,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-
+      this.isActive = false;
     }
 
     setRadius(val): void {
@@ -67,11 +68,13 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     dataRefresh() {
-      this.tracker.tracks = LocationTrackerComponent.position;
-      this.dataSource = new MatTableDataSource(this.tracker.tracks);
+      if (this.isActive) {
+        this.tracker.tracks = LocationTrackerComponent.position;
+        this.dataSource = new MatTableDataSource(this.tracker.tracks);
+        this.table.renderRows();
+        this.dataSource.sort = this.sort;
+      }
       this.radius = LocationTrackerComponent.radius;
-      this.table.renderRows();
-      this.dataSource.sort = this.sort;
       this.data.updateTracking(this.tracker);
       return;
     }

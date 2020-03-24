@@ -78,6 +78,7 @@ export class DataService {
 
 }
 
+
 export interface Session {
   loginStatus: string;
   device: string;
