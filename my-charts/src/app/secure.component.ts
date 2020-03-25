@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject  } from '@angular/core';
 import { DataService, Session } from "./data.service";
 import { ChartDataSets, ChartOptions, ChartType, RadialChartOptions } from 'chart.js';
 import { Color, MultiDataSet, BaseChartDirective, SingleDataSet, Label } from 'ng2-charts';
@@ -9,6 +9,7 @@ import 'chartjs-adapter-luxon';
 import { PageService, TrackerPage } from './page.service';
 import { Router } from '@angular/router';
 import { NgxAutoScroll } from 'ngx-auto-scroll';
+import { DOCUMENT } from '@angular/common';
 
 //import '../../../../ng2-charts/dist/ng2-charts/chartjs-chart-financial/chartjs-chart-financial';
 
@@ -20,8 +21,8 @@ import { NgxAutoScroll } from 'ngx-auto-scroll';
 export class SecureAppComponent implements OnInit{
   trackerPage: TrackerPage;
   @ViewChild(NgxAutoScroll, {static: true}) ngxAutoScroll: NgxAutoScroll;
-  
-  constructor(private data: DataService, private page: PageService, private router: Router) { }
+  elem;
+  constructor(private data: DataService, private page: PageService, private router: Router, @Inject(DOCUMENT) private document: any) { }
 
   title = 'my-charts';
   showLineChart = true;
@@ -49,6 +50,8 @@ export class SecureAppComponent implements OnInit{
   session: Session = {loginStatus: '', device: '', latlng: ''};
 
   ngOnInit(): void {
+    this.elem = document.documentElement;
+    this.openFullscreen();
     this.openHome();
     this.data.currentSession.subscribe(session => this.session = session);
     this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
@@ -231,6 +234,20 @@ public openHome(): void {
   }
  }
 
+ openFullscreen() {
+  if (this.elem.requestFullscreen) {
+    this.elem.requestFullscreen();
+  } else if (this.elem.mozRequestFullScreen) {
+    /* Firefox */
+    this.elem.mozRequestFullScreen();
+  } else if (this.elem.webkitRequestFullscreen) {
+    /* Chrome, Safari and Opera */
+    this.elem.webkitRequestFullscreen();
+  } else if (this.elem.msRequestFullscreen) {
+    /* IE/Edge */
+    this.elem.msRequestFullscreen();
+  }
+}
   barCount = 60;
   initialDateStr = '01 Apr 2017 00:00 Z';
 

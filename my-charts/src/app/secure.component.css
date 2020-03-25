@@ -53,6 +53,10 @@ mat-drawer {
     color: green;
 }
 
+.inactive-icon {
+    color: yellow;
+}
+
 .icon-display {
     transform: scale(0.8);
     margin-left: 2px;

@@ -42,3 +42,11 @@ body.noScroll {
 .example-full-width {
     width: 100%;
 }
+
+.active-icon {
+    color: green;
+}
+
+.inactive-icon {
+    color: yellow;
+}

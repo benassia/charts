@@ -2,6 +2,8 @@
     <mat-toolbar-row>
         <mat-icon>font_download</mat-icon>
         <span class="example-spacer "></span>
+        <mat-icon class="active-icon" *ngIf="trackerPage.isTracking && trackerPage.trackme">wifi_tethering</mat-icon>
+        <mat-icon class="inactive-icon" *ngIf="!trackerPage.isTracking && trackerPage.trackme ">wifi_tethering</mat-icon>
     </mat-toolbar-row>
 </mat-toolbar>
 

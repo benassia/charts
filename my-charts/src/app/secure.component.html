@@ -2,47 +2,49 @@
     <mat-toolbar-row>
         <mat-icon (click)="drawer.toggle()">dehaze</mat-icon>
         <span class="example-spacer"></span>
-        <mat-icon (click)="openHome()">home</mat-icon>
-        <span class="example-spacer"></span>
-        <mat-icon (click)="logout()">logout</mat-icon>
+        <mat-icon (click)="openHome()">home</mat-icon>&nbsp;
+        <mat-icon class="active-icon" *ngIf="trackerPage.isTracking && trackerPage.trackme">wifi_tethering</mat-icon>
+        <mat-icon class="inactive-icon" *ngIf="!trackerPage.isTracking && trackerPage.trackme ">wifi_tethering</mat-icon>
+        <span class=" example-spacer "></span>
+        <mat-icon (click)="logout() ">logout</mat-icon>
     </mat-toolbar-row>
 </mat-toolbar>
-<mat-drawer-container class="base_container" [hasBackdrop]=true>
-    <mat-drawer #drawer [mode]="'side'">
+<mat-drawer-container class="base_container " [hasBackdrop]=true>
+    <mat-drawer #drawer [mode]=" 'side' ">
         <mat-list>
-            <mat-list-item (click)="openYourDetails()" (click)="drawer.toggle()"> Your Details </mat-list-item>
-            <mat-list-item (click)="openLocationTracker()" (click)="drawer.toggle()">Location Tracker&nbsp;
-                <mat-icon *ngIf="trackerPage.trackme" class="active-icon icon-display">wifi_tethering</mat-icon>
-                <mat-icon *ngIf="!trackerPage.trackme" class="icon-display">portable_wifi_off</mat-icon>
+            <mat-list-item (click)="openYourDetails() " (click)="drawer.toggle() "> Your Details </mat-list-item>
+            <mat-list-item (click)="openLocationTracker() " (click)="drawer.toggle() ">Location Tracker&nbsp;
+                <mat-icon *ngIf="trackerPage.trackme " class="active-icon icon-display ">wifi_tethering</mat-icon>
+                <mat-icon *ngIf="!trackerPage.trackme " class="icon-display ">portable_wifi_off</mat-icon>
             </mat-list-item>
-            <mat-list-item (click)="openDayObservations()" (click)="drawer.toggle()"> Day Observations</mat-list-item>
-            <mat-list-item (click)="openYourSummary()" (click)="drawer.toggle()"> Your Summary</mat-list-item>
-            <mat-list-item (click)="openAegonSummary()" (click)="drawer.toggle()"> Aegon Summary</mat-list-item>
-            <mat-list-item (click)="openWorldComparator()" (click)="drawer.toggle()"> World Comparator</mat-list-item>
+            <mat-list-item (click)="openDayObservations() " (click)="drawer.toggle() "> Day Observations</mat-list-item>
+            <mat-list-item (click)="openYourSummary() " (click)="drawer.toggle() "> Your Summary</mat-list-item>
+            <mat-list-item (click)="openAegonSummary() " (click)="drawer.toggle() "> Aegon Summary</mat-list-item>
+            <mat-list-item (click)="openWorldComparator() " (click)="drawer.toggle() "> World Comparator</mat-list-item>
             <!--
-            <mat-list-item (click)="openChat()" (click)="drawer.toggle()"> Chat </mat-list-item>
-            <mat-list-item (click)="openCharts()" (click)="drawer.toggle()"> Charts </mat-list-item>
+            <mat-list-item (click)="openChat() " (click)="drawer.toggle() "> Chat </mat-list-item>
+            <mat-list-item (click)="openCharts() " (click)="drawer.toggle() "> Charts </mat-list-item>
             -->
         </mat-list>
     </mat-drawer>
     <mat-drawer-content>
-        <yourdetails *ngIf="showYourDetails" ngx-auto-scroll>
+        <yourdetails *ngIf="showYourDetails " ngx-auto-scroll>
         </yourdetails>
-        <locationtracker *ngIf="showLocationTracker" ngx-auto-scroll>
+        <locationtracker *ngIf="showLocationTracker " ngx-auto-scroll>
         </locationtracker>
-        <dayobservations *ngIf="showDayObservations" ngx-auto-scroll>
+        <dayobservations *ngIf="showDayObservations " ngx-auto-scroll>
         </dayobservations>
-        <yoursummary *ngIf="showYourSummary" ngx-auto-scroll>
+        <yoursummary *ngIf="showYourSummary " ngx-auto-scroll>
         </yoursummary>
-        <aegonsummary *ngIf="showAegonSummary" ngx-auto-scroll>
+        <aegonsummary *ngIf="showAegonSummary " ngx-auto-scroll>
         </aegonsummary>
-        <worldcomparator *ngIf="showWorldComparator" ngx-auto-scroll>
+        <worldcomparator *ngIf="showWorldComparator " ngx-auto-scroll>
         </worldcomparator>
-        <home *ngIf="showHome">
+        <home *ngIf="showHome ">
         </home>
-        <!-- <chat *ngIf="showChat">
+        <!-- <chat *ngIf="showChat ">
             </chat>
-            <charts *ngIf="showCharts">
+            <charts *ngIf="showCharts ">
             </charts>
         -->
     </mat-drawer-content>

@@ -1,0 +1,8 @@
+{
+    "short_name": "C19T",
+    "name": "C19: Personal Virus Tracker?",
+    "description": "Track your symptoms",
+    "start_url": "/",
+    "display": "standalone",
+    "scope": "/"
+}

@@ -9,7 +9,7 @@ import { KVLABELS } from './data.service';
 
 export class PageService {
 
-  trackerPage: TrackerPage = {trackme: false, trackradius: 0.5 };
+  trackerPage: TrackerPage = {trackme: false, trackradius: 0.5, isUIVisible: false, isTracking: true };
 
   private trackerPageHandler = new BehaviorSubject(this.trackerPage);
   currentTrackerPage = this.trackerPageHandler.asObservable();
@@ -23,6 +23,7 @@ export class PageService {
   }
 
   updateTrackerPage(trackerPage: TrackerPage) {
+    //console.log("Tracker Count is " + trackerPage.isTracking);
     this.storage.set( KVLABELS.TRACKERPAGE, trackerPage);
     this.trackerPageHandler.next(trackerPage);
   }
@@ -33,4 +34,7 @@ export class PageService {
 export interface TrackerPage {
   trackme: boolean;
   trackradius: number;
+  isUIVisible: boolean;
+  isTracking: boolean;
 }
+

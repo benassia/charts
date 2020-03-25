@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Inject} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { DataService, Session, UnSecureIdentity, Device } from './data.service';
 import { ThemePalette } from '@angular/material/core';
@@ -6,6 +6,8 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PageService, TrackerPage } from './page.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'unsecure-root',
@@ -21,6 +23,7 @@ export class UnSecureAppComponent  implements OnInit {
   unSecureLogIdentity: UnSecureIdentity = { orgunit: '', email: '', device: null , sword: '', swordChk: '', name: '', mobile: ''};
   unSecureForgotIdentity: UnSecureIdentity = { orgunit: '', email: '', device: null , sword: '', swordChk: '', name: '', mobile: ''};
   
+  trackerPage: TrackerPage = {trackme: false, trackradius: 0.5, isUIVisible: false, isTracking: true };
   
   device: Device = { isMobile: false, isDesktop: false, isTablet: false, info: null };
 
@@ -32,11 +35,15 @@ export class UnSecureAppComponent  implements OnInit {
   mode: ProgressBarMode = 'buffer';
   value = 60;
   bufferValue = 95;
-
-  constructor(private _snackBar: MatSnackBar, private data: DataService, private deviceService: DeviceDetectorService, private router: Router) { }
+  elem;
+  constructor(private _snackBar: MatSnackBar,private page: PageService, private data: DataService, private deviceService: DeviceDetectorService, private router: Router, @Inject(DOCUMENT) private document: any) { }
 
   ngOnInit(): void {
+    this.elem = document.documentElement;
+    this.openFullscreen();
     this.data.currentSession.subscribe(session => this.session = session);
+    this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
+    
     this.epicFunction();
     console.log('unsecure');
   }
@@ -50,6 +57,20 @@ export class UnSecureAppComponent  implements OnInit {
     this.unSecureLogIdentity.device = this.device;
     this.unSecureForgotIdentity.device = this.device;
 
+  }
+  openFullscreen() {
+    if (this.elem.requestFullscreen) {
+      this.elem.requestFullscreen();
+    } else if (this.elem.mozRequestFullScreen) {
+      /* Firefox */
+      this.elem.mozRequestFullScreen();
+    } else if (this.elem.webkitRequestFullscreen) {
+      /* Chrome, Safari and Opera */
+      this.elem.webkitRequestFullscreen();
+    } else if (this.elem.msRequestFullscreen) {
+      /* IE/Edge */
+      this.elem.msRequestFullscreen();
+    }
   }
   
   emailFormControl = new FormControl('', [

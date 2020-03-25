@@ -46,11 +46,13 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
       this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
       this.tracking = this.trackerPage.trackme;
       this.radius = this.trackerPage.trackradius;
+      this.isUIVisible = this.trackerPage.isUIVisible;
       LocationTrackerComponent.radius = this.radius;
     }
 
     ngOnDestroy(): void {
       this.isUIVisible = false;
+      this.page.updateTrackerPage( this.trackerPage );
     }
 
     setRadius(val): void {
@@ -85,7 +87,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     processPosition(position: any) {
-      const rec: Track ={trackpoint: 0, latlng: '', datetime: 0, maplink: '', radius: 0};
+      const rec: Track = { trackpoint: 0, latlng: '', datetime: 0, maplink: '', radius: 0 };
       rec.trackpoint = LocationTrackerComponent.recSize++;
       rec.latlng = position.coords.latitude + ',' + position.coords.longitude;
       rec.radius = LocationTrackerComponent.radius;
@@ -100,12 +102,13 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
       } else { 
         this.openSnackBar("Tracking","Is Now OFF!"); 
       }
-
       while ( this.tracking ) {
         navigator.geolocation.getCurrentPosition(
           this.processPosition
         );
         this.dataRefresh();
+        this.trackerPage.isTracking = !this.trackerPage.isTracking;
+        this.page.updateTrackerPage(this.trackerPage);
         await this.delay(5000);
       }
     }
