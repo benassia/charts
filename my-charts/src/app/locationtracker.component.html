@@ -1,14 +1,17 @@
-<div class="content" role="main">
-    <mat-card>
-        <h2 class="subrow">
+<mat-card class="card-size">
+    <mat-card-header>
+        <div mat-card-avatar>
             <mat-icon class="icon-display active-icon " *ngIf="trackerPage.trackme" (click)="trackOnOff()">wifi_tethering</mat-icon>
             <mat-icon class="icon-display " *ngIf="!trackerPage.trackme" (click)="trackOnOff()">portable_wifi_off</mat-icon>
-            &nbsp; Location Tracker&nbsp;&nbsp;
-            <span *ngIf="trackerPage.trackme">On</span>
-            <span *ngIf="!trackerPage.trackme">Off</span>
-        </h2>
-        <hr>
-        <div class="example-form" *ngIf="trackerPage.trackme">
+        </div>
+        <mat-card-title>Location Tracker</mat-card-title>
+        <mat-card-subtitle *ngIf="trackerPage.trackme">On</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="!trackerPage.trackme">Off</mat-card-subtitle>
+    </mat-card-header>
+
+
+    <mat-card-content>
+        <div *ngIf="trackerPage.trackme">
             <span>Your Tracking Radius id ({{radius}} &nbsp; miles )</span>
             <br><br>
             <div class="example-button-row">
@@ -20,9 +23,6 @@
             <br>
             <span>A measure will be recorded as you move out with the radius from the last point of record</span>
         </div>
-    </mat-card>
-
-    <mat-card>
         <div class="example-container mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" matSort>
 
@@ -60,5 +60,5 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
-    </mat-card>
-</div>
+    </mat-card-content>
+</mat-card>

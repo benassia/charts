@@ -1,9 +1,11 @@
-<div class="content" role="main">
-    <mat-card>
-        <h2>Your Details</h2>
-        <hr>
-        <br>
-
+<mat-card class="card-size">
+    <mat-card-header>
+        <mat-card-title>Your Details</mat-card-title>
+        <mat-card-subtitle>
+            <hr>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
         <div class="example-form">
             <mat-form-field class="example-full-width">
                 <mat-label>Name</mat-label>
@@ -19,7 +21,7 @@
                 <input matInput [type]="hide ? 'password' : 'text'" placeholder="secrect code" [(ngModel)]="identity.sword">
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
+                </button>
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>Mobile</mat-label>
@@ -47,16 +49,15 @@
                 <input matInput disabled placeholder="click icon to get your location" [(ngModel)]="identity.homelatlng">
                 <mat-icon matSuffix (click)="getMyLocation()">person_pin_circle</mat-icon>
             </mat-form-field>
-            <br> <button mat-flat-button color="warn" (click)="deleteAllMyData()">Delete All My Data</button>
-
         </div>
-    </mat-card>
-    <mat-card *ngIf="showBuffer ">
-        <mat-card-content>
+    </mat-card-content>
+    <mat-card-footer>
+        <button mat-button color="warn" (click)="deleteAllMyData()">Delete All My Data</button>
+        <div *ngIf="showBuffer ">
             <section class="example-section">
                 <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
                 </mat-progress-bar>
             </section>
-        </mat-card-content>
-    </mat-card>
-</div>
+        </div>
+    </mat-card-footer>
+</mat-card>

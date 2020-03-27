@@ -51,7 +51,7 @@ export class SecureAppComponent implements OnInit{
 
   ngOnInit(): void {
     this.elem = document.documentElement;
-    this.openFullscreen();
+    //this.openFullscreen();
     this.openHome();
     this.data.currentSession.subscribe(session => this.session = session);
     this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
@@ -60,7 +60,7 @@ export class SecureAppComponent implements OnInit{
   logout(): void {
     this.session.loginStatus = 'false';
     this.data.updateSession(this.session);
-    this.router.navigate(['/unsecure']);
+    //this.router.navigate(['/unsecure']);
   }
 
   public openYourDetails(): void {

@@ -21,6 +21,7 @@
         "@angular/platform-browser": "~9.0.3",
         "@angular/platform-browser-dynamic": "~9.0.3",
         "@angular/router": "~9.0.3",
+        "@angular/service-worker": "~9.0.3",
         "chart.js": "^2.9.3",
         "chartjs-adapter-luxon": "^0.2.0",
         "chartjs-plugin-annotation": "^0.5.7",

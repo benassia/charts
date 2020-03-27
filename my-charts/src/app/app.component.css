@@ -1,12 +1,15 @@
+/*
 body.noScroll {
-    /* ...or body.dialogShowing */
+   
     overflow: hidden;
 }
+
 
 .base_container {
     width: 99%;
     height: 100%;
 }
+*/
 
 mat-drawer-content {
     padding: 12px;

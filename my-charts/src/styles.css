@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+
+/*
 html,
 body {
     height: 100%;
@@ -10,4 +12,18 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     overscroll-behavior: none;
+}
+
+*/
+
+html,
+body {
+    height: 100%;
+    background: rgb(255, 255, 255);
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    font-family: "Roboto:300,400,500" sans-serif;
 }

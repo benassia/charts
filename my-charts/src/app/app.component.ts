@@ -19,14 +19,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.elem = document.documentElement;
-    this.openFullscreen();
+    //this.openFullscreen();
     this.data.currentSession.subscribe(session => this.session = session);
     //console.log ("This is the session app.componnet " + JSON.stringify(this.session));
+    /*
     if ( this.session.loginStatus === 'true') {
       this.router.navigate(['/secure']);
     } else {
       this.router.navigate(['/unsecure']);
-    }
+    }*/
   }
 
   openFullscreen() {

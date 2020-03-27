@@ -13,10 +13,15 @@
     margin: 10px;
 }
 
+.card-size {
+    height: 80%;
+}
+
 .example-form {
-    min-width: 150px;
-    max-width: 500px;
     width: 100%;
+    height: 550px;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
 .example-full-width {
@@ -49,4 +54,20 @@ table {
 
 .active-icon {
     color: green;
+}
+
+.mat-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-card-header {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+.mat-card-content {
+    flex-grow: 1;
+    overflow: auto;
 }

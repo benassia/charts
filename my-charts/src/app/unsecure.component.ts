@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, Inject, ViewChild} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { DataService, Session, UnSecureIdentity, Device } from './data.service';
 import { ThemePalette } from '@angular/material/core';
@@ -8,15 +8,20 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageService, TrackerPage } from './page.service';
 import { DOCUMENT } from '@angular/common';
+import { NgxAutoScroll } from 'ngx-auto-scroll';
+
 
 @Component({
   selector: 'unsecure-root',
   templateUrl: './unsecure.component.html',
-  styleUrls: ['./unsecure.component.css']
+  styleUrls: ['./unsecure.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class UnSecureAppComponent  implements OnInit {
 
+  @ViewChild(NgxAutoScroll, {static: true}) ngxAutoScroll: NgxAutoScroll;
+  
   pageState = 'login';
   session: Session = {loginStatus: '', device: '', latlng: ''};
   unSecureRegIdentity: UnSecureIdentity = { orgunit: '', email: '', device: null , sword: '', swordChk: '', name: '', mobile: ''};
@@ -40,7 +45,7 @@ export class UnSecureAppComponent  implements OnInit {
 
   ngOnInit(): void {
     this.elem = document.documentElement;
-    this.openFullscreen();
+    //this.openFullscreen();
     this.data.currentSession.subscribe(session => this.session = session);
     this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
     
@@ -104,7 +109,7 @@ export class UnSecureAppComponent  implements OnInit {
       this.showBuffer = false;
       if ( this.session.loginStatus === 'true' ) {
         this.openSnackBar("Login","Successful!");
-        this.router.navigate(['/secure']);
+        //this.router.navigate(['/secure']);
       }
       else {
         this.openSnackBar("Login","Failed Please Check Details!");
@@ -112,16 +117,18 @@ export class UnSecureAppComponent  implements OnInit {
     }
     this.pageState = 'login';
   }
+
   forgotLogin(): void {
     this.pageState = 'forgotLogin';
   }
+
   async registerLogin(): Promise<void> {
     if ( this.pageState === 'registerLogin' ) {
       this.showBuffer = true;
       if( await this.data.registerUnsecureIdentity(this.unSecureRegIdentity )){
-        this.showBuffer = false;
-        this.pageState = 'login';
+        //this.pageState = 'login';
         this.openSnackBar("Regsitration","Securely Accepted!");  
+        this.showBuffer = false;
       }else {
         this.showBuffer = false;
         this.openSnackBar("Regsitration","Failed, Have You Registered Already!"); 
@@ -148,6 +155,7 @@ export class UnSecureAppComponent  implements OnInit {
   }
 
   openSnackBar(message: string, action: string) {
+    this.showBuffer = false;
     this._snackBar.open(message, action, {
       duration: 2000,
     });

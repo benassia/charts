@@ -1,28 +1,9 @@
-body.noScroll {
-    /* ...or body.dialogShowing */
-    overflow: hidden;
-}
-
-.base_container {
-    width: 99%;
-    height: 100%;
-}
-
 .toolbar {
     position: relative;
 }
 
 .selected {
     color: #F27D00;
-}
-
-@media(max-width: 576px) {
-    mat-toolbar {
-        height: 40px;
-    }
-     ::ng-deep .mat-toolbar-single-row {
-        padding: 0 5px !important;
-    }
 }
 
 .example-icon {
@@ -33,10 +14,15 @@ body.noScroll {
     flex: 1 1 auto;
 }
 
+.card-size {
+    height: 80%;
+}
+
 .example-form {
-    min-width: 150px;
-    max-width: 500px;
     width: 100%;
+    height: 550px;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
 .example-full-width {
@@ -49,4 +35,20 @@ body.noScroll {
 
 .inactive-icon {
     color: yellow;
+}
+
+.mat-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-card-header {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+.mat-card-content {
+    flex-grow: 1;
+    overflow: auto;
 }

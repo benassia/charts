@@ -46,7 +46,8 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
       this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
       this.tracking = this.trackerPage.trackme;
       this.radius = this.trackerPage.trackradius;
-      this.isUIVisible = this.trackerPage.isUIVisible;
+      this.trackerPage.isUIVisible=this.isUIVisible;
+      this.page.updateTrackerPage(this.trackerPage);
       LocationTrackerComponent.radius = this.radius;
     }
 
@@ -74,7 +75,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     dataRefresh() {
-      //console.log('Called ' + this.isUIVisible   );
+      console.log('Called ' + this.isUIVisible   );
       if (this.isUIVisible) {
         this.tracker.tracks = LocationTrackerComponent.position;
         this.dataSource = new MatTableDataSource(this.tracker.tracks);
