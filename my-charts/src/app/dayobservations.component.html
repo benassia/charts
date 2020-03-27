@@ -7,10 +7,10 @@
     </mat-card-header>
     <mat-card-content>
         <div class="example-button-row">
-            <button mat-fab color="accent" (click)="openGood()">Good</button>
-            <button mat-fab color="warn" (click)="openC19Q()">C19-?</button>
-            <button mat-fab color="primary" (click)="openC19A()">C19</button>
-            <button mat-fab color="warn" (click)="openC19S()">C19-Ok</button>
+            <button mat-fab matTooltip="Normal Health" color="accent" (click)="openGood()">OK</button>
+            <button mat-fab matTooltip="C-19 Symptoms" color="warn" (click)="openC19Q()">-VE</button>
+            <button mat-fab matTooltip="C-19 Active" color="primary" (click)="openC19A()">C19</button>
+            <button mat-fab matTooltip="C-19 Better" color="accent" (click)="openC19S()">+VE</button>
         </div>
         <br>
         <div *ngIf="showBuffer ">

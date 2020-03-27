@@ -133,9 +133,6 @@ export class UnSecureAppComponent  implements OnInit {
         this.showBuffer = false;
         this.openSnackBar("Regsitration","Failed, Have You Registered Already!"); 
       }
-      
-      
-      
     } else {
       this.pageState = 'registerLogin';
     }
@@ -143,7 +140,7 @@ export class UnSecureAppComponent  implements OnInit {
 
   async sendLoginReminder(): Promise<void> {
     this.showBuffer = true;
-    if( await this.data.sendLoginIdentity(this.unSecureForgotIdentity)){
+    if ( await this.data.sendLoginIdentity(this.unSecureForgotIdentity)){
       this.showBuffer = false;
       this.openSnackBar("Reminder","Has Been Sent!"); 
       this.pageState = 'login';

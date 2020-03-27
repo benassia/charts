@@ -28,10 +28,10 @@
     width: 100%;
 }
 
-.example-button-row button,
-.example-button-row a {
-    margin-right: 10px;
-    align-content: stretch;
+.example-button-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .example-container {
