@@ -88,7 +88,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     processPosition(position: any) {
-      const rec: Track = { trackpoint: 0, latlng: '', datetime: 0, maplink: '', radius: 0 };
+      const rec: Track = {id:'', etype:'', crc:'',checked:false, created:'',updated:'', uid: '', trackpoint: 0, latlng: '', datetime: 0, maplink: '', radius: 0 };
       rec.trackpoint = LocationTrackerComponent.recSize++;
       rec.latlng = position.coords.latitude + ',' + position.coords.longitude;
       rec.radius = LocationTrackerComponent.radius;

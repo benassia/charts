@@ -101,7 +101,12 @@ export class UnSecureAppComponent  implements OnInit {
 
   }
   async login(): Promise<void> {
+   
     if ( this.pageState === 'login' ) {
+      if ( !this.validateLogin(this.unSecureLogIdentity)) {
+        this.openSnackBar("Login","Error with Data!");
+        return;
+      }
       this.showBuffer = true;
       this.session.loginStatus = '' + await this.data.loginUnsecureIdentity(this.unSecureLogIdentity);
       //this.session.loginStatus = 'true';
@@ -125,17 +130,46 @@ export class UnSecureAppComponent  implements OnInit {
   async registerLogin(): Promise<void> {
     if ( this.pageState === 'registerLogin' ) {
       this.showBuffer = true;
-      if( await this.data.registerUnsecureIdentity(this.unSecureRegIdentity )){
-        //this.pageState = 'login';
-        this.openSnackBar("Regsitration","Securely Accepted!");  
-        this.showBuffer = false;
-      }else {
-        this.showBuffer = false;
-        this.openSnackBar("Regsitration","Failed, Have You Registered Already!"); 
+      if( this.validateRegistration(this.unSecureRegIdentity)) {
+        if( await this.data.registerUnsecureIdentity(this.unSecureRegIdentity )){
+          //this.pageState = 'login';
+          this.openSnackBar("Regsitration","Securely Accepted!");  
+          this.showBuffer = false;
+        } else {
+          this.showBuffer = false;
+          this.openSnackBar("Regsitration","Failed, Have You Registered Already!"); 
+        }
+      } else{
+          this.showBuffer = false;
+          this.openSnackBar("Regsitration","Failed Missing Data!"); 
       }
     } else {
       this.pageState = 'registerLogin';
     }
+  }
+
+  validateRegistration(identity: UnSecureIdentity): boolean {
+    console.log (JSON.stringify(identity));
+    let test = false;
+    if (identity.orgunit.length <=0 ) return test; 
+    if (identity.email.length <=0) return test; 
+    if (identity.device===null ) return test; 
+    if (identity.sword.length <=0  ) return test; 
+    if (identity.swordChk.length <=0 ) return test; 
+    if (identity.name.length <=0 ) return test; 
+    if (identity.mobile.length <=0 ) return test; 
+    test = true;
+    return test;
+  }
+
+  validateLogin(identity: UnSecureIdentity): boolean {
+    console.log (JSON.stringify(identity));
+    let test = false;
+    if (identity.email.length <=0) return test; 
+    if (identity.device===null ) return test; 
+    if (identity.sword.length <=0  ) return test; 
+    test = true;
+    return test;
   }
 
   async sendLoginReminder(): Promise<void> {

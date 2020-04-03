@@ -1,0 +1,9 @@
+{
+    "/apiMap/*": {
+        "target": "https://t9xr98usrk.execute-api.eu-west-2.amazonaws.com",
+        "secure": true,
+        "changeOrigin": true,
+        "logLevel": "debug",
+        "pathRewrite": { "^/apiMap": "/dev" }
+    }
+}

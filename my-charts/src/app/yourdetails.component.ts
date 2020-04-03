@@ -47,11 +47,15 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
         navigator.geolocation.getCurrentPosition(
             this.processPosition
         );
-        await this.delay(5000);
-        this.showBuffer = false;
-        this.openSnackBar("Home Location", "Securely Recorded!");
         this.identity.homelatlng = YourDetailsComponent.ypos;
-        this.data.updateIdentity(this.identity);
+        if (await this.data.refreshSecureIdentity(this.identity))
+        {
+            this.showBuffer = false;
+            this.openSnackBar("Home Location", "Securely Recorded!");
+        } else {
+            this.showBuffer = false;
+            this.openSnackBar("Home Location", "Error In Recording Position!");
+        }
     }
 
     deleteAllMyData(): void

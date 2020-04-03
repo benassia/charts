@@ -1,10 +1,12 @@
-import { Inject,Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SESSION_STORAGE, StorageService, LOCAL_STORAGE } from 'ngx-webstorage-service';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label, Color } from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-import { KVLABELS } from './data.service';
+import { KVLABELS, Identity } from './data.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -140,10 +142,15 @@ export class AnalyticService {
   private aegonDataSetHandler = new BehaviorSubject(this.aegonDataSet);
   currentAegonDataSet = this.aegonDataSetHandler.asObservable();
 
+  private apiEndpoint: String;
+  private httpOptions: any;
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
+  constructor(private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) {
+    this.apiEndpoint = environment.api.covid19;
+   }
 
-
+   public async initService() {
+    this.setHeaders();
    }
 
   updateChartDataSet(chartDataSet: ChartDataSet) {
@@ -160,6 +167,36 @@ export class AnalyticService {
     this.storage.set( KVLABELS.COMPYDS, aegonDataSet);
     this.aegonDataSetHandler.next(aegonDataSet);
   }
+
+  private setHeaders() {
+		//let token = this.currentSession.idToken.jwtToken;
+		this.httpOptions = {
+			headers: new HttpHeaders({
+				//'Authorization': token,
+				'Content-Type': 'application/json'
+			}),
+		};
+  }
+
+  async getWorldAnalytics(identity: Identity): Promise<WorldDataSet> {
+		// await this.setHttpOptions(); //need to find a way to fix this
+		const data = await this.http.post(`${this.apiEndpoint}/worldanalytics`, identity, this.httpOptions).toPromise() as unknown as WorldDataSet;
+		return data;
+  }
+  async getAegonAnalytics(identity: Identity): Promise<AegonDataSet> {
+		// await this.setHttpOptions(); //need to find a way to fix this
+		const data = await this.http.post(`${this.apiEndpoint}/aegonanalytics`, identity, this.httpOptions).toPromise() as unknown as AegonDataSet;
+		return data;
+  }
+  async getSelfAnalytics(identity: Identity): Promise<ChartDataSet> {
+		// await this.setHttpOptions(); //need to find a way to fix this
+    const data = await this.http.post(`${this.apiEndpoint}/worldanalytics`, identity, this.httpOptions).toPromise() as unknown as any;
+    this.chartDataSet.chartData = data.chartData;
+    this.chartDataSet.chartLabels = data.chartLabels;
+    
+		return data;
+  }
+
 
 }
 
