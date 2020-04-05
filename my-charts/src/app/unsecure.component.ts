@@ -24,9 +24,9 @@ export class UnSecureAppComponent  implements OnInit {
   
   pageState = 'login';
   session: Session = {loginStatus: '', device: '', latlng: ''};
-  unSecureRegIdentity: UnSecureIdentity = { orgunit: '', email: '', device: null , sword: '', swordChk: '', name: '', mobile: ''};
-  unSecureLogIdentity: UnSecureIdentity = { orgunit: '', email: '', device: null , sword: '', swordChk: '', name: '', mobile: ''};
-  unSecureForgotIdentity: UnSecureIdentity = { orgunit: '', email: '', device: null , sword: '', swordChk: '', name: '', mobile: ''};
+  unSecureRegIdentity: UnSecureIdentity = { crc: '', orgunit: '', email: '', device: null , sword: '', swordChk: '', name: '', mobile: ''};
+  unSecureLogIdentity: UnSecureIdentity = { crc: '', orgunit: '', email: '', device: null , sword: '', swordChk: '', name: '', mobile: ''};
+  unSecureForgotIdentity: UnSecureIdentity = { crc: '', orgunit: '', email: '', device: null , sword: '', swordChk: '', name: '', mobile: ''};
   
   trackerPage: TrackerPage = {trackme: false, trackradius: 0.5, isUIVisible: false, isTracking: true };
   
@@ -129,18 +129,17 @@ export class UnSecureAppComponent  implements OnInit {
 
   async registerLogin(): Promise<void> {
     if ( this.pageState === 'registerLogin' ) {
-      this.showBuffer = true;
-      if( this.validateRegistration(this.unSecureRegIdentity)) {
+      if(this.validateRegistration(this.unSecureRegIdentity)) {
+        this.showBuffer = true;
         if( await this.data.registerUnsecureIdentity(this.unSecureRegIdentity )){
           //this.pageState = 'login';
-          this.openSnackBar("Regsitration","Securely Accepted!");  
           this.showBuffer = false;
+          this.openSnackBar("Regsitration","Securely Accepted!");  
         } else {
           this.showBuffer = false;
           this.openSnackBar("Regsitration","Failed, Have You Registered Already!"); 
         }
-      } else{
-          this.showBuffer = false;
+      } else {
           this.openSnackBar("Regsitration","Failed Missing Data!"); 
       }
     } else {

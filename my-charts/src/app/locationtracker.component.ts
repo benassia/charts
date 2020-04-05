@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { ThemePalette } from '@angular/material/core';
-import { DataService, Tracker, Track } from './data.service';
+import { DataService, Tracker, Track, KVLABELS, Identity } from './data.service';
 import { PageService, TrackerPage } from './page.service';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -14,6 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LocationTrackerComponent implements OnInit, OnDestroy {
 
     static position: Track[] = [];
+    static pointPosition: Track = {id:'_TRK', etype: KVLABELS.TRACKER, crc:'crc',checked:false, created:'12',updated:'12', uid:'', trackpoint: '0', latlng: '', datetime: '0', maplink: '', radius: '0' };
     static recSize: number;
     static radius: number;
     isUIVisible = false;
@@ -25,28 +26,34 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
 
     tracker: Tracker;
     trackerPage: TrackerPage;
+    identity: Identity;
 
     dataSource = null;
 
-    constructor(private _snackBar: MatSnackBar, private data: DataService, private page: PageService) { 
+    constructor(private _snackBar: MatSnackBar, private data: DataService, private page: PageService) {
 
     }
     @ViewChild(MatTable) table: MatTable<any>;
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
     ngOnInit(): void {
+      //this.trackMe();
       this.isUIVisible = true;
       this.data.currentTracking.subscribe(tracker => this.tracker = tracker);
-      //console.log ('Your Stored Tracker Is ' + JSON.stringify(this.tracker));
+
       LocationTrackerComponent.recSize = this.tracker.tracks.length;
       LocationTrackerComponent.position = this.tracker.tracks;
+      LocationTrackerComponent.pointPosition = this.tracker.tracks[ this.tracker.tracks.length - 1 ];
       this.dataSource = new MatTableDataSource(this.tracker.tracks);
+      this.sort.direction ='desc';
+      this.sort.active ='trackpoint';
       this.dataSource.sort = this.sort;
 
       this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
+      this.data.currentIdentity.subscribe(indentity => this.identity = indentity);
       this.tracking = this.trackerPage.trackme;
       this.radius = this.trackerPage.trackradius;
-      this.trackerPage.isUIVisible=this.isUIVisible;
+      this.trackerPage.isUIVisible = this.isUIVisible;
       this.page.updateTrackerPage(this.trackerPage);
       LocationTrackerComponent.radius = this.radius;
     }
@@ -54,6 +61,9 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
       this.isUIVisible = false;
       this.page.updateTrackerPage( this.trackerPage );
+      this.tracker.track = LocationTrackerComponent.pointPosition;
+      this.data.updateTracking(this.tracker);
+      //this.trackMe();
     }
 
     setRadius(val): void {
@@ -63,9 +73,16 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
       LocationTrackerComponent.radius = this.radius;
     }
 
-    trackOnOff(): void {
-      this.tracking = !this.tracking;
-      this.trackerPage.trackme = this.tracking;
+    trackOn(): void {
+      this.tracking = true;
+      this.trackerPage.trackme = true;
+      this.page.updateTrackerPage(this.trackerPage);
+      this.trackCoords();
+    }
+
+    trackOff():void{
+      this.tracking = false;
+      this.trackerPage.trackme = false;
       this.page.updateTrackerPage(this.trackerPage);
       this.trackCoords();
     }
@@ -78,26 +95,39 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
       console.log('Called ' + this.isUIVisible   );
       if (this.isUIVisible) {
         this.tracker.tracks = LocationTrackerComponent.position;
+        this.tracker.track =  LocationTrackerComponent.pointPosition;
         this.dataSource = new MatTableDataSource(this.tracker.tracks);
         this.table.renderRows();
+        this.sort.direction ='desc';
+        this.sort.active ='trackpoint';
         this.dataSource.sort = this.sort;
+      } else {
+        this.tracker.tracks = LocationTrackerComponent.position;
+        this.tracker.track =  LocationTrackerComponent.pointPosition;
       }
       this.radius = LocationTrackerComponent.radius;
-      this.data.updateTracking(this.tracker);
+      console.log(JSON.stringify(this.tracker.track));
+      this.data.refreshTracking(this.tracker);
       return;
     }
 
     processPosition(position: any) {
-      const rec: Track = {id:'', etype:'', crc:'',checked:false, created:'',updated:'', uid: '', trackpoint: 0, latlng: '', datetime: 0, maplink: '', radius: 0 };
-      rec.trackpoint = LocationTrackerComponent.recSize++;
-      rec.latlng = position.coords.latitude + ',' + position.coords.longitude;
-      rec.radius = LocationTrackerComponent.radius;
-      rec.datetime = position.timestamp;
-      rec.maplink = 'H';
-      LocationTrackerComponent.position.push(rec);
+      LocationTrackerComponent.pointPosition = {id:'_TRK', etype: KVLABELS.TRACKER, crc:'crc',checked:false, created:'12',updated:'12', uid:'', trackpoint: '0', latlng: '', datetime: '0', maplink: '', radius: '0' };
+      LocationTrackerComponent.pointPosition.trackpoint = ''+LocationTrackerComponent.recSize++;
+      LocationTrackerComponent.pointPosition.latlng = position.coords.latitude + ',' + position.coords.longitude;
+      LocationTrackerComponent.pointPosition.radius = ''+LocationTrackerComponent.radius;
+      LocationTrackerComponent.pointPosition.datetime = ''+position.timestamp;
+      LocationTrackerComponent.pointPosition.maplink = 'H';
+      LocationTrackerComponent.position.push(LocationTrackerComponent.pointPosition);
+    }
+    async trackCoords(): Promise<void> {
+      this.trackerPage.isTracking = !this.trackerPage.isTracking;
+      this.page.updateTrackerPage(this.trackerPage);
+      this.trackMe();
     }
 
-    async trackCoords(): Promise<void> {
+
+    async trackMe(): Promise<void> {
       if (this.tracking) { 
         this.openSnackBar("Tracking","Is Now ON!"); 
       } else { 

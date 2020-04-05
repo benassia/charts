@@ -21,4 +21,4 @@ RUN npm install -g @angular/cli@7.3.9
 COPY . /app
 
 # start app
-CMD ng serve --prod --host 0.0.0.0 --disableHostCheck true
+CMD ng serve --proxy-config proxy.config.json --prod --host 0.0.0.0 --disableHostCheck true

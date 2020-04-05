@@ -23,6 +23,15 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
+        - ses:SendEmail
+      Resource: 
+        - "*"
+      Condition:
+        StringEquals:
+          ses:FromAddress:
+            - "mailbot@c19.ace-aegon.cloud"
+    - Effect: Allow
+      Action:
         - dynamodb:Query
         - dynamodb:Scan
         - dynamodb:GetItem
@@ -31,7 +40,15 @@ provider:
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
+
 functions:
+  email:
+    handler: todos/email.email
+    events:
+      - http:
+          path: sendmail
+          method: post
+          cors: true
   track:
     handler: todos/track.track
     events:
@@ -47,7 +64,7 @@ functions:
           method: post
           cors: true
   observation:
-    handler: todos/observation.track
+    handler: todos/observation.observation
     events:
       - http:
           path: observation
@@ -129,7 +146,7 @@ functions:
     handler: todos/update.update
     events:
       - http:
-          path: todo/{id}
+          path: todo
           method: put
           cors: true
 

@@ -1,6 +1,8 @@
 export const environment = {
-  production: true,
-  apiMap: {
+  production: false,
+  api: {
     covid19: '/apiMap'
   }
 };
+
+

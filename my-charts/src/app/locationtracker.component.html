@@ -1,8 +1,8 @@
 <mat-card class="card-size">
     <mat-card-header>
         <div mat-card-avatar>
-            <mat-icon class="icon-display active-icon " *ngIf="trackerPage.trackme" (click)="trackOnOff()">wifi_tethering</mat-icon>
-            <mat-icon class="icon-display " *ngIf="!trackerPage.trackme" (click)="trackOnOff()">portable_wifi_off</mat-icon>
+            <mat-icon class="icon-display active-icon " *ngIf="trackerPage.trackme" (click)="trackOff()">wifi_tethering</mat-icon>
+            <mat-icon class="icon-display " *ngIf="!trackerPage.trackme" (click)="trackOn()">portable_wifi_off</mat-icon>
         </div>
         <mat-card-title>Location Tracker</mat-card-title>
         <mat-card-subtitle *ngIf="trackerPage.trackme">On</mat-card-subtitle>

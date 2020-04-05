@@ -2,6 +2,7 @@ import json
 import time
 import logging
 import os
+import hashlib
 
 from todos import decimalencoder
 import boto3
@@ -15,6 +16,26 @@ def update(event, context):
         logging.error("Validation Failed")
         raise Exception("Couldn't update the todo item.")
         return
+
+    md = hashlib.md5();
+    vCrc = data['crc']
+    vTst = str(data['uid']+'yabba').encode('utf-8');
+    md.update(vTst)
+    vHash = md.hexdigest()
+    
+    if(vCrc != vHash):
+        response = {
+            "statusCode": 502,
+            "headers": {
+                "Access-Control-Allow-Origin":"*",
+                "Access-Control-Allow-Methods":"*",
+                "Access-Control-Allow-Headers":"*"
+            },
+            "body": ""
+        }
+        return response
+
+
 
     timestamp = int(time.time() * 1000)
 
@@ -38,6 +59,8 @@ def update(event, context):
                          'updatedAt = :updatedAt',
         ReturnValues='ALL_NEW',
     )
+    print("The Result Is")
+    print(result)
 
     # create a response
     response = {

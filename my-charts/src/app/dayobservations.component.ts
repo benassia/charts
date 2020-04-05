@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { DataService, Observer, Observation } from './data.service';
+import { DataService, Observer, Observation, KVLABELS } from './data.service';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
@@ -31,6 +31,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     bufferValue = 95;
 
     observer: Observer;
+    pointObservation: Observation;
 
     displayedColumns = ['record', 'activity', 'status', 'temp', 'symptom', 'notes', 'latlng', 'datetime'];
 
@@ -44,8 +45,12 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
       this.data.currentObservation.subscribe(observer => this.observer = observer);
       //console.log ('Your Stored Observer Is ' + JSON.stringify(this.observer));
       DayObservationsComponent.recSize = this.observer.observations.length + 1;
+      this.pointObservation = this.observer.observations[DayObservationsComponent.recSize - 2];
       this.dataSource = new MatTableDataSource(this.observer.observations);
+      this.sort.direction ='desc';
+      this.sort.active ='record';
       this.dataSource.sort = this.sort;
+
     }
 
     ngOnDestroy(): void {
@@ -57,7 +62,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openGood(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
         width: '250px',
-        data: {record: DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: '', latlng: '', bstate: 1, datetime: 0}
+        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'',record: ''+ DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -67,7 +72,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19Q(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog1, {
         width: '250px',
-        data: {record: DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: '', latlng: '', bstate: 2, datetime: 0}
+        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'',record: ''+ DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -77,7 +82,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19A(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog2, {
         width: '250px',
-        data: {record: DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: '', latlng: '', bstate: 3, datetime: 0}
+        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'12',record: ''+ DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -87,7 +92,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19S(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog3, {
         width: '250px',
-        data: {record: DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: '', latlng: '', bstate: 4, datetime: 0}
+        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'12',record: ''+ DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -114,11 +119,15 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
       );
       await this.delay(5000);
       result.latlng = DayObservationsComponent.ypos;
-      result.datetime = DayObservationsComponent.yposTime;
-      this.observer.observations.push(result);
+      result.datetime = ''+ DayObservationsComponent.yposTime;
+      this.pointObservation = result;
+      this.observer.observations.push(this.pointObservation);
+      this.observer.observation = this.pointObservation;
       this.table.renderRows();
-      this.data.updateObservation(this.observer);
+      this.data.refreshObservation(this.observer);
       this.dataSource = new MatTableDataSource(this.observer.observations);
+      this.sort.direction ='desc';
+      this.sort.active ='record';
       this.dataSource.sort = this.sort;
       this.openSnackBar("Observation","Has Been Recorded")
       this.showBuffer = false;

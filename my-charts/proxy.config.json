@@ -1,6 +1,6 @@
 {
     "/apiMap/*": {
-        "target": "https://t9xr98usrk.execute-api.eu-west-2.amazonaws.com",
+        "target": "https://r5ed9bfpvc.execute-api.eu-west-2.amazonaws.com",
         "secure": true,
         "changeOrigin": true,
         "logLevel": "debug",

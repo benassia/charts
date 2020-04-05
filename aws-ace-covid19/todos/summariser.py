@@ -9,7 +9,7 @@ import urllib3.request
 import re
 from textblob import TextBlob
 from bs4 import BeautifulSoup
-
+import hashlib
 
 from nltk.corpus import stopwords
 from nltk.cluster.util import cosine_distance

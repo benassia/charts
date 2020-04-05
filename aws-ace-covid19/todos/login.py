@@ -1,5 +1,6 @@
 import os
 import json
+import hashlib
 
 from todos import decimalencoder
 import boto3
@@ -13,6 +14,28 @@ def login(event, context):
         logging.error("Validation Failed")
         raise Exception("Couldn't create the todo item.")
 
+    md = hashlib.md5();
+    vCrc = data['crc']
+    vTst = str(data['email']+'yabba').encode('utf-8');
+    md.update(vTst)
+    vHash = md.hexdigest()
+    
+    if(vCrc != vHash):
+        response = {
+            "statusCode": 502,
+            "headers": {
+                "Access-Control-Allow-Origin":"*",
+                "Access-Control-Allow-Methods":"*",
+                "Access-Control-Allow-Headers":"*"
+            },
+            "body": ""
+        }
+        return response
+
+
+
+
+
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
 
     # fetch todo from the database
@@ -21,7 +44,7 @@ def login(event, context):
             'id': data['email']
         }
     )
-
+    print(result)
     # create a response
     response = {
         "statusCode": 200,
