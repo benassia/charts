@@ -44,7 +44,7 @@ def login(event, context):
             'id': data['email']
         }
     )
-    print(result)
+    #print(result)
     # create a response
     response = {
         "statusCode": 200,

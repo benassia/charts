@@ -23,7 +23,9 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
 
     identity: Identity;
 
-    constructor(private _snackBar: MatSnackBar, private data: DataService) { }
+    constructor(private _snackBar: MatSnackBar, private data: DataService) { 
+        this.readLocation();
+    }
 
     ngOnInit(): void {
         this.data.currentIdentity.subscribe(identity => this.identity = identity);

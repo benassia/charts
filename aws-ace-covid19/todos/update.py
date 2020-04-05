@@ -59,8 +59,8 @@ def update(event, context):
                          'updatedAt = :updatedAt',
         ReturnValues='ALL_NEW',
     )
-    print("The Result Is")
-    print(result)
+    #print("The Result Is")
+    #print(result)
 
     # create a response
     response = {

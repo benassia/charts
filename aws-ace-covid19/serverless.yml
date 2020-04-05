@@ -134,6 +134,13 @@ functions:
           path: login
           method: post
           cors: true
+  forgot:
+    handler: todos/forgot.forgot
+    events:
+      - http:
+          path: forgot
+          method: post
+          cors: true
   get:
     handler: todos/get.get
     events:

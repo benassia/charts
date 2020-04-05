@@ -31,7 +31,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     bufferValue = 95;
 
     observer: Observer;
-    pointObservation: Observation;
+    pointObservation: Observation = {id:'_OBS', etype:KVLABELS.OBSERVER, crc:'crc', uid:'12',record: '12', activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'};
 
     displayedColumns = ['record', 'activity', 'status', 'temp', 'symptom', 'notes', 'latlng', 'datetime'];
 
@@ -45,7 +45,9 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
       this.data.currentObservation.subscribe(observer => this.observer = observer);
       //console.log ('Your Stored Observer Is ' + JSON.stringify(this.observer));
       DayObservationsComponent.recSize = this.observer.observations.length + 1;
-      this.pointObservation = this.observer.observations[DayObservationsComponent.recSize - 2];
+      if(DayObservationsComponent.recSize - 2 > -1){
+        this.pointObservation = this.observer.observations[DayObservationsComponent.recSize - 2];
+      }
       this.dataSource = new MatTableDataSource(this.observer.observations);
       this.sort.direction ='desc';
       this.sort.active ='record';

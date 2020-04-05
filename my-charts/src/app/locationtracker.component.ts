@@ -43,7 +43,9 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
 
       LocationTrackerComponent.recSize = this.tracker.tracks.length;
       LocationTrackerComponent.position = this.tracker.tracks;
-      LocationTrackerComponent.pointPosition = this.tracker.tracks[ this.tracker.tracks.length - 1 ];
+      if (this.tracker.tracks.length - 1 > -1) {
+        LocationTrackerComponent.pointPosition = this.tracker.tracks[ this.tracker.tracks.length - 1 ];
+      }
       this.dataSource = new MatTableDataSource(this.tracker.tracks);
       this.sort.direction ='desc';
       this.sort.active ='trackpoint';

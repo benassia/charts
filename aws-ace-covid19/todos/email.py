@@ -54,15 +54,44 @@ client = boto3.client('ses',region_name=AWS_REGION)
 comms = { 'error': 'false', 'message': '' }
 
 def email(event, context):
+
     data = json.loads(event['body'])
+    if 'crc' not in data:
+        logging.error("Validation Failed")
+        raise Exception("Couldn't create the todo item.")
+
+    data = json.loads(event['body'])
+
+
+    md = hashlib.md5();
+    vCrc = data['crc']
+    vTst = str(data['email']+'yabba').encode('utf-8');
+    md.update(vTst)
+    vHash = md.hexdigest()
+    
+    if(vCrc != vHash):
+        response = {
+            "statusCode": 502,
+            "headers": {
+                "Access-Control-Allow-Origin":"*",
+                "Access-Control-Allow-Methods":"*",
+                "Access-Control-Allow-Headers":"*"
+            },
+            "body": ""
+        }
+        return response
+
+
+
+
     RECIPIENT = data['email']
     SUBJECT= data['subject']
-    BODY_TEXT = (data['text-message'])
+    BODY_TEXT = (data['text_message'])
     BODY_HTML = """<html>
                 <head></head>
                 <body>
                 <h1>"""+SUBJECT+"""</h1>
-                <p>"""+data['html-message'] +"""</p>
+                <p>"""+data['html_message'] +"""</p>
                 </body>
                 </html>
                 """ 
@@ -98,13 +127,13 @@ def email(event, context):
         )
     # Display an error if something goes wrong.	
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        #print(e.response['Error']['Message'])
         comms['error'] = 'true'
         comms['message'] = e.response['Error']['Message']
         # create a response
     else:
-        print("Email sent! Message ID:")
-        print(emailResp['MessageId'])
+        #print("Email sent! Message ID:")
+        #print(emailResp['MessageId'])
         # create a response
         comms['message'] = emailResp['MessageId']
     

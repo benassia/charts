@@ -50,7 +50,7 @@ export class UnSecureAppComponent  implements OnInit {
     this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
     
     this.epicFunction();
-    console.log('unsecure');
+    //console.log('unsecure');
   }
 
   epicFunction() {
@@ -148,7 +148,7 @@ export class UnSecureAppComponent  implements OnInit {
   }
 
   validateRegistration(identity: UnSecureIdentity): boolean {
-    console.log (JSON.stringify(identity));
+    //console.log (JSON.stringify(identity));
     let test = false;
     if (identity.orgunit.length <=0 ) return test; 
     if (identity.email.length <=0) return test; 
@@ -162,7 +162,7 @@ export class UnSecureAppComponent  implements OnInit {
   }
 
   validateLogin(identity: UnSecureIdentity): boolean {
-    console.log (JSON.stringify(identity));
+    //console.log (JSON.stringify(identity));
     let test = false;
     if (identity.email.length <=0) return test; 
     if (identity.device===null ) return test; 
@@ -174,11 +174,9 @@ export class UnSecureAppComponent  implements OnInit {
   async sendLoginReminder(): Promise<void> {
     this.showBuffer = true;
     if ( await this.data.sendLoginIdentity(this.unSecureForgotIdentity)){
-      this.showBuffer = false;
       this.openSnackBar("Reminder","Has Been Sent!"); 
-      this.pageState = 'login';
+      //this.pageState = 'login';
     } else {
-      this.showBuffer = false;
       this.openSnackBar("Reminder","Failed: Please Try Again!"); 
     }
 
@@ -189,6 +187,10 @@ export class UnSecureAppComponent  implements OnInit {
     this._snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  async delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
 }
