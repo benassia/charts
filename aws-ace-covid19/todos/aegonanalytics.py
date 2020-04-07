@@ -14,7 +14,7 @@ def aegonanalytics(event, context):
                                 "chartLabels": [ "TotalCases", "New Cases", "Recovered", "Active", "Serious", "Total Staff"],
                                 "chartData": [
                                   {"data": [90, 150, 200, 45, 160, 45], "label": "NL"},
-                                  {"data": [90, 150, 200, 45, 160, 45], "label": "AMM US"},
+                                  {"data": [90, 150, 200, 45, 160, 45], "label": "AMM US3"},
                                   {"data": [120, 130, 180, 70, 140, 45],"label": "UK"},
                                   {"data": [90, 150, 200, 45, 160, 45], "label": "TA"},
                                   {"data": [90, 150, 200, 45, 160, 45], "label": "IND"},

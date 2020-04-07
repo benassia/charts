@@ -8,21 +8,21 @@
     <div class="flex-item">
         <table class="table table-responsive table-condensed">
             <tr>
-                <th>Key</th>
-                <th *ngFor="let label of chartDataSet.chartLabels">{{label}}</th>
+                <th>time</th>
+                <th *ngFor="let key of keySet">{{key}}</th>
             </tr>
-            <tr *ngFor="let d of chartDataSet.chartData; let i=index" [class]="'line-'+i">
-                <td>{{keySet[i]}}</td>
-                <td *ngFor="let label of chartDataSet.chartLabels; let j=index">{{d && d.data[j]}}</td>
+            <tr *ngFor="let label of chartDataSet.chartLabels; let i=index ">
+                <td>{{label}}</td>
+                <td *ngFor=" let val of chartDataSet.chartData; let j=index ">{{val && val.data[i]}}</td>
             </tr>
         </table>
 
         <!--
-        <button mat-button mat-raised-button color="primary" (click)="randomize()">Randomize</button>
-        <button mat-button mat-raised-button color="primary" (click)="pushOne()">Push</button>
-        <button mat-button mat-raised-button color="primary" (click)="changeColor()">Recolor</button>
-        <button mat-button mat-raised-button color="primary" (click)="hideOne()">Toggle Series B</button>
-        <button mat-button mat-raised-button color="primary" (click)="changeLabel()">Change Label</button>
+        <button mat-button mat-raised-button color="primary " (click)="randomize() ">Randomize</button>
+        <button mat-button mat-raised-button color="primary " (click)="pushOne() ">Push</button>
+        <button mat-button mat-raised-button color="primary " (click)="changeColor() ">Recolor</button>
+        <button mat-button mat-raised-button color="primary " (click)="hideOne() ">Toggle Series B</button>
+        <button mat-button mat-raised-button color="primary " (click)="changeLabel() ">Change Label</button>
         -->
     </div>
 </div>

@@ -4,6 +4,8 @@ import hashlib
 
 from todos import decimalencoder
 import boto3
+from boto3.dynamodb.conditions import Key, Attr
+
 dynamodb = boto3.resource('dynamodb')
 
 
@@ -34,9 +36,13 @@ def tracklist(event, context):
 
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
 
-    # fetch all todos from the database
-    result = table.scan()
+    result = table.scan(
+        FilterExpression = Attr('id').contains(data['uid']+'_TRK_'),
+        ConsistentRead = True
+    )
 
+    print(result)
+    
     # create a response
     response = {
         "statusCode": 200,
@@ -45,7 +51,7 @@ def tracklist(event, context):
             "Access-Control-Allow-Methods":"*",
             "Access-Control-Allow-Headers":"*"
             },
-        "body": json.dumps(result['Items'], cls=decimalencoder.DecimalEncoder)
+        "body": json.dumps(result, cls=decimalencoder.DecimalEncoder)
     }
 
     return response

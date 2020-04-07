@@ -17,6 +17,8 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     static pointPosition: Track = {id:'_TRK', etype: KVLABELS.TRACKER, crc:'crc',checked:false, created:'12',updated:'12', uid:'', trackpoint: '0', latlng: '', datetime: '0', maplink: '', radius: '0' };
     static recSize: number;
     static radius: number;
+
+    identity: Identity;
     isUIVisible = false;
     displayedColumns = ['trackpoint', 'latlng', 'datetime', 'maplink', 'radius'];
     color: ThemePalette = 'warn';
@@ -26,7 +28,6 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
 
     tracker: Tracker;
     trackerPage: TrackerPage;
-    identity: Identity;
 
     dataSource = null;
 
@@ -39,20 +40,20 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
       //this.trackMe();
       this.isUIVisible = true;
+      this.data.currentIdentity.subscribe(indentity => this.identity = indentity);
       this.data.currentTracking.subscribe(tracker => this.tracker = tracker);
-
+      this.data.recoverTracking(this.identity);
       LocationTrackerComponent.recSize = this.tracker.tracks.length;
       LocationTrackerComponent.position = this.tracker.tracks;
-      if (this.tracker.tracks.length - 1 > -1) {
-        LocationTrackerComponent.pointPosition = this.tracker.tracks[ this.tracker.tracks.length - 1 ];
-      }
+      LocationTrackerComponent.pointPosition = this.tracker.track;
+    
       this.dataSource = new MatTableDataSource(this.tracker.tracks);
       this.sort.direction ='desc';
       this.sort.active ='trackpoint';
       this.dataSource.sort = this.sort;
 
       this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
-      this.data.currentIdentity.subscribe(indentity => this.identity = indentity);
+   
       this.tracking = this.trackerPage.trackme;
       this.radius = this.trackerPage.trackradius;
       this.trackerPage.isUIVisible = this.isUIVisible;

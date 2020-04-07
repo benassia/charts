@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { DataService, Observer, Observation, KVLABELS } from './data.service';
+import { DataService, Observer, Observation, KVLABELS, Identity } from './data.service';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
@@ -30,6 +30,8 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     value = 60;
     bufferValue = 95;
 
+    identity: Identity;
+
     observer: Observer;
     pointObservation: Observation = {id:'_OBS', etype:KVLABELS.OBSERVER, crc:'crc', uid:'12',record: '12', activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'};
 
@@ -42,12 +44,13 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
     ngOnInit(): void {
+      this.data.currentIdentity.subscribe(indentity => this.identity = indentity);
       this.data.currentObservation.subscribe(observer => this.observer = observer);
+      this.data.recoverObservations(this.identity);
+
+      this.pointObservation = this.observer.observation;
       ////////console.log ('Your Stored Observer Is ' + JSON.stringify(this.observer));
       DayObservationsComponent.recSize = this.observer.observations.length + 1;
-      if(DayObservationsComponent.recSize - 2 > -1){
-        this.pointObservation = this.observer.observations[DayObservationsComponent.recSize - 2];
-      }
       this.dataSource = new MatTableDataSource(this.observer.observations);
       this.sort.direction ='desc';
       this.sort.active ='record';

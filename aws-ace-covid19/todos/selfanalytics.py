@@ -10,8 +10,7 @@ dynamodb = boto3.resource('dynamodb')
 
 
 def selfanalytics(event, context):
-    chartingData = { "chartDataSet" : [{ "data": [37.2, 36.1, 36.1, 37.2, 37.2, 38, 38], "label": "Temp" },{ "data": [0, 10, 20, 30, 30, 20, 10], "label": "Status" },{ "data": [0, 10, 0, 30, 30, 30, 30], "label": "Symptom", "yAxisID": "y-axis-1"}], "chartLabels": ["1-Jan", "2-Jan", "3-Jan", "4-Jan", "5-Jan", "6-Jan", "7-Jan"]};
-
+    chartingData = { "chartDataSet" : [{ "data": [], "label": "Temp" },{ "data": [], "label": "Status" },{ "data": [], "label": "Symptom", "yAxisID": "y-axis-1"}], "chartLabels": []};
        
     data = json.loads(event['body'])
     if 'crc' not in data or 'uid' not in data:
@@ -35,20 +34,37 @@ def selfanalytics(event, context):
             "body": ""
         }
         return response
-    
-
-    
 
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
 
+
     result = table.scan(
-        FilterExpression = Attr('id').eq(data['uid']+'_OBS_'),
+        FilterExpression = Attr('id').contains(data['uid']+'_OBS_'),
         ConsistentRead = True
     )
+    if len(result['Items']) > 0:
+        dataSet = result['Items'];
+        temp = []
+        status = []
+        symp = []
+        label = []
+        activ=[]
+        for row in dataSet:
+            temp.append(row['temp'])
+            status.append(row['status'])
+            symp.append(row['symptom'])
+            label.append(row['datetime'])
+            activ.append(row['activity'])
 
-    # create a response
-     #"body": json.dumps(result['Items'], cls=decimalencoder.DecimalEncoder)
-    
+        chartSet = [{"data":temp, "label": "Temp" }, {"data":status, "label": "Status" }, {"data":symp, "label": "Symptom" , "yAxisID": "y-axis-1"}]
+        chartLabs = label
+        chartingData['chartDataSet']=chartSet
+        chartingData['chartLabels']=chartLabs
+        
+        print(chartingData)
+    else:
+        print(chartingData)
+
     response = {
         "statusCode": 200,
         "headers": {

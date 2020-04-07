@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {Md5} from 'ts-md5/dist/md5';
 import { EncrDecrService } from './encr-decr.service';
+import { NONE_TYPE } from '@angular/compiler';
 
 
 
@@ -58,7 +59,7 @@ export class DataService {
       this.session = this.storage.get( KVLABELS.SESSION );
     }
     this.sessionHandler.next(this.session);
-    ////////////console.log('Constructor Session :: ' + JSON.stringify(this.session) );
+    //////////////('Constructor Session :: ' + JSON.stringify(this.session) );
 
     if ( this.storage.get( KVLABELS.TRACKER ) !== undefined ){
       this.tracker = this.storage.get( KVLABELS.TRACKER );
@@ -81,68 +82,79 @@ export class DataService {
   }
 
   updateIdentity(indentity: Identity) {
-    //////////console.log('Saving Identity :: ' + JSON.stringify(this.indentity) );
+    ////////////('Saving Identity :: ' + JSON.stringify(this.indentity) );
     this.storage.set( KVLABELS.IDENTITY, indentity);
     this.identityHandler.next(indentity);
   }
 
   updateObservation(observer: Observer) {
-    ////////console.log('Saving Observer :: ' + JSON.stringify(this.observer) );
-
+    ////('Saving Observer :: ' + JSON.stringify(this.observer) );
     this.storage.set( KVLABELS.OBSERVER, observer);
     this.observerHandler.next(observer);
   }
 
   updateTracking(tracker: Tracker) {
-    ////////console.log('Saving Tracker :: ' + JSON.stringify(this.tracker) );
+    //////////('Saving Tracker :: ' + JSON.stringify(this.tracker) );
     this.storage.set( KVLABELS.TRACKER, tracker);
     this.trackerHandler.next(tracker);
   }
 
   updateSession(session: Session) {
-    ////////console.log('Saving Session :: ' + JSON.stringify(this.session) );
+    //////////('Saving Session :: ' + JSON.stringify(this.session) );
     this.storage.set( KVLABELS.SESSION, session);
     this.sessionHandler.next(session);
   }
 
   async registerUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
-    //////console.log('Registering Unsecure Identity :: ' + JSON.stringify(identity) );
+    ////////('Registering Unsecure Identity :: ' + JSON.stringify(identity) );
     //this.storage.set( KVLABELS.REGIDENTITY, identity);
     return this.createIdentity(identity);
   }
 
   async refreshSecureIdentity(identity: Identity): Promise <boolean>{
-    //////console.log('Registering Unsecure Identity :: ' + JSON.stringify(identity) );
+    ////////('Registering Unsecure Identity :: ' + JSON.stringify(identity) );
     return this.refreshIdentity(identity);
   }
 
   async loginUnsecureIdentity(identity: UnSecureIdentity): Promise <boolean> {
-       ////console.log('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
+       //////('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
       return await this.loginIdentity(identity);
   
   }
 
   async refreshTracking(tracker: Tracker): Promise <boolean> {
     return await this.trackIdentity(tracker);
-   ////////console.log('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
+   //////////('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
   }
 
   async refreshObservation(observer: Observer): Promise <boolean> {
     return await this.observeIdentity(observer);
-   ////////console.log('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
+   //////////('Logging In Unsecure Identity :: ' + JSON.stringify(identity) );
   }
 
   async sendLoginIdentity(identity: UnSecureIdentity): Promise <boolean> {
-    ////////console.log('Sending Login Identity :: ' + JSON.stringify(identity) );
+    //////////('Sending Login Identity :: ' + JSON.stringify(identity) );
     return await this.remindIdentity(identity);
   }
+
+  async recoverObservations(identity: Identity): Promise <boolean> {
+    //('Recover Observations :: ' + JSON.stringify(identity) );
+    return await this.getIdentityObservations(identity);
+  }
+
+  async recoverTracking(identity: Identity): Promise <boolean> {
+    //('Recover Tracking :: ' + JSON.stringify(identity) );
+    return await this.getIdentityTracking(identity);
+  }
+
+
 
   async delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
  private setHeaders() {
-    //////console.log("setting headers");
+    ////////("setting headers");
     //let token = this.currentSession.idToken.jwtToken;
     // tslint:disable-next-line:indent
 		this.httpOptions = {
@@ -161,8 +173,54 @@ export class DataService {
     return crc;
   }
 
-  private handleError(input: string): void {
+  async getIdentityTracking(identity: Identity): Promise<boolean> {
 
+    let result: boolean = false;
+    this.initService();
+
+    let c_url = `${this.apiEndpoint}/tracks`;
+    //('URL To Call ' + c_url);
+
+    const id = await this.http.post(c_url, identity, this.httpOptions).toPromise()
+      .then(response1 => {
+        const tracks: Track [] = response1[ 'Items' ];
+        let track: Track;
+        if  (  tracks.length >  1 )  {
+             track = tracks[tracks.length - 1];
+        }
+        const tracker: Tracker={"tracks": tracks, "track":track}
+        this.updateTracking(tracker);
+        result = true;
+      })
+      .catch(error => {
+
+       }) as unknown as TrackItems;
+    return Promise.resolve(result);
+  }
+
+  async getIdentityObservations(identity: Identity): Promise<boolean> {
+
+    let result: boolean = false;
+    this.initService();
+
+    let c_url = `${this.apiEndpoint}/observations`;
+    //('URL To Call ' + c_url);
+
+    const id = await this.http.post(c_url, identity, this.httpOptions).toPromise()
+      .then(response1 => {
+        const observations: Observation [] = response1[ 'Items' ];
+        let observation: Observation;
+        if  (  observations.length >  1 )  {
+             observation = observations[observations.length - 1];
+        }
+        const observer: Observer={"observations": observations, "observation":observation}
+        this.updateObservation(observer);
+        result = true;
+      })
+      .catch(error => {
+
+       }) as unknown as ObserverItems;
+    return Promise.resolve(result);
   }
 
   async remindIdentity(identity: UnSecureIdentity): Promise<boolean> {
@@ -175,10 +233,10 @@ export class DataService {
     reminder.mobile = identity.mobile;
     reminder.crc = this.createCRC(identity.mobile);
 
-    //////console.log('the object in \n' + JSON.stringify(reminder));
+    ////////('the object in \n' + JSON.stringify(reminder));
 
     let c_url = `${this.apiEndpoint}/forgot`;
-    //////console.log('URL To Call ' + c_url);
+    ////////('URL To Call ' + c_url);
 
     const id = await this.http.post(c_url, reminder, this.httpOptions).toPromise()
       .then(response1 => {
@@ -207,10 +265,10 @@ export class DataService {
     observer.observation.id = identity.uid + "_OBS_" + observer.observation.record;
     observer.observation.crc = this.createCRC(observer.observation.uid);
 
-    //////console.log('the object in \n' + JSON.stringify(observer.observation));
+    ////////('the object in \n' + JSON.stringify(observer.observation));
 
     let c_url = `${this.apiEndpoint}/observation`;
-    //////console.log('URL To Call ' + c_url);
+    ////////('URL To Call ' + c_url);
 
     const id = await this.http.post(c_url, observer.observation, this.httpOptions).toPromise() as unknown as Observation;
     observer.observation = id;
@@ -229,10 +287,10 @@ export class DataService {
     tracker.track.id = identity.uid + "_TRK_" + tracker.track.trackpoint;
     tracker.track.crc = this.createCRC(tracker.track.uid);
 
-    //////console.log('the object in \n' + JSON.stringify(tracker.track));
+    ////////('the object in \n' + JSON.stringify(tracker.track));
 
     let c_url = `${this.apiEndpoint}/track`;
-    //////console.log('URL To Call ' + c_url);
+    ////////('URL To Call ' + c_url);
 
     const id = await this.http.post(c_url, tracker.track, this.httpOptions).toPromise() as unknown as Track;
     tracker.track = id;
@@ -249,10 +307,10 @@ export class DataService {
 
     identity.crc = this.createCRC(identity.uid);
 
-    //////console.log('the object in \n' + JSON.stringify(identity));
+    ////////('the object in \n' + JSON.stringify(identity));
 
     let c_url = `${this.apiEndpoint}/todo`;
-    //////console.log('URL To Call ' + c_url);
+    ////////('URL To Call ' + c_url);
 
     const id = await this.http.put(c_url, identity, this.httpOptions).toPromise() as unknown as Identity;
     if ( id.id === identity.email) {
@@ -271,13 +329,13 @@ export class DataService {
 
     identity.crc = this.createCRC(identity.email);
 
-    ////console.log('the object in \n' + JSON.stringify(identity));
+    //////('the object in \n' + JSON.stringify(identity));
 
     let c_url = `${this.apiEndpoint}/login`;
-    //////console.log('URL To Call ' + c_url);
+    ////////('URL To Call ' + c_url);
 
     const id = await this.http.post(c_url, identity, this.httpOptions).toPromise() as unknown as Identity;
-    ////console.log('the object in \n' + JSON.stringify(id.id));
+    //////('the object in \n' + JSON.stringify(id.id));
     if ( id.id === identity.email) {
         this.updateIdentity(id);
         result = true;
@@ -302,11 +360,11 @@ export class DataService {
     let result = false;
     this.initService();
 
-    //////console.log('the object in \n' + JSON.stringify(this.indentity));
+    ////////('the object in \n' + JSON.stringify(this.indentity));
     
     let c_url = `${this.apiEndpoint}/todo`;
     
-    //////console.log('URL To Call ' + c_url);
+    ////////('URL To Call ' + c_url);
 
     const id = await this.http.post(c_url, this.indentity, this.httpOptions).toPromise() as unknown as Identity;
 
@@ -337,7 +395,7 @@ export class DataService {
    
     let e_url = `${this.apiEndpoint}/sendmail`;
 
-    //////console.log("EMAIL MESSAGE IS \n" + JSON.stringify(e_payload));
+    ////////("EMAIL MESSAGE IS \n" + JSON.stringify(e_payload));
     
     const comms = await this.http.post(e_url, e_payload, this.httpOptions).toPromise() as unknown as CommsACK;
 
@@ -434,6 +492,10 @@ export interface Tracker {
     track: Track;
 }
 
+export interface TrackItems {
+  Items: Track[];
+}
+
 export interface Track {
   id: string;
   etype: string;
@@ -473,6 +535,10 @@ export interface Observation {
 export interface Observer {
   observations: Observation [];
   observation: Observation;
+}
+
+export interface ObserverItems {
+    Items: Observation[];
 }
 
 export interface WorldDataSet {
