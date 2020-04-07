@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SESSION_STORAGE, StorageService, LOCAL_STORAGE } from 'ngx-webstorage-service';
 import { ChartDataSets, ChartOptions } from 'chart.js';
@@ -14,54 +14,30 @@ import { environment } from 'src/environments/environment';
 
 export class AnalyticService {
 
+  isCharting = false;
+
+  chartingData = {  chartDataSet : [{data: [], label: ''}],
+    chartLabels: []
+  };
+
   worldDataSet: WorldDataSet = {
                                 chartType: 'radar',
-                                chartLabels: [ 'TotalCases', 'New Cases', 'Recovered', 'Active', 'Serious', 'Total Staff'],
+                                chartLabels: [ ],
                                 chartData: [
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon NL'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'AMM NL'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'NL'},
-                                  {data: [120, 130, 180, 70, 140, 45], label: 'Aegon UK'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'AMM UK'},
-                                  {data: [120, 130, 180, 70, 140, 45], label: 'UK'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Transamerica'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'AMM US'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'USA'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon Life'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'India'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon TK'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Turkey'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon RO'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Romania'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon PL'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Poland'},
-                                  {data: [10, 200, 60, 110, 180, 45], label: 'Aegon SP'},
-                                  {data: [10, 200, 60, 110, 180, 45], label: 'Spain'}
+                                  {data: [], label: ''}
                                   ]
                               };
   aegonDataSet: AegonDataSet = {
                                 chartType: 'radar',
-                                chartLabels: [ 'TotalCases', 'New Cases', 'Recovered', 'Active', 'Serious', 'Total Staff'],
+                                chartLabels: [ ],
                                 chartData: [
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon NL'},
-                                  {data: [120, 130, 180, 70, 140, 45], label: 'Aegon UK'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Transamerica'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon Life'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon TK'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon RO'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon PL'},
-                                  {data: [10, 200, 60, 110, 180, 45], label: 'Aegon SP'},
-                                  {data: [90, 150, 200, 45, 160, 45], label: 'Aegon AAM'}
+                                  {data: [], label: ''}
                                   ]
                               };
 
   chartDataSet: ChartDataSet = {
-                                chartData: [
-                                  { data: [37, 37, 37, 37, 37, 37, 37], label: 'Temp' },
-                                  { data: [5, 5, 4, 4, 4, 3, 2], label: 'Status' },
-                                  { data: [1, 1, 1, 4, 4, 5, 5], label: 'Symptom', yAxisID: 'y-axis-1'}
-                                  ],
-                                chartLabels: ['1-Jan', '2-Jan', '3-Jan', '4-Jan', '5-Jan', '6-Jan', '7-Jan'],
+                                chartData: this.chartingData.chartDataSet,
+                                chartLabels: this.chartingData.chartLabels,
                                 chartOptions: {
                                   responsive: true,
                                   scales: {
@@ -167,6 +143,7 @@ export class AnalyticService {
     this.storage.set( KVLABELS.COMPYDS, aegonDataSet);
     this.aegonDataSetHandler.next(aegonDataSet);
   }
+  
 
   private setHeaders() {
 		//let token = this.currentSession.idToken.jwtToken;
@@ -178,23 +155,58 @@ export class AnalyticService {
 		};
   }
 
-  async getWorldAnalytics(identity: Identity): Promise<WorldDataSet> {
-		// await this.setHttpOptions(); //need to find a way to fix this
-		const data = await this.http.post(`${this.apiEndpoint}/worldanalytics`, identity, this.httpOptions).toPromise() as unknown as WorldDataSet;
-		return data;
+  async getWorldAnalytics(identity: Identity): Promise<Boolean> {
+    this.initService();
+    let result = false;
+    // await this.setHttpOptions(); //need to find a way to fix this
+    const data = await this.http.post(`${this.apiEndpoint}/worldanalytics`, identity, this.httpOptions).toPromise()
+    .then(response1 => {
+      this.worldDataSet = response1['WorldDataSet'];
+      this.updateWorldDataSet(this.worldDataSet);
+      result = true;
+    })
+    .catch(error => {
+      //console.log(JSON.stringify(error))
+     }) as unknown as WorldDataSet;
+
+
+    return Promise.resolve(result);
   }
-  async getAegonAnalytics(identity: Identity): Promise<AegonDataSet> {
-		// await this.setHttpOptions(); //need to find a way to fix this
-		const data = await this.http.post(`${this.apiEndpoint}/aegonanalytics`, identity, this.httpOptions).toPromise() as unknown as AegonDataSet;
-		return data;
+
+  async getAegonAnalytics(identity: Identity): Promise<Boolean> {
+    this.initService();
+    let result = false;
+    // await this.setHttpOptions(); //need to find a way to fix this
+    const data = await this.http.post(`${this.apiEndpoint}/aegonanalytics`, identity, this.httpOptions).toPromise()
+    .then(response1 => {
+      this.aegonDataSet = response1['AegonDataSet'];
+      this.updateAegonDataSet(this.aegonDataSet);
+      result = true;
+    })
+    .catch(error => {
+      //console.log(JSON.stringify(error))
+     }) as unknown as AegonDataSet;
+
+
+    return Promise.resolve(result);
   }
-  async getSelfAnalytics(identity: Identity): Promise<ChartDataSet> {
+  async getSelfAnalytics(identity: Identity): Promise<boolean> {
+    this.initService();
+    let result = false;
 		// await this.setHttpOptions(); //need to find a way to fix this
-    const data = await this.http.post(`${this.apiEndpoint}/worldanalytics`, identity, this.httpOptions).toPromise() as unknown as any;
-    this.chartDataSet.chartData = data.chartData;
-    this.chartDataSet.chartLabels = data.chartLabels;
-    
-		return data;
+    const data = await this.http.post(`${this.apiEndpoint}/selfanalytics`, identity, this.httpOptions).toPromise()
+    .then(response1 => {
+      this.chartDataSet.chartData = response1['chartDataSet'];
+      this.chartDataSet.chartLabels = response1['chartLabels'];
+      this.updateChartDataSet(this.chartDataSet);
+      result = true;
+    })
+    .catch(error => {
+      //console.log(JSON.stringify(error))
+     }) as unknown as ChartingData;
+
+
+		return Promise.resolve(result);
   }
 
 
@@ -231,4 +243,9 @@ export interface ChartDataSet {
 	chartType: string;
 	chartPlugins: pluginAnnotations[];
 
+}
+
+export interface ChartingData {
+	chartData: ChartDataSets[];
+  chartLabels: Label[];
 }

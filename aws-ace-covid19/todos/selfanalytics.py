@@ -4,12 +4,15 @@ import hashlib
 
 from todos import decimalencoder
 import boto3
-dynamodb = boto3.resource('dynamodb')
+from boto3.dynamodb.conditions import Key, Attr
 
-rdata = "{chartData: [ { data: [37, 37, 37, 37, 37, 37, 37], label: 'Temp' },{ data: [5, 5, 4, 4, 4, 3, 2], label: 'Status' },{ data: [1, 1, 1, 4, 4, 5, 5], label: 'Symptom', yAxisID: 'y-axis-1'}],chartLabels: ['1-Jan', '2-Jan', '3-Jan', '4-Jan', '5-Jan', '6-Jan', '7-Jan']}"
+dynamodb = boto3.resource('dynamodb')
 
 
 def selfanalytics(event, context):
+    chartingData = { "chartDataSet" : [{ "data": [37.2, 36.1, 36.1, 37.2, 37.2, 38, 38], "label": "Temp" },{ "data": [0, 10, 20, 30, 30, 20, 10], "label": "Status" },{ "data": [0, 10, 0, 30, 30, 30, 30], "label": "Symptom", "yAxisID": "y-axis-1"}], "chartLabels": ["1-Jan", "2-Jan", "3-Jan", "4-Jan", "5-Jan", "6-Jan", "7-Jan"]};
+
+       
     data = json.loads(event['body'])
     if 'crc' not in data or 'uid' not in data:
         logging.error("Validation Failed")
@@ -32,17 +35,20 @@ def selfanalytics(event, context):
             "body": ""
         }
         return response
+    
 
-
-
+    
 
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
 
-    # fetch all todos from the database
-    result = table.scan()
+    result = table.scan(
+        FilterExpression = Attr('id').eq(data['uid']+'_OBS_'),
+        ConsistentRead = True
+    )
 
     # create a response
      #"body": json.dumps(result['Items'], cls=decimalencoder.DecimalEncoder)
+    
     response = {
         "statusCode": 200,
         "headers": {
@@ -50,7 +56,7 @@ def selfanalytics(event, context):
             "Access-Control-Allow-Methods":"*",
             "Access-Control-Allow-Headers":"*"
         },
-        "body": json.dumps(rdata, cls=decimalencoder.DecimalEncoder)
+        "body": json.dumps(chartingData)
     }
 
     return response

@@ -94,7 +94,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     dataRefresh() {
-      console.log('Called ' + this.isUIVisible   );
+      //console.log('Called ' + this.isUIVisible   );
       if (this.isUIVisible) {
         this.tracker.tracks = LocationTrackerComponent.position;
         this.tracker.track =  LocationTrackerComponent.pointPosition;
@@ -108,7 +108,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
         this.tracker.track =  LocationTrackerComponent.pointPosition;
       }
       this.radius = LocationTrackerComponent.radius;
-      console.log(JSON.stringify(this.tracker.track));
+      //console.log(JSON.stringify(this.tracker.track));
       this.data.refreshTracking(this.tracker);
       return;
     }

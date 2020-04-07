@@ -31,7 +31,7 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
         this.data.currentIdentity.subscribe(identity => this.identity = identity);
         this.readLocation();
         this.showBuffer = false;
-        //console.log ('Your Stored Identity Is ' + JSON.stringify(this.identity));
+        ////console.log ('Your Stored Identity Is ' + JSON.stringify(this.identity));
     }
 
     ngOnDestroy(): void {
@@ -44,13 +44,13 @@ export class YourDetailsComponent implements OnInit, OnDestroy {
     processPosition(position: any) {
         const pos =  position.coords.latitude + ',' + position.coords.longitude;
         YourDetailsComponent.ypos = pos;
-        console.log("FERE IS RHE " + YourDetailsComponent.ypos)
+        //console.log("FERE IS RHE " + YourDetailsComponent.ypos)
     }
 
     async getMyLocation(): Promise<void> {
         if ( await this.readLocation()) {
             this.identity.homelatlng = YourDetailsComponent.ypos;
-            console.log( 'here is the latlang\n' + this.identity.homelatlng )
+            //console.log( 'here is the latlang\n' + this.identity.homelatlng )
             if (await this.data.refreshSecureIdentity(this.identity)) {
                 this.showBuffer = false;
                 this.openSnackBar("Home Location", "Securely Recorded!");

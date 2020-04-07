@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageService, TrackerPage } from './page.service';
 import { DOCUMENT } from '@angular/common';
 import { NgxAutoScroll } from 'ngx-auto-scroll';
+import { EncrDecrService } from './encr-decr.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class UnSecureAppComponent  implements OnInit {
 
   hide = true;
   chide = true;
+  mhide = true;
 
   showBuffer = false;
   color: ThemePalette = 'primary';
@@ -41,7 +43,7 @@ export class UnSecureAppComponent  implements OnInit {
   value = 60;
   bufferValue = 95;
   elem;
-  constructor(private _snackBar: MatSnackBar,private page: PageService, private data: DataService, private deviceService: DeviceDetectorService, private router: Router, @Inject(DOCUMENT) private document: any) { }
+  constructor(private EncrDecr: EncrDecrService, private _snackBar: MatSnackBar,private page: PageService, private data: DataService, private deviceService: DeviceDetectorService, private router: Router, @Inject(DOCUMENT) private document: any) { }
 
   ngOnInit(): void {
     this.elem = document.documentElement;
@@ -50,7 +52,13 @@ export class UnSecureAppComponent  implements OnInit {
     this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
     
     this.epicFunction();
-    //console.log('unsecure');
+    ////console.log('unsecure');
+  }
+
+  hideAll() {
+    this.hide = true;
+    this.chide = true;
+    this.mhide = true;
   }
 
   epicFunction() {
@@ -101,13 +109,17 @@ export class UnSecureAppComponent  implements OnInit {
 
   }
   async login(): Promise<void> {
-   
+    this.hideAll();
     if ( this.pageState === 'login' ) {
       if ( !this.validateLogin(this.unSecureLogIdentity)) {
         this.openSnackBar("Login","Error with Data!");
         return;
       }
       this.showBuffer = true;
+
+      const encSword = this.EncrDecr.set('123456$#@$^@1ERF', this.unSecureLogIdentity.sword);
+      this.unSecureLogIdentity.sword = encSword;
+
       this.session.loginStatus = '' + await this.data.loginUnsecureIdentity(this.unSecureLogIdentity);
       //this.session.loginStatus = 'true';
       this.data.updateSession(this.session);
@@ -124,17 +136,30 @@ export class UnSecureAppComponent  implements OnInit {
   }
 
   forgotLogin(): void {
+    this.hideAll();
     this.pageState = 'forgotLogin';
   }
 
   async registerLogin(): Promise<void> {
+    this.hideAll();
     if ( this.pageState === 'registerLogin' ) {
       if(this.validateRegistration(this.unSecureRegIdentity)) {
         this.showBuffer = true;
+        
+        const encSword = this.EncrDecr.set('123456$#@$^@1ERF', this.unSecureRegIdentity.sword );
+        const encSwordChk = this.EncrDecr.set('123456$#@$^@1ERF', this.unSecureRegIdentity.swordChk);
+        const encMobile = this.EncrDecr.set('123456$#@$^@1ERF', this.unSecureRegIdentity.mobile);
+        
+        
+        this.unSecureRegIdentity.swordChk = encSwordChk;
+        this.unSecureRegIdentity.sword = encSword;
+        this.unSecureRegIdentity.mobile = encMobile;
+        
         if( await this.data.registerUnsecureIdentity(this.unSecureRegIdentity )){
           //this.pageState = 'login';
           this.showBuffer = false;
-          this.openSnackBar("Regsitration","Securely Accepted!");  
+          this.openSnackBar("Regsitration","Securely Accepted!");
+          this.pageState = 'login';  
         } else {
           this.showBuffer = false;
           this.openSnackBar("Regsitration","Failed, Have You Registered Already!"); 
@@ -148,7 +173,7 @@ export class UnSecureAppComponent  implements OnInit {
   }
 
   validateRegistration(identity: UnSecureIdentity): boolean {
-    //console.log (JSON.stringify(identity));
+    ////console.log (JSON.stringify(identity));
     let test = false;
     if (identity.orgunit.length <=0 ) return test; 
     if (identity.email.length <=0) return test; 
@@ -162,7 +187,7 @@ export class UnSecureAppComponent  implements OnInit {
   }
 
   validateLogin(identity: UnSecureIdentity): boolean {
-    //console.log (JSON.stringify(identity));
+    ////console.log (JSON.stringify(identity));
     let test = false;
     if (identity.email.length <=0) return test; 
     if (identity.device===null ) return test; 
@@ -172,7 +197,10 @@ export class UnSecureAppComponent  implements OnInit {
   }
 
   async sendLoginReminder(): Promise<void> {
+    this.hideAll();
     this.showBuffer = true;
+    const encMobile = this.EncrDecr.set('123456$#@$^@1ERF', this.unSecureForgotIdentity.mobile);
+    this.unSecureForgotIdentity.mobile = encMobile;
     if ( await this.data.sendLoginIdentity(this.unSecureForgotIdentity)){
       this.openSnackBar("Reminder","Has Been Sent!"); 
       //this.pageState = 'login';
@@ -183,6 +211,7 @@ export class UnSecureAppComponent  implements OnInit {
   }
 
   openSnackBar(message: string, action: string) {
+    this.hideAll();
     this.showBuffer = false;
     this._snackBar.open(message, action, {
       duration: 2000,

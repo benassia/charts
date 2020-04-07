@@ -43,7 +43,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
       this.data.currentObservation.subscribe(observer => this.observer = observer);
-      //console.log ('Your Stored Observer Is ' + JSON.stringify(this.observer));
+      ////////console.log ('Your Stored Observer Is ' + JSON.stringify(this.observer));
       DayObservationsComponent.recSize = this.observer.observations.length + 1;
       if(DayObservationsComponent.recSize - 2 > -1){
         this.pointObservation = this.observer.observations[DayObservationsComponent.recSize - 2];
@@ -115,6 +115,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
 
   async getMyLocation(result: Observation): Promise<void> {
     if (!DayObservationsComponent.oCancel) {
+      //////console.log(JSON.stringify(result));
       this.showBuffer = true;
       navigator.geolocation.getCurrentPosition(
           this.processPosition

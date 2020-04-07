@@ -46,15 +46,27 @@ def login(event, context):
     )
     #print(result)
     # create a response
-    response = {
-        "statusCode": 200,
-        "headers": {
-             "Access-Control-Allow-Origin":"*",
-            "Access-Control-Allow-Methods":"*",
-            "Access-Control-Allow-Headers":"*"
-        },
-        "body": json.dumps(result['Item'],cls=decimalencoder.DecimalEncoder)
+    if result['Item']['sword'] == data['sword']:
+        response = {
+            "statusCode": 200,
+            "headers": {
+                "Access-Control-Allow-Origin":"*",
+                "Access-Control-Allow-Methods":"*",
+                "Access-Control-Allow-Headers":"*"
+            },
+            "body": json.dumps(result['Item'],cls=decimalencoder.DecimalEncoder)
 
-    }
+        }
+    else :
+        response = {
+            "statusCode": 502,
+            "headers": {
+                "Access-Control-Allow-Origin":"*",
+                "Access-Control-Allow-Methods":"*",
+                "Access-Control-Allow-Headers":"*"
+            },
+            "body": ""
+
+        }
 
     return response

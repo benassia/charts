@@ -67,8 +67,10 @@
                 </mat-form-field>
                 <mat-form-field class="example-full-width">
                     <mat-label>Mobile</mat-label>
-                    <input matInput [formControl]="mobileFormControl" placeholder="mobile number" [(ngModel)]="unSecureRegIdentity.mobile">
-                    <mat-icon matSuffix>mode_edit</mat-icon>
+                    <input matInput [type]="mhide ? 'password' : 'text'" [formControl]="mobileFormControl" placeholder="mobile number" [(ngModel)]="unSecureRegIdentity.mobile">
+                    <button mat-icon-button matSuffix (click)="mhide = !mhide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="mhide">
+                    <mat-icon>{{mhide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                     <mat-error *ngIf="mobileFormControl.hasError('required')">
                         Mobile is <strong>required</strong>
                     </mat-error>
@@ -122,8 +124,10 @@
             <div class="example-form">
                 <mat-form-field class="example-full-width">
                     <mat-label>Mobile</mat-label>
-                    <input type="tel" matInput [formControl]="mobileFormControl" placeholder="mobile number" [(ngModel)]="unSecureForgotIdentity.mobile">
-                    <mat-icon matSuffix>mode_edit</mat-icon>
+                    <input matInput [type]="mhide ? 'password' : 'text'" [formControl]="mobileFormControl" placeholder="mobile number" [(ngModel)]="unSecureForgotIdentity.mobile">
+                    <button mat-icon-button matSuffix (click)="mhide = !mhide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="mhide">
+                    <mat-icon>{{mhide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                     <mat-error *ngIf="mobileFormControl.hasError('required')">
                         Mobile is <strong>required</strong>
                     </mat-error>

@@ -10,6 +10,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { ChartsModule } from 'ng2-charts';
 
+import {EncrDecrService} from './encr-decr.service';
+
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -192,6 +194,7 @@ const routes: Routes = [
   ],
   providers: [
     AuthGuard,
+    EncrDecrService,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ],
   bootstrap: [AppComponent]

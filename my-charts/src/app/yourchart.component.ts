@@ -1,6 +1,7 @@
 import { Component, OnInit,  ViewChild,  OnDestroy  } from "@angular/core";
 import { BaseChartDirective, Label, Color,   } from 'ng2-charts';
 import { AnalyticService, ChartDataSet } from './analytic.service';
+import { Identity, DataService } from './data.service';
 
 
 
@@ -12,11 +13,16 @@ import { AnalyticService, ChartDataSet } from './analytic.service';
 export class YourChartComponent implements OnInit, OnDestroy {
 
 	chartDataSet: ChartDataSet;
+	identity: Identity;
+	keySet=["temp","stats","symp"];
 
-	constructor(private data: AnalyticService) { }
+	constructor(private anaytics: AnalyticService, private data: DataService) { }
 
     ngOnInit(): void {
-		this.data.currentChartDataSet.subscribe(chartDataSet => this.chartDataSet = chartDataSet);
+		this.data.currentIdentity.subscribe(indentity => this.identity = indentity);
+		this.anaytics.getSelfAnalytics(this.identity);
+		this.anaytics.currentChartDataSet.subscribe(chartDataSet => this.chartDataSet = chartDataSet);
+		this.chart.update();
     }
     
     ngOnDestroy(): void {
