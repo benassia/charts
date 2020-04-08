@@ -17,10 +17,10 @@ import { NONE_TYPE } from '@angular/compiler';
 export class DataService {
 
   position: Track[] = [];
-  pointPosition: Track =  {id:'_TRK', etype: KVLABELS.TRACKER, crc:'crc',checked:false, created:'12',updated:'12', uid:'', trackpoint: '0', latlng: '', datetime: '0', maplink: '', radius: '0' };
+  pointPosition: Track =  {id:'_TRK', etype: KVLABELS.TRACKER, crc:'crc',checked:false, org: '12', created:'12',updated:'12', uid:'', trackpoint: '0', latlng: '', datetime: '0', maplink: '', radius: '0' };
   
   observation: Observation[] = [];
-  pointObservation: Observation = {id:'_OBS', etype:KVLABELS.OBSERVER, crc:'crc', uid:'12',record: '12', activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'};
+  pointObservation: Observation = {id:'_OBS', etype:KVLABELS.OBSERVER, crc:'crc', uid:'12', org: '12', record: '12', activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'};
   
   session: Session = {loginStatus: 'false', device: '', latlng: ''};
   tracker: Tracker = {tracks: this.position, track: this.pointPosition};
@@ -54,7 +54,7 @@ export class DataService {
   constructor(private EncrDecr: EncrDecrService, private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService, private router: Router) {
     this.initService();
     this.apiEndpoint = environment.api.covid19;
-
+    
     if ( this.storage.get( KVLABELS.SESSION ) !== undefined) { 
       this.session = this.storage.get( KVLABELS.SESSION );
     }
@@ -264,7 +264,7 @@ export class DataService {
     observer.observation.uid = identity.uid;
     observer.observation.id = identity.uid + "_OBS_" + observer.observation.record;
     observer.observation.crc = this.createCRC(observer.observation.uid);
-
+    observer.observation.org = identity.org;
     ////////('the object in \n' + JSON.stringify(observer.observation));
 
     let c_url = `${this.apiEndpoint}/observation`;
@@ -286,6 +286,7 @@ export class DataService {
     tracker.track.uid = identity.uid;
     tracker.track.id = identity.uid + "_TRK_" + tracker.track.trackpoint;
     tracker.track.crc = this.createCRC(tracker.track.uid);
+    tracker.track.org = identity.org;
 
     ////////('the object in \n' + JSON.stringify(tracker.track));
 
@@ -503,6 +504,7 @@ export interface Track {
   uid: string;
   latlng: string;
   trackpoint: string;
+  org: string;
   datetime: string;
   maplink: string;
   radius: string;
@@ -522,6 +524,7 @@ export interface Observation {
   activity: string;
   temp: string;
   symptom: string;
+  org: string;
   latlng: string;
   notes: string;
   bstate: string;

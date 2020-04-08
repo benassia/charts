@@ -53,6 +53,7 @@ def observation(event, context):
         'status': data['status'],
         'activity': data['activity'],
         'temp': data['temp'],
+        'org': data['org'],
         'symptom': data['symptom'],
         'latlng': data['latlng'],
         'notes': data['notes'],

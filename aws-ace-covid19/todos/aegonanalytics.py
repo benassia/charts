@@ -56,7 +56,7 @@ def aegonanalytics(event, context):
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
 
     result = table.scan(
-        FilterExpression = Attr('id').eq(data['uid']+'_OBS_'),
+        FilterExpression = Attr('id').contains('_OBS_'),
         ConsistentRead = True
     )
 

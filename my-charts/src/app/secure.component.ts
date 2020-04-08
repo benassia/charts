@@ -10,6 +10,7 @@ import { PageService, TrackerPage } from './page.service';
 import { Router } from '@angular/router';
 import { NgxAutoScroll } from 'ngx-auto-scroll';
 import { DOCUMENT } from '@angular/common';
+import { StorageService, LOCAL_STORAGE } from 'ngx-webstorage-service';
 
 //import '../../../../ng2-charts/dist/ng2-charts/chartjs-chart-financial/chartjs-chart-financial';
 
@@ -22,7 +23,7 @@ export class SecureAppComponent implements OnInit{
   trackerPage: TrackerPage;
   @ViewChild(NgxAutoScroll, {static: true}) ngxAutoScroll: NgxAutoScroll;
   elem;
-  constructor(private data: DataService, private page: PageService, private router: Router, @Inject(DOCUMENT) private document: any) { }
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private data: DataService, private page: PageService, private router: Router, @Inject(DOCUMENT) private document: any) { }
 
   title = 'my-charts';
   showLineChart = true;
@@ -58,6 +59,7 @@ export class SecureAppComponent implements OnInit{
   }
 
   logout(): void {
+    this.storage.clear();
     this.session.loginStatus = 'false';
     this.data.updateSession(this.session);
     //this.router.navigate(['/unsecure']);

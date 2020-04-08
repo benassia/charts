@@ -3,7 +3,7 @@
     <p>Ok Status Record</p>
     <mat-form-field>
         <mat-label>Activity</mat-label>
-        <mat-select [(value)]="data.activity">
+        <mat-select [(value)]="activity">
             <mat-option value="1">At Work</mat-option>
             <mat-option value="2">At Home</mat-option>
             <mat-option value="3">In Quarantine</mat-option>
@@ -14,7 +14,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Health Status</mat-label>
-        <mat-select [(value)]="data.status">
+        <mat-select [(value)]="status">
             <mat-option value="1">Very Good</mat-option>
             <mat-option value="2">Good</mat-option>
             <mat-option value="3">Fine</mat-option>
@@ -24,16 +24,35 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Temperature</mat-label>
-        <mat-select [(value)]="data.temp">
-            <mat-option value="37.2"> 36.1C[97F] &gt; - &lt; 37.2C[99F]</mat-option>
-            <mat-option value="37.3"> &gt; 37.2C [99F]</mat-option>
-            <mat-option value="36.0"> &lt; 36.1C [97F]</mat-option>
-            <mat-option value="38"> &sim; nearing 38C [100.4F]</mat-option>
+        <mat-select [(value)]="temp">
+            <mat-option value="38.1"> &gt; 38 C</mat-option>
+            <mat-option value="38.0">38 C</mat-option>
+            <mat-option value="37.9">37.9 C</mat-option>
+            <mat-option value="37.8">37.8 C</mat-option>
+            <mat-option value="37.7">37.7 C</mat-option>
+            <mat-option value="37.6">37.6 C</mat-option>
+            <mat-option value="37.5">37.5 C</mat-option>
+            <mat-option value="37.4">37.4 C</mat-option>
+            <mat-option value="37.3">37.3 C</mat-option>
+            <mat-option value="37.2">37.2 C</mat-option>
+            <mat-option value="37.1">37.1 C</mat-option>
+            <mat-option value="37.0">37.0 C</mat-option>
+            <mat-option value="36.9">36.9 C</mat-option>
+            <mat-option value="36.8">36.8 C</mat-option>
+            <mat-option value="36.7">36.7 C</mat-option>
+            <mat-option value="36.6">36.6 C</mat-option>
+            <mat-option value="36.5">36.5 C</mat-option>
+            <mat-option value="36.4">36.4 C</mat-option>
+            <mat-option value="36.3">36.3 C</mat-option>
+            <mat-option value="36.2">36.2 C</mat-option>
+            <mat-option value="36.1">36.1 C</mat-option>
+            <mat-option value="36.0">36.0 C</mat-option>
+            <mat-option value="35.9"> &lt; 36.0 C</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Symptoms</mat-label>
-        <mat-select [(value)]="data.symptom">
+        <mat-select [(value)]="symptom">
             <mat-option value="0"> None</mat-option>
             <mat-option value="1">Dry Cough</mat-option>
             <mat-option value="2">Taste Loss</mat-option>

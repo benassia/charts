@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LocationTrackerComponent implements OnInit, OnDestroy {
 
     static position: Track[] = [];
-    static pointPosition: Track = {id:'_TRK', etype: KVLABELS.TRACKER, crc:'crc',checked:false, created:'12',updated:'12', uid:'', trackpoint: '0', latlng: '', datetime: '0', maplink: '', radius: '0' };
+    static pointPosition: Track = {id:'_TRK', etype: KVLABELS.TRACKER, crc:'crc',checked:false, created:'12',org:'12',updated:'12', uid:'', trackpoint: '0', latlng: '', datetime: '0', maplink: '', radius: '0' };
     static recSize: number;
     static radius: number;
 
@@ -115,7 +115,7 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
     }
 
     processPosition(position: any) {
-      LocationTrackerComponent.pointPosition = {id:'_TRK', etype: KVLABELS.TRACKER, crc:'crc',checked:false, created:'12',updated:'12', uid:'', trackpoint: '0', latlng: '', datetime: '0', maplink: '', radius: '0' };
+      LocationTrackerComponent.pointPosition = {id:'_TRK', etype: KVLABELS.TRACKER, crc:'crc',checked:false, org: '12', created:'12',updated:'12', uid:'', trackpoint: '0', latlng: '', datetime: '0', maplink: '', radius: '0' };
       LocationTrackerComponent.pointPosition.trackpoint = ''+LocationTrackerComponent.recSize++;
       LocationTrackerComponent.pointPosition.latlng = position.coords.latitude + ',' + position.coords.longitude;
       LocationTrackerComponent.pointPosition.radius = ''+LocationTrackerComponent.radius;

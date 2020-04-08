@@ -47,6 +47,7 @@ def track(event, context):
         'crc': data['crc'],
         'uid': data['uid'],
         'latlng': data['latlng'],
+        'org': data['org'],
         'trackpoint': data['trackpoint'],
         'datetime': data['datetime'],
         'maplink': data['maplink'],
