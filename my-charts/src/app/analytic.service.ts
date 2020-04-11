@@ -16,7 +16,9 @@ export class AnalyticService {
 
   isCharting = false;
 
-  chartingData = {  chartDataSet : [{data: [], label: ''}],
+  chartingData = { 
+    tableDataSet : [{data: [], label: ''}], 
+    chartDataSet : [{data: [], label: ''}],
     chartLabels: []
   };
 
@@ -108,6 +110,82 @@ export class AnalyticService {
                                 chartType :'line',
                                 chartPlugins : [pluginAnnotations]
                               };
+  tableDataSet: ChartDataSet = {
+                                chartData: this.chartingData.tableDataSet,
+                                chartLabels: this.chartingData.chartLabels,
+                                chartOptions: {
+                                  responsive: true,
+                                  scales: {
+                                    // We use this empty structure as a placeholder for dynamic theming.
+                                    xAxes: [{}],
+                                    yAxes: [
+                                    {
+                                      id: 'y-axis-0',
+                                      position: 'left',
+                                    },
+                                    {
+                                      id: 'y-axis-1',
+                                      position: 'right',
+                                      gridLines: {
+                                      color: 'rgba(255,0,0,0.3)',
+                                      },
+                                      ticks: {
+                                      fontColor: 'red',
+                                      }
+                                    }
+                                    ]
+                                  },
+                                  annotation: {
+                                    annotations: [
+                                    {
+                                      type: 'line',
+                                      mode: 'vertical',
+                                      scaleID: 'x-axis-0',
+                                      value: '2-Jan',
+                                      borderColor: 'orange',
+                                      borderWidth: 2,
+                                      label: {
+                                      enabled: true,
+                                      fontColor: 'orange',
+                                      content: 'LineAnno'
+                                      }
+                                    },
+                                    ],
+                                  },
+                                  },
+                                chartColors: [
+                                  { // grey
+                                    backgroundColor: 'rgba(148,159,177,0.2)',
+                                    borderColor: 'rgba(148,159,177,1)',
+                                    pointBackgroundColor: 'rgba(148,159,177,1)',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                                  },
+                                  { // dark grey
+                                    backgroundColor: 'rgba(77,83,96,0.2)',
+                                    borderColor: 'rgba(77,83,96,1)',
+                                    pointBackgroundColor: 'rgba(77,83,96,1)',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: 'rgba(77,83,96,1)'
+                                  },
+                                  { // red
+                                    backgroundColor: 'rgba(255,0,0,0.3)',
+                                    borderColor: 'red',
+                                    pointBackgroundColor: 'rgba(148,159,177,1)',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                                  }
+                                  ],
+                                chartLegend : true,
+                                chartType :'line',
+                                chartPlugins : [pluginAnnotations]
+  };
+
+  private tableDataSetHandler = new BehaviorSubject(this.tableDataSet);
+  currentTableDataSet = this.tableDataSetHandler.asObservable();
 
   private chartDataSetHandler = new BehaviorSubject(this.chartDataSet);
   currentChartDataSet = this.chartDataSetHandler.asObservable();
@@ -128,6 +206,11 @@ export class AnalyticService {
    public async initService() {
     this.setHeaders();
    }
+
+   updateTableDataSet(tableDataSet: ChartDataSet) {
+    this.storage.set( KVLABELS.TPERNDS, tableDataSet);
+    this.tableDataSetHandler.next(tableDataSet);
+  }
 
   updateChartDataSet(chartDataSet: ChartDataSet) {
     this.storage.set( KVLABELS.PERNDS, chartDataSet);
@@ -198,7 +281,12 @@ export class AnalyticService {
     .then(response1 => {
       this.chartDataSet.chartData = response1['chartDataSet'];
       this.chartDataSet.chartLabels = response1['chartLabels'];
+      
+      this.tableDataSet.chartData = response1['tableDataSet'];
+      this.tableDataSet.chartLabels = response1['chartLabels'];
+      
       this.updateChartDataSet(this.chartDataSet);
+      this.updateTableDataSet(this.tableDataSet);
       result = true;
     })
     .catch(error => {
@@ -246,6 +334,7 @@ export interface ChartDataSet {
 }
 
 export interface ChartingData {
+  tableData: ChartDataSets[];
 	chartData: ChartDataSets[];
   chartLabels: Label[];
 }

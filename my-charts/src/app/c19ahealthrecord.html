@@ -3,28 +3,28 @@
     <p>C19 Status Record</p>
     <mat-form-field>
         <mat-label>Activity</mat-label>
-        <mat-select [(value)]="activity">
-            <mat-option value="1">At Work</mat-option>
-            <mat-option value="2">At Home</mat-option>
-            <mat-option value="3">In Quarantine</mat-option>
-            <mat-option value="4">In Bed</mat-option>
-            <mat-option value="5">Seen Doctor</mat-option>
-            <mat-option value="6">Hospitalised</mat-option>
+        <mat-select [(value)]="data.activity">
+            <mat-option value="At Work">At Work</mat-option>
+            <mat-option value="At Home">At Home</mat-option>
+            <mat-option value="In Quarantine">In Quarantine</mat-option>
+            <mat-option value="In Bed">In Bed</mat-option>
+            <mat-option value="Seen Doctor">Seen Doctor</mat-option>
+            <mat-option value="Hospitalised">Hospitalised</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Health Status</mat-label>
-        <mat-select [(value)]="status">
-            <mat-option value="1">Very Good</mat-option>
-            <mat-option value="2">Good</mat-option>
-            <mat-option value="3">Fine</mat-option>
-            <mat-option value="4">Not So Good</mat-option>
-            <mat-option value="5">Ill</mat-option>
+        <mat-select [(value)]="data.status">
+            <mat-option value="Very Good">Very Good</mat-option>
+            <mat-option value="Good">Good</mat-option>
+            <mat-option value="Fine">Fine</mat-option>
+            <mat-option value="Not So Good">Not So Good</mat-option>
+            <mat-option value="Ill">Ill</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Temperature C</mat-label>
-        <mat-select [(value)]="temp">
+        <mat-label>Temperature</mat-label>
+        <mat-select [(value)]="data.temp">
             <mat-option value="38.1"> &gt; 38 C</mat-option>
             <mat-option value="38.0">38 C</mat-option>
             <mat-option value="37.9">37.9 C</mat-option>
@@ -52,13 +52,13 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Symptoms</mat-label>
-        <mat-select [(value)]="symptom">
-            <mat-option value="1"> None</mat-option>
-            <mat-option value="2">Dry Cough</mat-option>
-            <mat-option value="3">Taste Loss</mat-option>
-            <mat-option value="4">Sore Throat</mat-option>
-            <mat-option value="5">Smell Loss</mat-option>
-            <mat-option value="6">Fever</mat-option>
+        <mat-select [(value)]="data.symptom">
+            <mat-option value="None"> None</mat-option>
+            <mat-option value="Dry Cough">Dry Cough</mat-option>
+            <mat-option value="Taste Loss">Taste Loss</mat-option>
+            <mat-option value="Sore Throat">Sore Throat</mat-option>
+            <mat-option value="Smell Loss">Smell Loss</mat-option>
+            <mat-option value="Fever">Fever</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>

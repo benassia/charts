@@ -13,6 +13,7 @@ import { Identity, DataService } from './data.service';
 export class YourChartComponent implements OnInit, OnDestroy {
 
 	chartDataSet: ChartDataSet;
+	tableDataSet: ChartDataSet;
 	identity: Identity;
 	keySet=["temp","stats","symp"];
 
@@ -22,6 +23,7 @@ export class YourChartComponent implements OnInit, OnDestroy {
 		this.data.currentIdentity.subscribe(indentity => this.identity = indentity);
 		this.anaytics.getSelfAnalytics(this.identity);
 		this.anaytics.currentChartDataSet.subscribe(chartDataSet => this.chartDataSet = chartDataSet);
+		this.anaytics.currentTableDataSet.subscribe(tableDataSet => this.tableDataSet = tableDataSet);
 		this.chart.update();
     }
     
@@ -29,7 +31,7 @@ export class YourChartComponent implements OnInit, OnDestroy {
         
     }
 
-    @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
+	@ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 	public isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
     public isChrome = /chrome/.test(window.navigator.userAgent.toLowerCase());
     

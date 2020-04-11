@@ -11,9 +11,9 @@
                 <th>time</th>
                 <th *ngFor="let key of keySet">{{key}}</th>
             </tr>
-            <tr *ngFor="let label of chartDataSet.chartLabels; let i=index ">
+            <tr *ngFor="let label of tableDataSet.chartLabels; let i=index ">
                 <td>{{label}}</td>
-                <td *ngFor=" let val of chartDataSet.chartData; let j=index ">{{val && val.data[i]}}</td>
+                <td *ngFor=" let val of tableDataSet.chartData; let j=index ">{{val && val.data[i]}}</td>
             </tr>
         </table>
 

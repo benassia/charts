@@ -10,7 +10,7 @@ dynamodb = boto3.resource('dynamodb')
 
 
 def selfanalytics(event, context):
-    chartingData = { "chartDataSet" : [{ "data": [], "label": "Temp" },{ "data": [], "label": "Status" },{ "data": [], "label": "Symptom", "yAxisID": "y-axis-1"}], "chartLabels": []};
+    chartingData = { "tableDataSet" : [{ "data": [], "label": "Temp" },{ "data": [], "label": "Status" },{ "data": [], "label": "Symptom", "yAxisID": "y-axis-1"}], "chartDataSet" : [{ "data": [], "label": "Temp" },{ "data": [], "label": "Status" },{ "data": [], "label": "Symptom", "yAxisID": "y-axis-1"}], "chartLabels": []};
        
     data = json.loads(event['body'])
     if 'crc' not in data or 'uid' not in data:
@@ -44,23 +44,40 @@ def selfanalytics(event, context):
     )
     if len(result['Items']) > 0:
         dataSet = result['Items'];
-        temp = []
-        status = []
-        symp = []
-        label = []
-        activ=[]
-        for row in dataSet:
-            temp.append(row['temp'])
-            status.append(row['status'])
-            symp.append(row['symptom'])
-            label.append(row['datetime'])
-            activ.append(row['activity'])
+        ctemp = []
+        cstatus = []
+        csymp = []
+        cactiv=[]
 
-        chartSet = [{"data":temp, "label": "Temp" }, {"data":status, "label": "Status" }, {"data":symp, "label": "Symptom" , "yAxisID": "y-axis-1"}]
+        ttemp = []
+        tstatus = []
+        tsymp = []
+        tactiv=[]
+
+        label = []
+
+        for row in reversed(dataSet):
+            ctemp.append(row['tval'])
+            cstatus.append(row['sval'])
+            csymp.append(row['syval'])
+            cactiv.append(row['aval'])
+
+            ttemp.append(row['temp'])
+            tstatus.append(row['status'])
+            tsymp.append(row['symptom'])
+            tactiv.append(row['activity'])
+
+            label.append(row['datetime'])
+
+
+        chartSet = [{"data":ctemp, "label": "Temp" }, {"data":cstatus, "label": "Status" }, {"data":csymp, "label": "Symptom" , "yAxisID": "y-axis-1"}]
+        tableSet = [{"data":ttemp, "label": "Temp" }, {"data":tstatus, "label": "Status" }, {"data":tsymp, "label": "Symptom" , "yAxisID": "y-axis-1"}]
+        
         chartLabs = label
         chartingData['chartDataSet']=chartSet
         chartingData['chartLabels']=chartLabs
-        
+        chartingData['tableDataSet']=tableSet
+
         print(chartingData)
     else:
         print(chartingData)

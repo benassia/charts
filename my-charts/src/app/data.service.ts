@@ -20,7 +20,7 @@ export class DataService {
   pointPosition: Track =  {id:'_TRK', etype: KVLABELS.TRACKER, crc:'crc',checked:false, org: '12', created:'12',updated:'12', uid:'', trackpoint: '0', latlng: '', datetime: '0', maplink: '', radius: '0' };
   
   observation: Observation[] = [];
-  pointObservation: Observation = {id:'_OBS', etype:KVLABELS.OBSERVER, crc:'crc', uid:'12', org: '12', record: '12', activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'};
+  pointObservation: Observation = {id:'_OBS', etype:KVLABELS.OBSERVER, aval:'12', sval:'12', tval:'12', syval:'12', crc:'crc', uid:'12', org: '12', record: '12', activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'};
   
   session: Session = {loginStatus: 'false', device: '', latlng: ''};
   tracker: Tracker = {tracks: this.position, track: this.pointPosition};
@@ -441,6 +441,7 @@ export class KVLABELS{
   static WORLDS: string = 'WORLDS';
   static COMPYDS: string = 'COMPYDS';
   static PERNDS: string = 'PERNDS';
+  static TPERNDS: string = 'TPERNDS';
   static REGIDENTITY: string = 'UNSECREGID';
 
 
@@ -521,9 +522,13 @@ export interface Observation {
   uid: string;
   record: string;
   status: string;
+  sval: string;
   activity: string;
+  aval: string;
   temp: string;
+  tval: string;
   symptom: string;
+  syval: string;
   org: string;
   latlng: string;
   notes: string;

@@ -33,7 +33,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     identity: Identity;
 
     observer: Observer;
-    pointObservation: Observation = {id:'_OBS', etype:KVLABELS.OBSERVER, crc:'crc', uid:'12',record: '12', activity: 'At Work', org: '12', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'};
+    pointObservation: Observation = {id:'_OBS', etype:KVLABELS.OBSERVER, crc:'crc', uid:'12',record: '12', aval:'12', sval:'12', tval:'12', syval:'12', activity: 'At Work', org: '12', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'};
 
     displayedColumns = ['record', 'activity', 'status', 'temp', 'symptom', 'notes', 'latlng', 'datetime'];
 
@@ -67,7 +67,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openGood(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
         width: '250px',
-        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'',record: ''+ DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
+        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'',record: ''+ DayObservationsComponent.recSize++, aval:'12', sval:'12', tval:'12', syval:'12', activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -78,7 +78,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19Q(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog1, {
         width: '250px',
-        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'',record: ''+ DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
+        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'',record: ''+ DayObservationsComponent.recSize++, aval:'12', sval:'12', tval:'12', syval:'12', activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -89,7 +89,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19A(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog2, {
         width: '250px',
-        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'12',record: ''+ DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
+        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'12',record: ''+ DayObservationsComponent.recSize++, aval:'12', sval:'12', tval:'12', syval:'12', activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -100,7 +100,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     openC19S(): void {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog3, {
         width: '250px',
-        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'12',record: ''+ DayObservationsComponent.recSize++, activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
+        data: {id:'12', etype: KVLABELS.OBSERVER, crc:'crc', uid:'12',record: ''+ DayObservationsComponent.recSize++, aval:'12', sval:'12', tval:'12', syval:'12', activity: 'At Work', status: 'Fine', temp: '2', symptom: 'None', notes: 'notes', latlng: '12', bstate: '1', datetime: '0',checked:false, created:'12', updated:'12'}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -158,13 +158,17 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
   templateUrl: 'goodhealthrecord.html',
 })
 export class DialogOverviewExampleDialog {
-  temp = '37.2';
-  status='1';
-  symptom='1';
-  activity='1';
+
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Observation) {}
+    @Inject(MAT_DIALOG_DATA) public data: Observation) {
+      data.temp = '37.2';
+      data.status='Very Good';
+      data.symptom='None';
+      data.activity='At Work';
+      data.bstate = 'OK';
+    
+    }
 
   onNoClick(): void {
     DayObservationsComponent.oCancel = true;
@@ -180,13 +184,16 @@ export class DialogOverviewExampleDialog {
   templateUrl: 'c19qhealthrecord.html',
 })
 export class DialogOverviewExampleDialog1 {
-  temp = '37.2';
-  status='2';
-  symptom='1';
-  activity='2';
+
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog1>,
-    @Inject(MAT_DIALOG_DATA) public data: Observation) {}
+    @Inject(MAT_DIALOG_DATA) public data: Observation) {
+      data.temp = '37.2';
+      data.status='Very Good';
+      data.symptom='None';
+      data.activity='At Work';
+      data.bstate = '+VE';
+    }
 
   onNoClick(): void {
     DayObservationsComponent.oCancel = true;
@@ -202,13 +209,15 @@ export class DialogOverviewExampleDialog1 {
   templateUrl: 'c19ahealthrecord.html',
 })
 export class DialogOverviewExampleDialog2 {
-  temp = '37.6';
-  status='6';
-  symptom='6';
-  activity='6';
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog2>,
-    @Inject(MAT_DIALOG_DATA) public data: Observation) {}
+    @Inject(MAT_DIALOG_DATA) public data: Observation) {
+      data.temp = '37.2';
+      data.status='Very Good';
+      data.symptom='None';
+      data.activity='At Work';
+      data.bstate = 'C19';
+    }
 
   onNoClick(): void {
     DayObservationsComponent.oCancel = true;
@@ -223,13 +232,15 @@ export class DialogOverviewExampleDialog2 {
   templateUrl: 'c19shealthrecord.html',
 })
 export class DialogOverviewExampleDialog3 {
-  temp = '37.4';
-  status='4';
-  symptom='4';
-  activity='4';
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog3>,
-    @Inject(MAT_DIALOG_DATA) public data: Observation) {}
+    @Inject(MAT_DIALOG_DATA) public data: Observation) {
+      data.temp = '37.2';
+      data.status='Very Good';
+      data.symptom='None';
+      data.activity='At Work';
+      data.bstate = '-VE';
+    }
 
   onNoClick(): void {
     DayObservationsComponent.oCancel = true;
