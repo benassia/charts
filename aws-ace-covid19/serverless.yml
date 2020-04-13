@@ -38,7 +38,18 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
+        - dynamodb:DescribeStream
+        - dynamodb:GetRecords
+        - dynamodb:GetShardIterator
+        - dynamodb:ListStreams
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:PutObjectAcl
+        - s3:GetObject
+        - s3:GetObjectAcl
+      Resource: "arn:aws:s3:::${self:provider.environment.DYNAMODB_TABLE}/*"
 
 
 functions:
@@ -164,6 +175,16 @@ functions:
           path: todo/{id}
           method: delete
           cors: true
+  dbstream:
+    handler: todos/dbstream.dbstream
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - TodosDynamoDbTable
+              - StreamArn
+          batchSize: 1
 
 resources:
   Resources:
@@ -182,4 +203,34 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
         TableName: ${self:provider.environment.DYNAMODB_TABLE}
+    S3BucketOutputs:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.DYNAMODB_TABLE}
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+              - ServerSideEncryptionByDefault:
+                  SSEAlgorithm: aws:kms
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+    #StreamFunctionEventSourceMappingDynamodbMyTable:
+    #  Type: AWS::Lambda::EventSourceMapping
+    #  DependsOn: IamPolicyLambdaExecution
+    #  Properties:
+    #    BatchSize: 10
+    #    EventSourceArn:
+    #      Fn::GetAtt:
+    #        - TodosDynamoDbTable
+    #        - StreamArn
+    #    FunctionName:
+    #      Fn::GetAtt:
+    #        - dbstream
+    #        - Arn
+    #    StartingPosition: TRIM_HORIZON
+    #    Enabled: True

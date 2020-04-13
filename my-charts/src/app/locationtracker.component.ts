@@ -100,10 +100,10 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
         this.tracker.tracks = LocationTrackerComponent.position;
         this.tracker.track =  LocationTrackerComponent.pointPosition;
         this.dataSource = new MatTableDataSource(this.tracker.tracks);
-        this.table.renderRows();
         this.sort.direction ='desc';
         this.sort.active ='trackpoint';
         this.dataSource.sort = this.sort;
+        this.table.renderRows();
       } else {
         this.tracker.tracks = LocationTrackerComponent.position;
         this.tracker.track =  LocationTrackerComponent.pointPosition;

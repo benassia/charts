@@ -55,6 +55,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
       this.sort.direction ='desc';
       this.sort.active ='record';
       this.dataSource.sort = this.sort;
+      this.table.renderRows();
 
     }
 
@@ -133,12 +134,12 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
       this.pointObservation = result;
       this.observer.observations.push(this.pointObservation);
       this.observer.observation = this.pointObservation;
-      this.table.renderRows();
       this.data.refreshObservation(this.observer);
       this.dataSource = new MatTableDataSource(this.observer.observations);
       this.sort.direction ='desc';
       this.sort.active ='record';
       this.dataSource.sort = this.sort;
+      this.table.renderRows();
       this.openSnackBar("Observation","Has Been Recorded")
       this.showBuffer = false;
     } else {
