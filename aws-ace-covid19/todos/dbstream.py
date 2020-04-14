@@ -8,6 +8,7 @@ import hashlib
 import boto3
 dynamodb = boto3.resource('dynamodb')
 s3 = boto3.resource('s3')
+from datetime import datetime
 
 def dbstream(event, context):
     #print(event)
@@ -20,24 +21,42 @@ def dbstream(event, context):
         prid = record['dynamodb']['NewImage']['uid']['S']
         orid = record['dynamodb']['NewImage']['org']['S']
         trid = record['dynamodb']['NewImage']['etype']['S']
-        
+        eid = record['eventID']
+        data = record['dynamodb']['NewImage']
+  
+        #print(data)
+        for key in data.keys():
+            if 'S' in data[key]:
+                data[key] = data[key]['S']
+            elif 'BOOL' in data[key]:
+                data[key] = data[key]['BOOL']
+            
+            #if 'datetime' in data[key]:
+            #    dt = datetime.fromtimestamp(int(data[key])/1000.0)
+            #    data[key] = "{}:{}:{}".format(dt.year,dt.month,dt.day)
+          
+        #print(data)
+  
         prid = str(prid+'yabba').encode('utf-8');
         md.update(prid)
         prid = md.hexdigest()
-        eid = record['eventID']
 
-        pfilename = "{}/{}/{}.json".format(prid,trid,eid)
-        ofilename = "{}/{}/{}.json".format(orid,trid,eid)
+        prid=prid.replace(" ", "_")
+        orid=orid.replace(" ", "_")
+        trid=trid.replace(" ", "_")
+
+        pfilename = "{}/{}/{}.json".format(trid,prid,eid)
+        ofilename = "{}/{}/{}.json".format(trid,orid,eid)
 
         #print(pfilename)
         #print(ofilename)
         
 
         pobject = s3.Object(bucket, pfilename)
-        pobject.put(Body=(bytes(json.dumps(record).encode('UTF-8'))))
+        pobject.put(Body=(bytes(json.dumps(data).encode('UTF-8'))))
 
         oobject = s3.Object(bucket, ofilename)
-        oobject.put(Body=(bytes(json.dumps(record).encode('UTF-8'))))
+        oobject.put(Body=(bytes(json.dumps(data).encode('UTF-8'))))
 
     # create a response
     response = {
