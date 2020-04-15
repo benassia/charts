@@ -288,7 +288,7 @@ export class DataService {
     tracker.track.crc = this.createCRC(tracker.track.uid);
     tracker.track.org = identity.org;
 
-    ////////('the object in \n' + JSON.stringify(tracker.track));
+    //console.log('the object in \n' + JSON.stringify(tracker.track));
 
     let c_url = `${this.apiEndpoint}/track`;
     ////////('URL To Call ' + c_url);

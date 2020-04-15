@@ -46,17 +46,31 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
       this.data.currentIdentity.subscribe(indentity => this.identity = indentity);
       this.data.currentObservation.subscribe(observer => this.observer = observer);
+      this.loadInitiaData();
+      /*
       this.data.recoverObservations(this.identity);
-
       this.pointObservation = this.observer.observation;
       ////////console.log ('Your Stored Observer Is ' + JSON.stringify(this.observer));
-      DayObservationsComponent.recSize = this.observer.observations.length + 1;
+      DayObservationsComponent.recSize = this.observer.observations.length + 2;
       this.dataSource = new MatTableDataSource(this.observer.observations);
       this.sort.direction ='desc';
       this.sort.active ='record';
       this.dataSource.sort = this.sort;
-      this.table.renderRows();
+      //this.table.renderRows();
+      */
 
+    }
+
+    async loadInitiaData(): Promise<boolean> {
+      const result = await this.data.recoverObservations(this.identity);
+      this.pointObservation = this.observer.observation;
+      ////////console.log ('Your Stored Observer Is ' + JSON.stringify(this.observer));
+      DayObservationsComponent.recSize = this.observer.observations.length + 2;
+      this.dataSource = new MatTableDataSource(this.observer.observations);
+      this.sort.direction ='desc';
+      this.sort.active ='record';
+      this.dataSource.sort = this.sort;
+      return Promise.resolve(result);
     }
 
     ngOnDestroy(): void {
@@ -139,7 +153,7 @@ export class DayObservationsComponent implements OnInit, OnDestroy {
       this.sort.direction ='desc';
       this.sort.active ='record';
       this.dataSource.sort = this.sort;
-      this.table.renderRows();
+      //this.table.renderRows();
       this.openSnackBar("Observation","Has Been Recorded")
       this.showBuffer = false;
     } else {

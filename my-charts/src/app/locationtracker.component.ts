@@ -42,6 +42,8 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
       this.isUIVisible = true;
       this.data.currentIdentity.subscribe(indentity => this.identity = indentity);
       this.data.currentTracking.subscribe(tracker => this.tracker = tracker);
+      this.loadInitiaData();
+      /*
       this.data.recoverTracking(this.identity);
       LocationTrackerComponent.recSize = this.tracker.tracks.length;
       LocationTrackerComponent.position = this.tracker.tracks;
@@ -59,6 +61,28 @@ export class LocationTrackerComponent implements OnInit, OnDestroy {
       this.trackerPage.isUIVisible = this.isUIVisible;
       this.page.updateTrackerPage(this.trackerPage);
       LocationTrackerComponent.radius = this.radius;
+      */
+    }
+    async loadInitiaData(): Promise<boolean> {
+      const result = this.data.recoverTracking(this.identity);
+      LocationTrackerComponent.recSize = this.tracker.tracks.length;
+      LocationTrackerComponent.position = this.tracker.tracks;
+      LocationTrackerComponent.pointPosition = this.tracker.track;
+    
+      this.dataSource = new MatTableDataSource(this.tracker.tracks);
+      this.sort.direction ='desc';
+      this.sort.active ='trackpoint';
+      this.dataSource.sort = this.sort;
+
+      this.page.currentTrackerPage.subscribe(trackerPage => this.trackerPage = trackerPage);
+   
+      this.tracking = this.trackerPage.trackme;
+      this.radius = this.trackerPage.trackradius;
+      this.trackerPage.isUIVisible = this.isUIVisible;
+      this.page.updateTrackerPage(this.trackerPage);
+      LocationTrackerComponent.radius = this.radius;
+    
+      return Promise.resolve(result);
     }
 
     ngOnDestroy(): void {
