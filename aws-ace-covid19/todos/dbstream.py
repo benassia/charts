@@ -24,18 +24,25 @@ def dbstream(event, context):
         eid = record['eventID']
         data = record['dynamodb']['NewImage']
   
-        #print(data)
+        print(data)
+        l=[]
         for key in data.keys():
             if 'S' in data[key]:
                 data[key] = data[key]['S']
             elif 'BOOL' in data[key]:
                 data[key] = data[key]['BOOL']
             
-            #if 'datetime' in data[key]:
-            #    dt = datetime.fromtimestamp(int(data[key])/1000.0)
-            #    data[key] = "{}:{}:{}".format(dt.year,dt.month,dt.day)
+            if 'datetime' == key :
+                dt = datetime.fromtimestamp(int(data[key])/1000.0)
+                data[key] = "{}:{}:{}".format(dt.day,dt.month,dt.year)
+            elif 'latlng' == key :
+                l = data[key].split(',')
+        data['lat']=float(l[0])
+        data['lng']=float(l[1])      
+                
+
           
-        #print(data)
+        print(data)
   
         prid = str(prid+'yabba').encode('utf-8');
         md.update(prid)
