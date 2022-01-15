@@ -42,7 +42,7 @@
     "highlight.js": "^9.15.8",
     "lodash-es": "^4.17.11",
     "luxon": "^1.15.0",
-    "marked": "^0.8.0",
+    "marked": "^4.0.10",
     "ngx-highlightjs": "^3.0.3",
     "ngx-markdown": "^7.1.5",
     "prismjs": "^1.16.0",
